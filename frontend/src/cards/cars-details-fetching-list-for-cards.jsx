@@ -73,7 +73,7 @@ function CarDetailsFetchingListForCards({filters, search}){
     //(x,y) => y-x; x is index 1 and y is index 2, if true changes made in desending order
     // const FilteredCarDetailsFetchingListForCards = carDetails.filter((carDetail)=>carDetail.rating>0) 
 
-    if(carDetails.length === 0){
+    if(!carDetails || carDetails.length === 0){
         return (
             <div className="car_card_box d-flex justify-content-center align-items-center" style={{ minHeight: "200px" }}>
                 <p style={{ fontSize: "1.2rem", color: "gray" }}>🚗 No cars found matching your search.</p>
@@ -81,7 +81,7 @@ function CarDetailsFetchingListForCards({filters, search}){
         )
     }
 
-    const CarDetailsFetchingListForCards = carDetails.map((Detail)=>{
+    const CarDetailsFetchingListForCards = (carDetails || []).map((Detail)=>{
         return <Cards key = {Detail._id} _id={Detail._id} brand={Detail.brand} model={Detail.model} bodyType={Detail.bodyType} image={Detail.image} price={Detail.price} rating={Detail.rating} available={Detail.available} onUpdate={handleRefresh}/>
     });
 
