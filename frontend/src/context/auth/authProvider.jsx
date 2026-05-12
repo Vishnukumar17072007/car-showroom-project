@@ -38,14 +38,14 @@ export function AuthProvider({children}){
     }
 
     async function login(email, password) {
-        const res = await API.post('auth/login', {email, password});
+        const res = await API.post('/auth/login', {email, password});
         setUser(res.data.user);
         toast.success("Welcome again🙏 how can we help you!?");
         return res.data;
     }
 
     async function logout(){
-        await API.post('auth/logout');
+        await API.post('/auth/logout');
         toast.success("Bye👋.");
         setUser(null);
     }
