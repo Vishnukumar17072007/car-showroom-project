@@ -13,7 +13,7 @@ const authRoutes = require('./routes/authRoute');
 const app = express();
 
 app.use(cors({
-    origin: ["http://localhost:1200"], // ← exact frontend URL
+    origin: "*", // ← exact frontend URL
     credentials: true,                // ← allows cookies to be sent
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // ✅ allow DELETE and OPTIONS
     allowedHeaders: ['Content-Type', 'Authorization']
