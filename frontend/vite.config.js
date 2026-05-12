@@ -6,16 +6,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: 'localhost',
-    port: 1200,
-    proxy: {
-      '/api': {
-          target: 'https://car-showroom-project.onrender.com',
-          changeOrigin: true,
-          cookieDomainRewrite: 'localhost',
-      }
-    },
-    watch: {
-      usePolling: true
-    }
+    port: 1200
+  },
+  build: {
+    outDir: 'dist'
   }
 })
