@@ -13,13 +13,8 @@ const authRoutes = require('./routes/authRoute');
 const app = express();
 
 app.use(cors({
-    origin: [
-        "http://localhost:1200",
-        process.env.FRONTEND_ORIGIN
-      ], // ← exact frontend URL
-    credentials: true,                // ← allows cookies to be sent
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // ✅ allow DELETE and OPTIONS
-    allowedHeaders: ['Content-Type', 'Authorization']
+    origin: true,
+    credentials: true
 }));
 
 app.use(cookieParser());
