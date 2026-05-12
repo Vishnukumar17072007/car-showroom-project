@@ -33,9 +33,9 @@ app.use('/api/cart', cartRoute);
 app.use('/api/wishlist', wishListRoute);
 app.use('/api/order', orderRoute);
 
-const PORT = process.env.MONGO_URI;
+const PORT = process.env.PORT;
 
-mongoose.connect(PORT)
+mongoose.connect(process.env.MONGO_URI)
 .then(()=>{
     console.log("MongoDB Connected");
     app.listen(PORT, async () => {
