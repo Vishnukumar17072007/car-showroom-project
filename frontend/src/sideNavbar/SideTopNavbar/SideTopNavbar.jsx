@@ -6,7 +6,7 @@ function SideTopNavbar() {
     const location = useLocation();
     const { user } = useAuth();
 
-    const faviconTopArr = [["bi bi-house", "Home", "/"], ["bi bi-car-front", "Vehicles", "/vehicles"], ["bi bi-heart", "WishList", "/wishlist"], ["bi bi-cart4", "Cart", "/addToCart"], ["bi bi-bag-check", "Orders", "/orders"]];
+    const faviconTopArr = [["bi bi-house", "Home", "/"], ["bi bi-car-front", "Vehicles", "/vehicles"], ["bi bi-heart", "WishList", "/wishlist"], ["bi bi-cart", "Cart", "/addToCart"], ["bi bi-bag-check", "Orders", "/orders"]];
 
     const proctectedRoutes = new Set([
         "/wishlist","/addToCart","/orders"
