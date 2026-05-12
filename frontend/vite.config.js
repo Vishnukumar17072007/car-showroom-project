@@ -9,7 +9,7 @@ export default defineConfig({
     port: 1200,
     proxy: {
       '/api': {
-          target: 'http://localhost:5000',
+          target: 'https://car-showroom-project.onrender.com',
           changeOrigin: true,
           cookieDomainRewrite: 'localhost',
       }
