@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { CartContext } from "./cartContext";
 import { useAuth } from "../auth/useAuth";
 import toast from "react-hot-toast";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export function CartProvider({ children }) {
     const { user } = useAuth();
@@ -16,7 +17,7 @@ export function CartProvider({ children }) {
             return;
         }
         try {
-            const res = await fetch("/api/cart", { credentials: "include" });
+            const res = await fetch(`${API_URL}/cart`, { credentials: "include" });
             const data = await res.json();
             setCartItems(data.items || data.item || []);
         } finally {
@@ -30,7 +31,7 @@ export function CartProvider({ children }) {
 
     const addToCart = async (carIdOrCar) => {
         const carId = typeof carIdOrCar === "string" ? carIdOrCar : carIdOrCar?._id;
-        const res = await fetch(`/api/cart/`, {
+        const res = await fetch(`${API_URL}/cart`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
@@ -43,7 +44,7 @@ export function CartProvider({ children }) {
 
     const removeFromCart = async (carIdOrCar) => {
         const carId = typeof carIdOrCar === "string" ? carIdOrCar : carIdOrCar?._id;
-        const res = await fetch(`/api/cart/${carId}`, {
+        const res = await fetch(`${API_URL}/cart/${carId}`, {
             method: "DELETE",
             credentials: "include"
         });

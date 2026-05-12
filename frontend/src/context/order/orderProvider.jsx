@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { OrderContext } from "./orderContext";
 import { useAuth } from "../auth/useAuth";
 import toast from "react-hot-toast";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const OrderProvider = ({ children }) => {
     const [orders, setOrders] = useState([]);
@@ -16,7 +17,7 @@ export const OrderProvider = ({ children }) => {
             return;
         }
         try {
-            const res = await fetch('/api/order', { credentials: 'include' });
+            const res = await fetch(`${API_URL}/order`, { credentials: 'include' });
             const data = await res.json();
             setOrders(Array.isArray(data) ? data : []);
         } catch {
@@ -31,7 +32,7 @@ export const OrderProvider = ({ children }) => {
     }, [fetchOrders]);
 
     const placeOrder = async (shippingDetails, carIds) => {
-        const res = await fetch('/api/order', {
+        const res = await fetch(`${API_URL}/order`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -48,7 +49,7 @@ export const OrderProvider = ({ children }) => {
     };
 
     const cancelOrder = async (orderId) => {
-        const res = await fetch(`/api/order/${orderId}`, {
+        const res = await fetch(`${API_URL}/order/${orderId}`, {
             method: 'DELETE',
             credentials: 'include'
         });

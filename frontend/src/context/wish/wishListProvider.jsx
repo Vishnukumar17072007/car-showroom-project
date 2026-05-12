@@ -4,6 +4,7 @@ import { AuthContext } from "../auth/authContext";
 import { useContext, useCallback } from "react";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export function WishListProvider({children}){
     const { user } = useContext(AuthContext);
@@ -25,7 +26,7 @@ export function WishListProvider({children}){
             return;
         }
         try {
-            const res = await fetch("/api/wishlist", { credentials: "include" });
+            const res = await fetch(`${API_URL}/wishlist`, { credentials: "include" });
             const data = await res.json();
             setWishListItems(normalizeWishList(data));
         } finally {
@@ -45,7 +46,7 @@ export function WishListProvider({children}){
     }, [user, refreshWishList]);
 
     const addToWishList = async(carId) => {
-        await fetch("/api/wishlist", {
+        await fetch(`${API_URL}/wishlist`, {
             method: "POST",
             headers: { "Content-Type": "application/json"},
             credentials: "include",
@@ -57,7 +58,7 @@ export function WishListProvider({children}){
     }
 
     const removeFromWishList = async(carId) => {
-        await fetch(`/api/wishlist/${carId}`, {
+        await fetch(`${API_URL}/wishlist/${carId}`, {
             method: "DELETE",
             credentials: "include"
         });
