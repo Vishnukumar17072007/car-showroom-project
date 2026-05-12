@@ -1,0 +1,36 @@
+{
+"carDetails" : [
+    {
+        "brand": "BMW",
+        "model": "M4",
+        "type": "coupé",
+        "image": "https://stimg.cardekho.com/images/carexteriorimages/930x620/BMW/M4-Competition/11702/1762778618869/front-left-side-47.jpg",
+        "price" : 1000,
+        "rating" : 7.9
+    },
+    {
+        "brand": "Toyota",
+        "model": "Supra",
+        "type": "coupé",
+        "image": "https://media.zigcdn.com/media/model/2023/Jan/supra_600x400.jpg",
+        "price" : 799,
+        "rating" : 10.0
+    },
+    {
+        "brand": "Nissan",
+        "model": "Skyline",
+        "type": "coupé",
+        "image": "https://m.media-amazon.com/images/I/71NGNYdc2NL.jpg",
+        "price" : 299,
+        "rating" : 5.4
+    },
+    {
+        "brand": "Ford",
+        "model": "Mustang",
+        "type": "coupé",
+        "image": "https://file.kelleybluebookimages.com/kbb/base/evox/CP/57761/2026-Ford-Mustang-front_57761_032_2400x1800_PQ_nologo.png",
+        "price" : 499,
+        "rating" : 7.5
+    }
+]
+}
