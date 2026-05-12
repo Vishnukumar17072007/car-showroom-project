@@ -2,8 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const open = require('open');
-const fs = require('fs');
 require('dotenv').config();
 const carsRoute = require('./routes/carsRoute');
 const cartRoute = require('./routes/cartRoute');
@@ -25,7 +23,7 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-app.get('/test', (req, res) => {
+app.get('/', (req, res) => {
     res.json({ message: 'Server is working!' });
 });
 
@@ -35,18 +33,13 @@ app.use('/api/cart', cartRoute);
 app.use('/api/wishlist', wishListRoute);
 app.use('/api/order', orderRoute);
 
-const FLAG_FILE = './.browser_opened';
+const PORT = process.env.MONGO_URI;
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(PORT)
 .then(()=>{
     console.log("MongoDB Connected");
-    app.listen(process.env.PORT, async () => {
-        console.log(`Server running on port ${process.env.PORT}`);
-        if (!fs.existsSync(FLAG_FILE)) {
-            fs.writeFileSync(FLAG_FILE, 'opened');
-            const { default: open } = await import('open');
-            open('http://localhost:1200');
-        }
+    app.listen(PORT, async () => {
+        console.log(`Server running on port ${PORT}`);
     });
 })
 .catch((err) => {
