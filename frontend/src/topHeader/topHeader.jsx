@@ -16,7 +16,7 @@ function TopHeader() {
     return(
         //Brand heading
         <div className="brand">
-            <h1 style={{cursor: "pointer"}} onClick={() => {navigate('/')}}>BOTSALES</h1>
+            <h1 style={{cursor: "pointer"}} onClick={() => {navigate('/')}}>CARFIELD</h1>
 
             <input type="text" placeholder="Search brand or model" onChange={e => setSearch(e.target.value)} className="search-input-field" />
 
