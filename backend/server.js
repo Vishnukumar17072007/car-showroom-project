@@ -13,9 +13,9 @@ const authRoutes = require('./routes/authRoute');
 const app = express();
 
 app.use(cors({
-    origin: true,
-    credentials: true
-}));
+    origin: 'https://your-app-name.vercel.app',
+    credentials: true,
+  }));
 
 app.use(cookieParser());
 
