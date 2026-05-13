@@ -60,7 +60,7 @@ router.post('/login', async(req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: false,
-            sameSite: 'lax',
+            sameSite: 'none',
             maxAge: 1000*60*60*24*7
         });
 
@@ -81,7 +81,7 @@ router.post('/logout', async (req, res) => {
     res.clearCookie("token", {
         httpOnly: true,
         secure: false,
-        sameSite: 'lax',        // ← must match exactly what was set
+        sameSite: 'none',        // ← must match exactly what was set
     });
     
     res.status(200).json({message: "account logged out successfully."});

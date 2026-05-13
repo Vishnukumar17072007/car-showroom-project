@@ -6,7 +6,7 @@ const { Types } = require('mongoose');
 
 router.get("/", verifyToken, async(req, res) => {
     try{
-        const wishList = await WishListSchema.findOne({userId: req.user.id}).populate("items.carId");
+        const wishList = await WishListSchema.findOne({userId: req.user.userId}).populate("items.carId");
         if(!wishList) return res.json({items: []});
         res.status(200).json(wishList);
     }
@@ -20,7 +20,7 @@ router.post("/", verifyToken, async(req, res) => {
     try{
         const carObjectId = new Types.ObjectId(carId);
         const wishList = await WishListSchema.findOneAndUpdate(
-            { userId: req.user.id},
+            { userId: req.user.userId},
             { $addToSet: {items: {carId: carObjectId}}},
             { new: true, upsert: true }
         ).populate("items.carId");
@@ -34,7 +34,7 @@ router.post("/", verifyToken, async(req, res) => {
 router.delete("/:carId", verifyToken, async(req, res) => {
     try{
         const wishList = await WishListSchema.findOneAndUpdate(
-            {userId: req.user.id},
+            {userId: req.user.userId},
             { $pull: { items: { carId: new Types.ObjectId(req.params.carId) } } },
             {new: true}
         ).populate("items.carId");

@@ -17,7 +17,19 @@ function App() {
     setMobileNavOpen(false);
   }, [location.pathname]);
 
-    if (authLoading) return <div>Loading...</div>;
+  if (authLoading) {
+    return (
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        color: "white"
+      }}>
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <>

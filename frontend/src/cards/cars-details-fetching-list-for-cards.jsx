@@ -28,7 +28,7 @@ function CarDetailsFetchingListForCards({filters, search}){
     params.append("_t", refreshKey);
 
     const queryString = params.toString();
-    const url = `${import.meta.env.VITE_API_URL}/cars${queryString ? "?" + queryString : ""}`;
+    const url = `https://car-showroom-project.onrender.com/api/cars${queryString ? "?" + queryString : ""}`;
 
     const [carDetails, error, loading] = useFetch(url);
 
