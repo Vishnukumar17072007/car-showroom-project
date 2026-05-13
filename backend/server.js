@@ -13,9 +13,23 @@ const authRoutes = require('./routes/authRoute');
 const app = express();
 
 app.use(cors({
-    origin: process.env.FRONTEND_ORIGIN,
+    origin: function (origin, callback) {
+        const allowedOrigins = [
+            'http://localhost:5173',                                    // local dev
+            'https://car-showroom-project-d4e5.vercel.app',           // stable production URL
+        ];
+
+        // Allow any preview deployment from your Vercel project
+        const vercelPreview = /^https:\/\/car-showroom-project-d4e5.*\.vercel\.app$/;
+
+        if (!origin || allowedOrigins.includes(origin) || vercelPreview.test(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
-  }));
+}));
 
 app.use(cookieParser());
 
