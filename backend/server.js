@@ -17,6 +17,7 @@ app.use(cors({
         const allowedOrigins = [
             'http://localhost:5173',                                    // local dev
             'https://car-showroom-project-d4e5.vercel.app',           // stable production URL
+            'https://carfield.vercel.app',
         ];
 
         // Allow any preview deployment from your Vercel project
