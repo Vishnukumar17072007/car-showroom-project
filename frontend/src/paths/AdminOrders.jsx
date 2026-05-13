@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import API from '../api/axios';
 import toast from 'react-hot-toast';
 import { OrderListSkeleton } from '../component/PageSkeletons';
+import { useAuth } from '../context/auth/useAuth';
 
 const statusColor = (status) => {
     switch (status) {
@@ -16,6 +17,8 @@ function AdminOrders() {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const { user } = useAuth();
+
     async function fetchAllOrders() {
         try {
             const res = await API.get('/order/admin/all');
@@ -28,8 +31,13 @@ function AdminOrders() {
     }
 
     useEffect(() => {
-        fetchAllOrders();
-    }, []);
+        if(user?.role === "admin"){
+            fetchAllOrders();
+        }
+        else{
+            setLoading(false);
+        }
+    }, [user]);
 
     async function handleStatusChange(orderId, newStatus) {
         try {
