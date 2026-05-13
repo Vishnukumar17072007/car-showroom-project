@@ -1683,7 +1683,7 @@ input[type="checkbox"]:checked {
 .support-wrapper {
   display: flex;
   flex-direction: column;
-  height: 678px;
+  height: 626px;
   width: 100%;
   background: #1a1a1a;
   overflow: hidden;        /* prevent the whole wrapper from growing */

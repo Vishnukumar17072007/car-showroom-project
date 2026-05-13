@@ -31,7 +31,7 @@ function Cards(props){
 
     async function handleDelete() {
         try {
-            await API.delete(`/cars/${props._id}`);
+            await API.patch(`/cars/soft-delete/${props._id}`);
             props.onUpdate();
             toast.success("A Car Detail Card have been successfully Deleted.");
         }
