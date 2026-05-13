@@ -13,7 +13,7 @@ const authRoutes = require('./routes/authRoute');
 const app = express();
 
 app.use(cors({
-    origin: 'https://your-app-name.vercel.app',
+    origin: process.env.FRONTEND_ORIGIN,
     credentials: true,
   }));
 
