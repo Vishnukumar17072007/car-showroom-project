@@ -18,6 +18,7 @@ const carSchema = new mongoose.Schema({
   mileage: String,
   fuelType: String,
   available: { type: Number, default: 1},
+  isDeleted: { type: Boolean, default: false},
 });
 
 module.exports = mongoose.model('Car', carSchema, 'CarLists');

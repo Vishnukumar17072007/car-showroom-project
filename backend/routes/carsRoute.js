@@ -30,7 +30,8 @@ router.get('/', async (req, res) => {
         { bodyType:   { $regex: search, $options: "i" } },
         { fuelType:   { $regex: search, $options: "i" } },
         { transmission: { $regex: search, $options: "i" } },
-    ];
+      ];
+      query.isDeleted = false;
 
       const cars = await Car.find(query).maxTimeMS(5000);
       res.json(cars);
@@ -142,6 +143,25 @@ router.delete('/:id', verifyToken, verifyRole("admin"), async (req, res) => {
   }
   catch (err) {
     res.status(500).json({ message: err.message });
+  }
+});
+
+router.patch(`/soft-delete/:id`, verifyToken, verifyRole('admin'), async (req, res) => {
+  try{
+    const car = await Car.findByIdAndUpdate(
+      req.params.id,
+      { $set: { isDeleted: true } },
+      { new: true }
+    );
+
+    if(!car){
+      return res.status(404).json({ message: "car not found" });
+    }
+
+    res.status(200).json("car soft-deleted successfully.");
+  }
+  catch(err){
+    res.status(500).json({message: err.message});
   }
 });
 
