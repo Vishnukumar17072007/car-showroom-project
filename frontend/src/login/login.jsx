@@ -178,6 +178,7 @@ function LoginTab({ onClose }) {
 
                                 {/* country selector — shows name, stores dial code */}
                                 <select
+                                    className="container-fluid"
                                     onChange={handleCountryChange}
                                     defaultValue="India"
                                     style={{ padding: "4px", borderRadius: "4px", width: "100px" }}
