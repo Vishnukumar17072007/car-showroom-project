@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { OrderContext } from '../context/order/orderContext';
@@ -9,6 +9,8 @@ const Orders = () => {
     const navigate = useNavigate();
 
     const { orders, cancelOrder, deleteOrder, ordersLoading } = useContext(OrderContext);
+
+    const [showOrderHistoryMenu, setShowOrderHistoryMenu] = useState(false);
 
     const activeOrders = orders
         .filter(i => i.status === 'pending' || i.status === 'confirmed')
@@ -84,11 +86,14 @@ const Orders = () => {
 
                     {/* Three-dots — only for history orders */}
                     {(order.status === 'delivered' || order.status === 'cancelled') && (
-                        <div className="dropdown">
-                            <i className='bi bi-three-dots-vertical threeDots dropdown-toggle' data-bs-toggle='dropdown' />
-                            <ul className="dropdown-menu">
-                                <li className='dropdown-item' style={{listStyle: "none"}} onClick={() => deleteOrder(order._id)}>Delete order history</li>
-                            </ul>
+                        <div>
+                            <i className='bi bi-three-dots-vertical threeDots' onClick={() => setShowOrderHistoryMenu(!showOrderHistoryMenu)} />
+
+                            {(showOrderHistoryMenu) && (
+                                <div className='' style={{borderRadius: "5px", backgroundColor: "white"}}>
+                                    <li className='' style={{listStyle: "none", cursor: "pointer", backgroundColor: "grey"}} onClick={() => deleteOrder(order._id)}>Delete order history</li>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
