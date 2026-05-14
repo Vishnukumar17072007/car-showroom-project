@@ -38,7 +38,7 @@ const Orders = () => {
     };
     // ── 3. Reusable card so we don't repeat JSX twice ────────────────────────
     const OrderCard = ({ order }) => (
-        <div key={order._id} className="cart_item_card" style={{ width: '100%' }}>
+        <div key={order._id} className="cart_item_card" style={{ width: '100%', position: "relative" }}>
 
             {/* Order header */}
             <div style={{
@@ -90,7 +90,7 @@ const Orders = () => {
                             <i className='bi bi-three-dots-vertical threeDots' onClick={() => setShowOrderHistoryMenu(!showOrderHistoryMenu)} />
 
                             {(showOrderHistoryMenu) && (
-                                <div className='' style={{borderRadius: "5px", backgroundColor: "white", zIndex: 1, padding: "10px"}}>
+                                <div className='' style={{borderRadius: "5px", backgroundColor: "white", zIndex: 1, padding: "10px", position: "absolute", top: "25%", right: "30px"}}>
                                     <li className='' style={{listStyle: "none", cursor: "pointer", backgroundColor: "grey"}} onClick={() => deleteOrder(order._id)}>Delete order history</li>
                                 </div>
                             )}
