@@ -125,7 +125,7 @@ router.delete('/delete/:orderId', verifyToken, async (req, res) => {
         const order = await Order.findOneAndDelete({
             _id: new mongoose.Types.ObjectId(orderId),
             userId,               // ensures user owns this order
-            status: 'pending'     // only pending orders can be cancelled
+            status: { $in: ['delivered', 'cancelled'] }     // only pending orders can be cancelled
         });
 
         if (!order) {
