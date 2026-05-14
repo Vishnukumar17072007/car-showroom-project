@@ -180,7 +180,7 @@ function LoginTab({ onClose }) {
                                 <select
                                     onChange={handleCountryChange}
                                     defaultValue="India"
-                                    style={{ padding: "4px", borderRadius: "4px" }}
+                                    style={{ padding: "4px", borderRadius: "4px", width: "30px" }}
                                 >
                                     {COUNTRIES.map((c) => (
                                         <option key={c.name} value={c.name}>
@@ -195,7 +195,7 @@ function LoginTab({ onClose }) {
                                     placeholder="Enter phone number"
                                     value={phone}
                                     onChange={(e) => setPhone(e.target.value)}
-                                    style={{ flex: 1, width: "30px" }}
+                                    style={{ flex: 1 }}
                                 />
                             </div>
                         </div>
