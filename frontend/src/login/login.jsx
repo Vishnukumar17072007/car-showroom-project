@@ -195,7 +195,7 @@ function LoginTab({ onClose }) {
                                     placeholder="Enter phone number"
                                     value={phone}
                                     onChange={(e) => setPhone(e.target.value)}
-                                    style={{ flex: 1 }}
+                                    style={{ flex: 1, width: "30px" }}
                                 />
                             </div>
                         </div>
