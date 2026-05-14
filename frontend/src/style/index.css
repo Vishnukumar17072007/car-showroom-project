@@ -1918,6 +1918,25 @@ input[type="checkbox"]:checked {
   }
 }
 
+.orderMenubox{
+  border-radius: 5px;
+  z-index: 1;
+  padding: 10px;
+  position: absolute;
+  top: 25%;
+  right: 10px;
+}
+
+.orderMenu{
+  list-style-type: none;
+  cursor: pointer;
+  background-color: #26262f;
+  color: white;
+}
+
+.orderMenu:hover{
+  background-color: #1a1a22;
+}
 
 /* ============================================================
    RESPONSIVE — MOBILE (≤768px)

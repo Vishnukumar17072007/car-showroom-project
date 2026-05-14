@@ -10,7 +10,7 @@ const Orders = () => {
 
     const { orders, cancelOrder, deleteOrder, ordersLoading } = useContext(OrderContext);
 
-    const [showOrderHistoryMenu, setShowOrderHistoryMenu] = useState(false);
+    const [showOrderMenu, setshowOrderMenu] = useState(false);
 
     const activeOrders = orders
         .filter(i => i.status === 'pending' || i.status === 'confirmed')
@@ -84,18 +84,22 @@ const Orders = () => {
                         </button>
                     )}
 
-                    {/* Three-dots — only for history orders */}
-                    {(order.status === 'delivered' || order.status === 'cancelled') && (
-                        <div>
-                            <i className='bi bi-three-dots-vertical threeDots' onClick={() => setShowOrderHistoryMenu(!showOrderHistoryMenu)} />
+                    <div>
+                        <i className='bi bi-three-dots-vertical threeDots' onClick={() => setshowOrderMenu(!showOrderMenu)} />
+                            
+                        {(showOrderMenu) && (
+                            <div className='orderMenubox'>
+                                <li className='' onClick={() => navigate(`/support`) }>Support</li>
 
-                            {(showOrderHistoryMenu) && (
-                                <div className='' style={{borderRadius: "5px", backgroundColor: "white", zIndex: 1, padding: "10px", position: "absolute", top: "25%", right: "30px"}}>
-                                    <li className='' style={{listStyle: "none", cursor: "pointer", backgroundColor: "grey"}} onClick={() => deleteOrder(order._id)}>Delete order history</li>
-                                </div>
-                            )}
-                        </div>
-                    )}
+                                {/* Three-dots — only for history orders */}
+                                {(order.status === 'delivered' || order.status === 'cancelled') && (
+                                    <div>
+                                        <li className='orderMenu' onClick={() => deleteOrder(order._id)}>Delete history</li>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
