@@ -90,7 +90,7 @@ const Orders = () => {
                             <i className='bi bi-three-dots-vertical threeDots' onClick={() => setShowOrderHistoryMenu(!showOrderHistoryMenu)} />
 
                             {(showOrderHistoryMenu) && (
-                                <div className='' style={{borderRadius: "5px", backgroundColor: "white"}}>
+                                <div className='' style={{borderRadius: "5px", backgroundColor: "white", zIndex: 1, padding: "10px"}}>
                                     <li className='' style={{listStyle: "none", cursor: "pointer", backgroundColor: "grey"}} onClick={() => deleteOrder(order._id)}>Delete order history</li>
                                 </div>
                             )}
