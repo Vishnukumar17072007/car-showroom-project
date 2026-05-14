@@ -31,8 +31,8 @@ export function AuthProvider({children}){
         restoreSession();
     },[])
 
-    async function register(userName, email, password, role){
-        const res = await API.post('/auth/register', {userName, email, password, role});
+    async function register(userName, email, password, phone){
+        const res = await API.post('/auth/register', {userName, email, password, phone});
         toast.success("Welcome🙏 how can we help you!?");
         return res.data;
     }

@@ -4,16 +4,19 @@ const userSchema = new mongoose.Schema({
     userName: {
         type: String,
         require: true,
-        unqiue: true
+        unique: true
     },
     email: {
         type: String,
         require: true,
-        unquie: true
+        unique: true
     },
     password: {
         type: String,
         require: true
+    },
+    phone: {
+        type: String,
     },
     role: {
         type: String,
@@ -25,6 +28,6 @@ const userSchema = new mongoose.Schema({
         enum: ["free", "pro", "premium"],
         default: "free"
     }
-},{ timestamps: true})
+}, { timestamps: true })
 
 module.exports = mongoose.model("User", userSchema, "UserDetails")

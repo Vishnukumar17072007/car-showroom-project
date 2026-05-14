@@ -6,13 +6,14 @@ const jwt = require('jsonwebtoken');
 const verifyToken = require('../middleware/verifyToken');
 
 //Register
-router.post("/register", async( req, res)=>{
-    try{
-        const {userName, email, password, role} = req.body;
+//Register
+router.post("/register", async (req, res) => {
+    try {
+        const { userName, email, password, role, phone } = req.body; // ← phone added
 
-        const isUserExists = await User.findOne({email});
-        if(isUserExists){
-            return res.status(400).json({message: "User already Exits"});
+        const isUserExists = await User.findOne({ email });
+        if (isUserExists) {
+            return res.status(400).json({ message: "User already Exists" });
         }
 
         const salt = await bcrypt.genSalt(5);
@@ -22,17 +23,18 @@ router.post("/register", async( req, res)=>{
             userName,
             email,
             password: hashedPassword,
+            phone,   // ← phone saved
             role
-        })
+        });
 
         await user.save();
 
-        res.status(201).json({message: "User Registered successfully"});
+        res.status(201).json({ message: "User Registered successfully" });
     }
-    catch(err){
-        res.status(500).json({message: err.message});   
+    catch (err) {
+        res.status(500).json({ message: err.message });
     }
-})
+});
 
 //Login
 router.post('/login', async(req, res) => {
@@ -75,7 +77,7 @@ router.post('/login', async(req, res) => {
     catch(err){
         res.status(500).json({message: err.message});
     }
-})
+});
 
 router.post('/logout', async (req, res) => {
     res.clearCookie("token", {
@@ -85,7 +87,7 @@ router.post('/logout', async (req, res) => {
     });
     
     res.status(200).json({message: "account logged out successfully."});
-})
+});
 
 router.get('/me', verifyToken, async (req, res) => {
     try{

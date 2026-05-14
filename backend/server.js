@@ -36,7 +36,7 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get('/test', (req, res) => {
     res.json({ message: 'Server is working!' });
 });
 
