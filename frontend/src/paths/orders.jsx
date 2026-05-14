@@ -8,7 +8,7 @@ const Orders = () => {
 
     const navigate = useNavigate();
 
-    const { orders, cancelOrder, ordersLoading } = useContext(OrderContext);
+    const { orders, cancelOrder, deleteOrder, ordersLoading } = useContext(OrderContext);
 
     const activeOrders = orders
         .filter(i => i.status === 'pending' || i.status === 'confirmed')
@@ -80,6 +80,16 @@ const Orders = () => {
                         >
                             Cancel
                         </button>
+                    )}
+
+                    {/* Three-dots — only for history orders */}
+                    {(order.status === 'delivered' || order.status === 'cancelled') && (
+                        <div className="dropdown">
+                            <i className='bi bi-three-dots-vertical threeDots dropdown-toggle' data-bs-toggle='dropdown' />
+                            <ul className="dropdown-menu">
+                                <li className='dropdown-item' style={{listStyle: "none"}} onClick={() => deleteOrder(order._id)}>Delete order history</li>
+                            </ul>
+                        </div>
                     )}
                 </div>
             </div>
