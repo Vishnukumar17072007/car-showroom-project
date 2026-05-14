@@ -88,6 +88,35 @@ router.get('/', verifyToken, async (req, res) => {
     }
 });
 
+// User: cancel their own pending order
+router.patch('/cancel/:orderId', verifyToken, async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const { orderId } = req.params;
+
+        const order = await Order.findOne({
+            _id: new mongoose.Types.ObjectId(orderId),
+            userId,                // user can only cancel their own order
+        });
+
+        if (!order) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+        if (order.status !== 'pending') {
+            return res.status(400).json({ message: `Cannot cancel an order that is already ${order.status}` });
+        }
+
+        order.status = 'cancelled';
+        await order.save();
+
+        res.status(200).json({ message: "Order cancelled successfully" });
+    } catch (err) {
+        console.error("Order PATCH cancel error:", err);
+        res.status(500).json({ message: "Server error", error: err.message });
+    }
+});
+
 router.delete('/delete/:orderId', verifyToken, async (req, res) => {
     try {
         const userId = req.user.userId;
