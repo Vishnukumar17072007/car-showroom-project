@@ -180,7 +180,7 @@ function LoginTab({ onClose }) {
                                 <select
                                     onChange={handleCountryChange}
                                     defaultValue="India"
-                                    style={{ padding: "4px", borderRadius: "4px", width: "30px" }}
+                                    style={{ padding: "4px", borderRadius: "4px", width: "100px" }}
                                 >
                                     {COUNTRIES.map((c) => (
                                         <option key={c.name} value={c.name}>
