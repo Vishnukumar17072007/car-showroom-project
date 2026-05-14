@@ -10,7 +10,7 @@ const Orders = () => {
 
     const { orders, cancelOrder, deleteOrder, ordersLoading } = useContext(OrderContext);
 
-    const [showOrderMenu, setshowOrderMenu] = useState(false);
+    const [openOrderMenu, setOpenOrderMenu] = useState(null);
 
     const activeOrders = orders
         .filter(i => i.status === 'pending' || i.status === 'confirmed')
@@ -84,17 +84,17 @@ const Orders = () => {
                         </button>
                     )}
 
-                    <div>
-                        <i className='bi bi-three-dots-vertical threeDots' onClick={() => setshowOrderMenu(!showOrderMenu)} />
+                    <div style={{position: "relative"}}>
+                        <i className='bi bi-three-dots-vertical threeDots' onClick={() => setOpenOrderMenu(openOrderMenu === order._id ? null : order._id)} />
                             
-                        {(showOrderMenu) && (
+                        {(openOrderMenu === order._id) && (
                             <div className='orderMenubox'>
                                 <li className='orderMenu' onClick={() => navigate(`/support`) }>Support</li>
 
                                 {/* Three-dots — only for history orders */}
                                 {(order.status === 'delivered' || order.status === 'cancelled') && (
                                     <div>
-                                        <li className='orderMenu' onClick={() => deleteOrder(order._id)}>Delete history</li>
+                                        <li className='orderMenu' onClick={() => {deleteOrder(order._id); setOpenOrderMenu(null);}}>Delete history</li>
                                     </div>
                                 )}
                             </div>

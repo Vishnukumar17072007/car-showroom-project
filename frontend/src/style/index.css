@@ -1817,6 +1817,45 @@ input[type="checkbox"]:checked {
   padding: 0;   /* remove padding specifically for support page */
 }
 
+.orderMenubox {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  z-index: 100;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 160px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.orderMenu {
+  list-style-type: none;
+  padding: 10px 16px;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 13px;
+  margin: 0;
+}
+
+.orderMenu:hover {
+  background-color: var(--border);
+  color: var(--text);
+}
+
+.threeDots {
+  cursor: pointer;
+  color: var(--subtext);
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.threeDots:hover {
+  background-color: var(--border);
+}
+
 /* Media query */
 /* ============================================================
    FILTER TOGGLE — base styles (outside all media queries)
@@ -1916,26 +1955,6 @@ input[type="checkbox"]:checked {
     padding: 11px 12px;
     justify-content: flex-start;
   }
-}
-
-.orderMenubox{
-  background-color: #1a1a22;
-  border-radius: 5px;
-  z-index: 1;
-  padding: 10px;
-  position: absolute;
-  top: 25%;
-  right: 10px;
-}
-
-.orderMenu{
-  list-style-type: none;
-  cursor: pointer;
-  color: white;
-}
-
-.orderMenu:hover{
-  background-color: #26262f;
 }
 
 /* ============================================================
