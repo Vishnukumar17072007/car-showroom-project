@@ -88,7 +88,7 @@ router.get('/', verifyToken, async (req, res) => {
     }
 });
 
-router.delete('/:orderId', verifyToken, async (req, res) => {
+router.delete('/delete/:orderId', verifyToken, async (req, res) => {
     try {
         const userId = req.user.userId;
         const { orderId } = req.params;

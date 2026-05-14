@@ -49,20 +49,38 @@ export const OrderProvider = ({ children }) => {
     };
 
     const cancelOrder = async (orderId) => {
-        const res = await fetch(`${API_URL}/order/${orderId}`, {
+        const res = await fetch(`${API_URL}/order/cancel/${orderId}`, {
+            method: 'PATCH',
+            credentials: 'include',
+        });
+        const data = await res.json();
+        if(!res.ok){
+            toast.error(data.message || 'Failed to cancel order.');
+            throw new Error(data.message || 'Failed to cancel order.');
+        }
+        else{
+            toast.success("Order cancelled");
+        }
+        await fetchOrders()
+    }
+
+    const deleteOrder = async (orderId) => {
+        const res = await fetch(`${API_URL}/order/delete/${orderId}`, {
             method: 'DELETE',
             credentials: 'include'
         });
         const data = await res.json();
         if (!res.ok) {
-            toast.error(data.message || 'Failed to cancel order.');
+            toast.error(data.message || 'Failed to Delete order history.');
+            throw new Error(data.message || 'Failed to Delete order history.');
         } else {
-            toast.success("Order cancelled.");
-        }        await fetchOrders();   // re-sync orders list from DB
+            toast.success("Order history Deleted.");
+        }
+        await fetchOrders();   // re-sync orders list from DB
     };
 
     return (
-        <OrderContext.Provider value={{ orders, placeOrder, fetchOrders, cancelOrder, ordersLoading }}>
+        <OrderContext.Provider value={{ orders, placeOrder, fetchOrders, deleteOrder, cancelOrder, ordersLoading }}>
             {children}
         </OrderContext.Provider>
     );
