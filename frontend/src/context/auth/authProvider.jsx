@@ -32,9 +32,11 @@ export function AuthProvider({children}){
     },[])
 
     async function register(userName, email, password, phone){
-        const res = await API.post('/auth/register', {userName, email, password, phone});
+        const res1 = await API.post('/auth/register', {userName, email, password, phone});
+        const res2 = await API.post('/auth/login', {email, password});
+        setUser(res2.data.user);
         toast.success("Welcome🙏 how can we help you!?");
-        return res.data;
+        return res1.data;
     }
 
     async function login(email, password) {

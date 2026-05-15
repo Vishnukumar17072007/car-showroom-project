@@ -1,33 +1,33 @@
 import { useState } from "react";
 import { useAuth } from "../context/auth/useAuth";
 
-// ── country list ──────────────────────────────────────────────
+// ── country list with per-country digit rules ──────────────────
 const COUNTRIES = [
-  { name: "India",          code: "+91"  },
-  { name: "United States",  code: "+1"   },
-  { name: "United Kingdom", code: "+44"  },
-  { name: "Canada",         code: "+1"   },
-  { name: "Australia",      code: "+61"  },
-  { name: "Germany",        code: "+49"  },
-  { name: "France",         code: "+33"  },
-  { name: "Japan",          code: "+81"  },
-  { name: "China",          code: "+86"  },
-  { name: "Brazil",         code: "+55"  },
-  { name: "South Africa",   code: "+27"  },
-  { name: "UAE",            code: "+971" },
-  { name: "Saudi Arabia",   code: "+966" },
-  { name: "Singapore",      code: "+65"  },
-  { name: "Malaysia",       code: "+60"  },
-  { name: "Pakistan",       code: "+92"  },
-  { name: "Bangladesh",     code: "+880" },
-  { name: "Sri Lanka",      code: "+94"  },
-  { name: "Nepal",          code: "+977" },
-  { name: "Nigeria",        code: "+234" },
-  { name: "Kenya",          code: "+254" },
-  { name: "Mexico",         code: "+52"  },
-  { name: "Argentina",      code: "+54"  },
-  { name: "Indonesia",      code: "+62"  },
-  { name: "Philippines",    code: "+63"  },
+  { name: "India",          code: "+91",  digits: { min: 10, max: 10 } },
+  { name: "United States",  code: "+1",   digits: { min: 10, max: 10 } },
+  { name: "United Kingdom", code: "+44",  digits: { min: 10, max: 10 } },
+  { name: "Canada",         code: "+1",   digits: { min: 10, max: 10 } },
+  { name: "Australia",      code: "+61",  digits: { min: 9,  max: 9  } },
+  { name: "Germany",        code: "+49",  digits: { min: 10, max: 11 } },
+  { name: "France",         code: "+33",  digits: { min: 9,  max: 9  } },
+  { name: "Japan",          code: "+81",  digits: { min: 10, max: 11 } },
+  { name: "China",          code: "+86",  digits: { min: 11, max: 11 } },
+  { name: "Brazil",         code: "+55",  digits: { min: 10, max: 11 } },
+  { name: "South Africa",   code: "+27",  digits: { min: 9,  max: 9  } },
+  { name: "UAE",            code: "+971", digits: { min: 9,  max: 9  } },
+  { name: "Saudi Arabia",   code: "+966", digits: { min: 9,  max: 9  } },
+  { name: "Singapore",      code: "+65",  digits: { min: 8,  max: 8  } },
+  { name: "Malaysia",       code: "+60",  digits: { min: 9,  max: 10 } },
+  { name: "Pakistan",       code: "+92",  digits: { min: 10, max: 10 } },
+  { name: "Bangladesh",     code: "+880", digits: { min: 10, max: 10 } },
+  { name: "Sri Lanka",      code: "+94",  digits: { min: 9,  max: 9  } },
+  { name: "Nepal",          code: "+977", digits: { min: 10, max: 10 } },
+  { name: "Nigeria",        code: "+234", digits: { min: 10, max: 10 } },
+  { name: "Kenya",          code: "+254", digits: { min: 9,  max: 9  } },
+  { name: "Mexico",         code: "+52",  digits: { min: 10, max: 10 } },
+  { name: "Argentina",      code: "+54",  digits: { min: 10, max: 10 } },
+  { name: "Indonesia",      code: "+62",  digits: { min: 9,  max: 12 } },
+  { name: "Philippines",    code: "+63",  digits: { min: 10, max: 10 } },
 ];
 
 function LoginTab({ onClose }) {
@@ -40,14 +40,16 @@ function LoginTab({ onClose }) {
     const [email,           setEmail]           = useState("");
     const [password,        setPassword]        = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [countryCode, setCountryCode] = useState("+91");
-    const [phone,       setPhone]       = useState("");
+
+    // ── store the selected country NAME, derive code from it ──
+    const [selectedCountry, setSelectedCountry] = useState("India");
+    const [phone,           setPhone]           = useState("");
     const [error, setError] = useState("");
 
-    // ── when user picks a different country, update the dial code ──
+    // ── when user picks a different country, update selected name ──
     function handleCountryChange(e) {
-        const selected = COUNTRIES.find(c => c.name === e.target.value);
-        if (selected) setCountryCode(selected.code);
+        setSelectedCountry(e.target.value);
+        setPhone(""); // clear phone when country changes
     }
 
     async function handleLogin(e) {
@@ -73,7 +75,6 @@ function LoginTab({ onClose }) {
         e.preventDefault();
         setError("");
 
-        // ── existing validations ──
         if (!userName.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
             setError("All fields are required.");
             return;
@@ -96,27 +97,44 @@ function LoginTab({ onClose }) {
             setError("Phone number must contain digits only.");
             return;
         }
-        if (phone.length < 7 || phone.length > 15) {
-            setError("Enter a valid phone number (7–15 digits).");
-            return;
+
+        // ── look up the selected country's digit rules ──
+        const countryData = COUNTRIES.find(c => c.name === selectedCountry);
+        const { min, max } = countryData.digits;
+
+        if (min === max) {
+            // exact digit count required (e.g. India = exactly 10)
+            if (phone.length !== min) {
+                setError(`Phone number for ${selectedCountry} must be exactly ${min} digits.`);
+                return;
+            }
+        } else {
+            // range allowed (e.g. Germany = 10 or 11)
+            if (phone.length < min || phone.length > max) {
+                setError(`Phone number for ${selectedCountry} must be ${min}–${max} digits.`);
+                return;
+            }
         }
 
         // ── combine country code + number ──
-        const fullPhone = `${countryCode} ${phone}`;   // e.g. "+91 9876543210"
+        const fullPhone = `${countryData.code} ${phone}`;
 
         try {
-            await register(userName, email, password, fullPhone); // ← pass fullPhone
+            await register(userName, email, password, fullPhone);
             await login(email, password);
             setUserName("");
             setEmail("");
             setPassword("");
             setConfirmPassword("");
-            setCountryCode("+91");
+            setSelectedCountry("India");
             setPhone("");
         } catch (err) {
             setError(err.response?.data?.message || "Registration failed");
         }
     }
+
+    // ── derive the dial code for display ──
+    const dialCode = COUNTRIES.find(c => c.name === selectedCountry)?.code || "";
 
     return (
         <div className="overlay" onClick={onClose}>
@@ -173,10 +191,10 @@ function LoginTab({ onClose }) {
                             <label>Phone : </label>
                             <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
 
-                                {/* country selector — shows name, stores dial code */}
+                                {/* country selector — value is country NAME */}
                                 <select
+                                    value={selectedCountry}
                                     onChange={handleCountryChange}
-                                    defaultValue="India"
                                     style={{ padding: "4px", borderRadius: "4px" }}
                                 >
                                     {COUNTRIES.map((c) => (
@@ -186,7 +204,10 @@ function LoginTab({ onClose }) {
                                     ))}
                                 </select>
 
-                                {/* phone number input — digits only */}
+                                {/* dial code badge */}
+                                <span style={{ fontWeight: "bold", minWidth: "40px" }}>{dialCode}</span>
+
+                                {/* phone number input */}
                                 <input
                                     type="tel"
                                     placeholder="Enter phone number"
