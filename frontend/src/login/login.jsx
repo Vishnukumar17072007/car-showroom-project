@@ -127,6 +127,7 @@ function LoginTab({ onClose }) {
             setConfirmPassword("");
             setSelectedCountry("India");
             setPhone("");
+            setActiveTab('');
         } catch (err) {
             setError(err.response?.data?.message || "Registration failed");
         }
