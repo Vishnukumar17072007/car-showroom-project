@@ -40,11 +40,8 @@ function LoginTab({ onClose }) {
     const [email,           setEmail]           = useState("");
     const [password,        setPassword]        = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-
-    // ── new phone states ──
-    const [countryCode, setCountryCode] = useState("+91");   // default: India
+    const [countryCode, setCountryCode] = useState("+91");
     const [phone,       setPhone]       = useState("");
-
     const [error, setError] = useState("");
 
     // ── when user picks a different country, update the dial code ──
@@ -109,6 +106,7 @@ function LoginTab({ onClose }) {
 
         try {
             await register(userName, email, password, fullPhone); // ← pass fullPhone
+            await login(email, password);
             setUserName("");
             setEmail("");
             setPassword("");
