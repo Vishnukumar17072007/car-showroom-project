@@ -113,7 +113,6 @@ function LoginTab({ onClose }) {
             setConfirmPassword("");
             setCountryCode("+91");
             setPhone("");
-            setActiveTab("login");
         } catch (err) {
             setError(err.response?.data?.message || "Registration failed");
         }
