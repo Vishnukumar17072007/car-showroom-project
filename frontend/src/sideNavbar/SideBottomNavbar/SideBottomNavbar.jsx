@@ -81,6 +81,7 @@ function SideBottomNavbar() {
                                         onClick={() => {
                                     setActiveBottomItem("Logout");
                                     logout();
+                                    setActiveBottomItem("");
                                 }}
                                     >
                                         {" " + item[1]}
