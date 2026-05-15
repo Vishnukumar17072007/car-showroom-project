@@ -121,7 +121,6 @@ function LoginTab({ onClose }) {
 
         try {
             await register(userName, email, password, fullPhone);
-            await login(email, password);
             setUserName("");
             setEmail("");
             setPassword("");
@@ -132,9 +131,6 @@ function LoginTab({ onClose }) {
             setError(err.response?.data?.message || "Registration failed");
         }
     }
-
-    // ── derive the dial code for display ──
-    const dialCode = COUNTRIES.find(c => c.name === selectedCountry)?.code || "";
 
     return (
         <div className="overlay" onClick={onClose}>
