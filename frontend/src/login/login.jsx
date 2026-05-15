@@ -204,9 +204,6 @@ function LoginTab({ onClose }) {
                                     ))}
                                 </select>
 
-                                {/* dial code badge */}
-                                <span style={{ fontWeight: "bold", minWidth: "40px" }}>{dialCode}</span>
-
                                 {/* phone number input */}
                                 <input
                                     type="tel"
