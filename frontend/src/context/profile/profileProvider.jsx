@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../auth/useAuth";
-import ProfileContext from "./ProfileContext";
+import ProfileContext from "./profileContext";
 
 function ProfileProvider({ children }) {
 
