@@ -20,6 +20,7 @@ import { SearchProvider } from './context/search/searchProvider.jsx'
 import AdminOrders from './paths/AdminOrders.jsx';
 import Profile from './paths/Profile.jsx';
 import EditProfile from './paths/EditProfile.jsx';
+import ProfileProvider from './context/profile/profileProvider.jsx';
 
 const router = createBrowserRouter([
   {
@@ -53,7 +54,9 @@ createRoot(document.getElementById('root')).render(
         <OrderProvider>
           <CartProvider>
             <SearchProvider>
-              <RouterProvider router={router} />
+              <ProfileProvider>
+                <RouterProvider router={router} />
+              </ProfileProvider>
             </SearchProvider>
           </CartProvider>
         </OrderProvider>
