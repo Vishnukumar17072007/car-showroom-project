@@ -1,7 +1,6 @@
 import './style/index.css'
 import TopHeader from './topHeader/topHeader';
-import SideTopNavbar from './sideNavbar/SideTopNavbar/SideTopNavbar';
-import SideBottomNavbar from './sideNavbar/SideBottomNavbar/SideBottomNavbar';
+import SideNavbar from './sideNavbar/SideNavBar';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from './context/auth/useAuth';
 import { Toaster } from 'react-hot-toast';
@@ -45,12 +44,7 @@ function App() {
       <div className="main-body d-flex flex-wrap">
       {/* Side menu bar */}
         <div className={`side-menu d-flex flex-column pt-2 ${mobileNavOpen ? "mobile-open" : ""}`}>
-          <ul className="side-menu-top list-unstyled d-flex flex-column gap-1">
-            <SideTopNavbar />
-          </ul>
-          <ul className="side-menu-bottom list-unstyled d-flex flex-column gap-1">
-            <SideBottomNavbar/>
-          </ul>
+          <SideNavbar />
         </div>
         <div className="OutLetContent">
           <Outlet />
