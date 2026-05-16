@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth/useAuth";
 import { useProfile } from "../context/profile/useProfile";
-import "../styles/EditProfile.css";
 
 function EditProfile() {
 
