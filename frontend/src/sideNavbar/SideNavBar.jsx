@@ -37,7 +37,7 @@ function SubscriptionBanner({ sub, onViewPlans, isActive, onActivate }) {
 function SideNavbar() {
 
     const location = useLocation();
-    const { user, logout } = useAuth();
+    const { user } = useAuth();
 
     const [showModal, setShowModal]           = useState(false);
     const [upgradePlanActive, setUpgradePlanActive] = useState(false);
@@ -120,20 +120,7 @@ function SideNavbar() {
                 </li>
             )}
 
-            {/* Logout */}
-            {user && (
-                <li className={`side_bar_menu_lists ps-2 w-100`}>
-                    <button
-                        type="button"
-                        className="bi bi-box-arrow-left text-decoration-none text-white side_bar_menu_items d-block w-100 border-0 bg-transparent text-start"
-                        onClick={() => logout()}
-                    >
-                        {" "}Logout
-                    </button>
-                </li>
-            )}
-
-            {showModal && <SubscriptionModal onClose={() => setShowModal(false)} />}
+            {showModal && <SubscriptionModal onClose={() => {setShowModal(false); setUpgradePlanActive(false);}} />}
         </>
     );
 }
