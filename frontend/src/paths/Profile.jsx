@@ -70,7 +70,7 @@ function Profile() {
                             {" "}You're on the <strong>{user.subscription === "free" ? "Free" : "Pro"}</strong> plan. Upgrade for priority listings.
                         </p>
                         <p className="upgrade-link" onClick={() => setShowSubscriptionModal(true)}>
-                            Upgrade &#xf061;
+                            Upgrade <span className="bi bi-arrow-right"></span>
                         </p>
                     </div>
                 )}
