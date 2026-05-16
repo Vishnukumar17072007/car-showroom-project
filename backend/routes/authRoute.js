@@ -90,15 +90,24 @@ router.post('/logout', async (req, res) => {
 });
 
 router.get('/me', verifyToken, async (req, res) => {
-    try{
+    try {
         const user = await User.findById(req.user.userId).select('-password');
-        if (!user){
-            return res.status(400).json({message: "User not found."});
+        if (!user) {
+            return res.status(400).json({ message: "User not found." });
         }
 
+        // BEFORE — only returned userId and role, Profile page got undefined for everything else
+        // res.status(200).json({ userId: user._id, role: user.role });
+
+        // AFTER — return everything the Profile page needs
         res.status(200).json({
-            userId: user._id,
-            role: user.role
+            userId:       user._id,
+            userName:     user.userName,
+            email:        user.email,
+            phone:        user.phone,
+            role:         user.role,
+            subscription: user.subscription,
+            createdAt:    user.createdAt,
         });
     }
     catch(err){
