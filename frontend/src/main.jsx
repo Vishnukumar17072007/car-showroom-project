@@ -18,6 +18,8 @@ import { CartProvider } from './context/cart/cartProvider.jsx'
 import ProtectedRoutes from './component/ProtectedRoutes.jsx'
 import { SearchProvider } from './context/search/searchProvider.jsx'
 import AdminOrders from './paths/AdminOrders.jsx';
+import Profile from './paths/Profile.jsx';
+import EditProfile from './paths/EditProfile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,8 @@ const router = createBrowserRouter([
       { path: "/vehicles",         element: <Vehicles /> },
       { path: "/vehicles/:id", element: <CarDetailsPage />},
       { path: "/support",         element: <Support /> },
+      {path: "/profile", element: <Profile />},
+      {path: "/editProfile", element: <EditProfile />},
       {
         element : <ProtectedRoutes />,
         children: [
