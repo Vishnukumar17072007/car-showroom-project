@@ -106,4 +106,68 @@ router.get('/me', verifyToken, async (req, res) => {
     }
 });
 
+router.put("/update", verifyToken, async (req, res) => {
+
+    const { userName, phone, currentPassword, newPassword } = req.body;
+
+    // Basic presence check
+    if (!userName || !phone) {
+        return res.status(400).json({ message: "Username and phone are required." });
+    }
+
+    try {
+        const user = await User.findById(req.user._id);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        // ── Update basic fields ──────────────────────────
+        user.userName = userName.trim();
+        user.phone    = phone.trim();
+
+        // ── Update password only if both fields are sent ─
+        if (currentPassword && newPassword) {
+
+            // Verify current password is correct
+            const isMatch = await bcrypt.compare(currentPassword, user.password);
+            if (!isMatch) {
+                return res.status(400).json({ message: "Current password is incorrect." });
+            }
+
+            if (newPassword.length < 8) {
+                return res.status(400).json({ message: "New password must be at least 8 characters." });
+            }
+
+            // Hash and save new password
+            user.password = await bcrypt.hash(newPassword, 10);
+        }
+
+        await user.save();
+
+        // Return updated user — never send password back
+        const updatedUser = {
+            _id:          user._id,
+            userName:     user.userName,
+            email:        user.email,
+            phone:        user.phone,
+            role:         user.role,
+            subscription: user.subscription,
+            createdAt:    user.createdAt,
+        };
+
+        res.status(200).json({ message: "Profile updated successfully.", user: updatedUser });
+
+    } catch (err) {
+
+        // Phone number is unique — catch duplicate key error
+        if (err.code === 11000) {
+            return res.status(400).json({ message: "This phone number is already in use." });
+        }
+
+        console.error("Update profile error:", err);
+        res.status(500).json({ message: "Server error. Please try again." });
+    }
+});
+
 module.exports = router;

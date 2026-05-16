@@ -19,6 +19,20 @@ const userSchema = new mongoose.Schema({
         require: true,
         unique: true
     },
+    image: {
+        type: String,
+        default: ""
+    },
+    location: {
+        city: {
+            type: String,
+            default: ""
+        },
+        state: {
+            type: String,
+            default: ""
+        },
+    },
     role: {
         type: String,
         enum: ["user","admin"],
