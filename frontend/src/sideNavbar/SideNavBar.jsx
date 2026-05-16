@@ -3,7 +3,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/auth/useAuth";
 import { useEffect, useState } from "react";
-import SubscriptionModal from "./SubscriptionModal";
+import SubscriptionModal from "../component/SubscriptionModal";
 import LoginTab from "../login/login";
 
 // ── Subscription Banner (local helper) ──────────────────────────────────────
