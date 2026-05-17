@@ -41,8 +41,13 @@ function ProfileProvider({ children }) {
             }
 
             // Refresh the user object in AuthContext
-            await checkAuth();
-
+            try {
+                await checkAuth();
+            } catch (authErr) {
+                // checkAuth failing doesn't mean the save failed — ignore it silently
+                console.warn("checkAuth failed after update:", authErr);
+            }
+            
             setSuccess("Profile updated successfully!");
             return true;
 
