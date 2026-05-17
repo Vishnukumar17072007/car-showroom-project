@@ -25,7 +25,7 @@ function ProfileProvider({ children }) {
         setLoading(true);
 
         try {
-            const res = await fetch("/api/auth/update", {
+            const res = await fetch("/auth/update", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
