@@ -1871,7 +1871,6 @@ input[type="checkbox"]:checked {
 
 .profile-scroll-area {
   width: 90%;
-  max-width: 900px;
   height: calc(100vh - 54px);
   overflow-y: auto;
 }
