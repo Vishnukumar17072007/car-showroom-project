@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../auth/useAuth";
 import ProfileContext from "./profileContext";
-import API from "../../api/axios";
 
 function ProfileProvider({ children }) {
 
@@ -10,6 +9,7 @@ function ProfileProvider({ children }) {
     const [loading, setLoading] = useState(false);
     const [error,   setError]   = useState("");
     const [success, setSuccess] = useState("");
+    const API_URL = import.meta.env.VITE_API_URL;
 
     // ── Clear messages (call this when the form mounts or resets) ──
     function clearMessages() {
@@ -26,7 +26,7 @@ function ProfileProvider({ children }) {
         setLoading(true);
 
         try {
-            const res = await fetch(`${API}/auth/update`, {
+            const res = await fetch(`${API_URL}/auth/update`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
