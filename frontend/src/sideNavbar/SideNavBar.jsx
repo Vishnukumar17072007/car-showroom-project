@@ -93,7 +93,7 @@ function SideNavbar() {
             </div>
 
 
-            <div className="divider"></div>
+            <div className="divider" style={{borderBottom: "1px solid grey"}}></div>
             <div className="bottomNavBar">
                 {/* ── Bottom Items ── */}
                 <SubscriptionBanner
