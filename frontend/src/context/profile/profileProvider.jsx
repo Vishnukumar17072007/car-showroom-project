@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../auth/useAuth";
 import ProfileContext from "./profileContext";
+import API from "../../api/axios";
 
 function ProfileProvider({ children }) {
 
@@ -25,7 +26,7 @@ function ProfileProvider({ children }) {
         setLoading(true);
 
         try {
-            const res = await fetch(`/auth/update`, {
+            const res = await fetch(`${API}/auth/update`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
