@@ -21,7 +21,7 @@ function EditProfile() {
     // Clear any leftover messages when this page first loads
     useEffect(() => {
         clearMessages();
-    });
+    }, []);
 
     // Navigate back after success message shows
     useEffect(() => {
