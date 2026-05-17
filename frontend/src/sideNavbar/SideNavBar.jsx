@@ -90,11 +90,10 @@ function SideNavbar() {
                         </Link>
                     </li>
                 )}
-            <div className="divider"></div>
             </div>
 
 
-                <div className="divider"></div>
+            <div className="divider"></div>
             <div className="bottomNavBar">
                 {/* ── Bottom Items ── */}
                 <SubscriptionBanner
