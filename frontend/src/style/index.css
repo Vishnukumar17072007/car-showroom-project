@@ -2465,6 +2465,7 @@ input[type="checkbox"]:checked {
     z-index: 80;
     transform: translateX(-100%);
     transition: transform 0.22s ease;
+    justify-content: space-between;
     box-shadow: 8px 0 28px rgba(0, 0, 0, 0.45);
   }
 

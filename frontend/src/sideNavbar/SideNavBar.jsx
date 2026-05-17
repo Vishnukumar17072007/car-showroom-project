@@ -59,66 +59,71 @@ function SideNavbar() {
 
     return (
         <>
-            {/* ── Top Nav Items ── */}
-            {topNavItems.map((item, index) => {
+            <div className="topNavBar">
+                {/* ── Top Nav Items ── */}
+                {topNavItems.map((item, index) => {
 
-                if (!user && protectedRoutes.has(item[2])) return null;
+                    if (!user && protectedRoutes.has(item[2])) return null;
 
-                const isActive = location.pathname === item[2];
+                    const isActive = location.pathname === item[2];
 
-                return (
-                    <li key={index} className={`side_bar_menu_lists ps-2 ${isActive ? "active" : ""}`}>
+                    return (
+                        <li key={index} className={`side_bar_menu_lists ps-2 ${isActive ? "active" : ""}`}>
+                            <Link
+                                className={item[0] + " text-decoration-none text-white side_bar_menu_items d-block w-100"}
+                                to={item[2]}
+                            >
+                                {" " + item[1]}
+                            </Link>
+                        </li>
+                    );
+                })}
+
+                {/* ── Admin Orders ── */}
+                {user?.role === "admin" && (
+                    <li className={`side_bar_menu_lists ps-2 ${location.pathname === "/admin/orders" ? "active" : ""}`}>
                         <Link
-                            className={item[0] + " text-decoration-none text-white side_bar_menu_items d-block w-100"}
-                            to={item[2]}
+                            className="bi bi-receipt text-decoration-none text-white side_bar_menu_items d-block w-100"
+                            to="/admin/orders"
                         >
-                            {" " + item[1]}
+                            {" "}All Orders
                         </Link>
                     </li>
-                );
-            })}
+                )}
+            </div>
 
-            {/* ── Admin Orders ── */}
-            {user?.role === "admin" && (
-                <li className={`side_bar_menu_lists ps-2 ${location.pathname === "/admin/orders" ? "active" : ""}`}>
+
+            <div className="BottomNavBar">
+                {/* ── Bottom Items ── */}
+                <SubscriptionBanner
+                    sub={user?.subscription}
+                    isActive={upgradePlanActive}
+                    onActivate={() => setUpgradePlanActive(true)}
+                    onViewPlans={() => setShowModal(true)}
+                />
+
+                {/* Support */}
+                <li className={`side_bar_menu_lists ps-2 w-100 ${location.pathname === "/support" ? "active" : ""}`}>
                     <Link
-                        className="bi bi-receipt text-decoration-none text-white side_bar_menu_items d-block w-100"
-                        to="/admin/orders"
+                        className="bi bi-person-bounding-box text-decoration-none text-white side_bar_menu_items d-block w-100"
+                        to="/support"
                     >
-                        {" "}All Orders
+                        {" "}Support
                     </Link>
                 </li>
-            )}
 
-            {/* ── Bottom Items ── */}
-            <SubscriptionBanner
-                sub={user?.subscription}
-                isActive={upgradePlanActive}
-                onActivate={() => setUpgradePlanActive(true)}
-                onViewPlans={() => setShowModal(true)}
-            />
-
-            {/* Support */}
-            <li className={`side_bar_menu_lists ps-2 w-100 ${location.pathname === "/support" ? "active" : ""}`}>
-                <Link
-                    className="bi bi-person-bounding-box text-decoration-none text-white side_bar_menu_items d-block w-100"
-                    to="/support"
-                >
-                    {" "}Support
-                </Link>
-            </li>
-
-            {/* Profile */}
-            {user && (
-                <li className={`side_bar_menu_lists ps-2 w-100 ${location.pathname === "/profile" ? "active" : ""}`}>
-                    <Link
-                        className="bi bi-person text-decoration-none text-white side_bar_menu_items d-block w-100"
-                        to="/profile"
-                    >
-                        {" "}Profile
-                    </Link>
-                </li>
-            )}
+                {/* Profile */}
+                {user && (
+                    <li className={`side_bar_menu_lists ps-2 w-100 ${location.pathname === "/profile" ? "active" : ""}`}>
+                        <Link
+                            className="bi bi-person text-decoration-none text-white side_bar_menu_items d-block w-100"
+                            to="/profile"
+                        >
+                            {" "}Profile
+                        </Link>
+                    </li>
+                )}
+            </div>
 
             {showModal && <SubscriptionModal onClose={() => {setShowModal(false); setUpgradePlanActive(false);}} />}
         </>
