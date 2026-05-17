@@ -93,7 +93,7 @@ function SideNavbar() {
             </div>
 
 
-            <div className="BottomNavBar">
+            <div className="bottomNavBar">
                 {/* ── Bottom Items ── */}
                 <SubscriptionBanner
                     sub={user?.subscription}
