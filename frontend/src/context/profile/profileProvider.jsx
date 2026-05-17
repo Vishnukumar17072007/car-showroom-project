@@ -25,7 +25,7 @@ function ProfileProvider({ children }) {
         setLoading(true);
 
         try {
-            const res = await fetch("/auth/update", {
+            const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/update`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
