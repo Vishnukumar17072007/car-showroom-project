@@ -2018,6 +2018,7 @@ input[type="checkbox"]:checked {
     padding: 0.75rem;
     border-radius: 10px;
     transition: background 0.2s;
+    border-bottom: 1px solid rgba(42, 63, 95, .8);;
     flex: 1;
 }
 
