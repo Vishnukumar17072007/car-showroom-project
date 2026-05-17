@@ -32,15 +32,15 @@ const router = createBrowserRouter([
       { path: "/vehicles",         element: <Vehicles /> },
       { path: "/vehicles/:id", element: <CarDetailsPage />},
       { path: "/support",         element: <Support /> },
-      {path: "/profile", element: <Profile />},
-      {path: "/editProfile", element: <EditProfile />},
       {
         element : <ProtectedRoutes />,
         children: [
           { path: "/admin/orders", element: <AdminOrders /> },
           { path: "/wishlist", element: <WishList /> },
           { path: "/orders", element: <Orders />},
-          { path: "/addToCart", element: <Cart /> }
+          { path: "/addToCart", element: <Cart /> },
+          {path: "/profile", element: <Profile />},
+          {path: "/editProfile", element: <EditProfile />},
         ]
       }
     ]

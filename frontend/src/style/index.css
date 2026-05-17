@@ -1863,6 +1863,7 @@ input[type="checkbox"]:checked {
 .profile {
     width: 90%;
     max-width: 900px;
+    height: 90%;
     margin: 2rem auto;
     padding: 0 1rem 4rem;
     font-family: 'Georgia', serif;
