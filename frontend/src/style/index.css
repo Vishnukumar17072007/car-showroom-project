@@ -2093,7 +2093,7 @@ input[type="checkbox"]:checked {
 .edit-profile-btn {
     width: 100%;
     padding: 13px;
-    margin: 5px;
+    margin: 10px;
     background: transparent;
     border: 1px solid #c9a84c;
     border-radius: 10px;
