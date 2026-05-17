@@ -91,9 +91,11 @@ function SideNavbar() {
                     </li>
                 )}
             </div>
+            <div className="divider"></div>
 
 
             <div className="bottomNavBar">
+                <div className="divider"></div>
                 {/* ── Bottom Items ── */}
                 <SubscriptionBanner
                     sub={user?.subscription}
