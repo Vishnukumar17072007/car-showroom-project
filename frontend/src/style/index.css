@@ -2116,12 +2116,14 @@ input[type="checkbox"]:checked {
 /* ── Edit Profile Page ──────────────────────── */
 
 .edit-profile {
-    width: 90%;
+    width: calc(100vh - 186px);
     max-width: 900px;
+    height: calc(100vh - 52px);
     margin: 2rem auto;
     padding: 0 1rem 4rem;
     font-family: 'Georgia', serif;
     color: #e8dcc8;
+    overflow-y: auto;
 }
 
 /* ── Header ─────────────────────────────────── */
