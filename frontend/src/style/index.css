@@ -1858,8 +1858,11 @@ input[type="checkbox"]:checked {
 
 /* ── Profile Page ───────────────────────────── */
 
+/* ── Profile Page ───────────────────────────── */
+
 .profile {
-    max-width: 540px;
+    width: 90%;
+    max-width: 900px;
     margin: 2rem auto;
     padding: 0 1rem 4rem;
     font-family: 'Georgia', serif;
@@ -1881,8 +1884,8 @@ input[type="checkbox"]:checked {
 }
 
 .img-round {
-    width: 72px;
-    height: 72px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #c9a84c;
@@ -1890,7 +1893,7 @@ input[type="checkbox"]:checked {
 }
 
 .profile-avatar-icon {
-    font-size: 72px;
+    font-size: 80px;
     color: #c9a84c;
     flex-shrink: 0;
     line-height: 1;
@@ -1902,7 +1905,7 @@ input[type="checkbox"]:checked {
 
 .name h3 {
     margin: 0 0 6px;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
     color: #f5e6c8;
     letter-spacing: 0.3px;
@@ -1940,12 +1943,12 @@ input[type="checkbox"]:checked {
     position: absolute;
     top: 1.25rem;
     right: 1.25rem;
-    font-size: 12px;
+    font-size: 13px;
     font-style: normal;
     color: #e05c5c;
     border: 1px solid rgba(224, 92, 92, 0.35);
     border-radius: 8px;
-    padding: 5px 12px;
+    padding: 6px 14px;
     cursor: pointer;
     transition: background 0.2s;
 }
@@ -1964,7 +1967,7 @@ input[type="checkbox"]:checked {
     background: rgba(201, 168, 76, 0.08);
     border: 1px solid rgba(201, 168, 76, 0.3);
     border-radius: 10px;
-    padding: 12px 16px;
+    padding: 12px 18px;
     margin-bottom: 1rem;
     font-size: 13px;
     color: #c9a84c;
@@ -1979,6 +1982,14 @@ input[type="checkbox"]:checked {
     cursor: pointer;
     font-weight: 600;
     text-decoration: underline;
+}
+
+/* ── Desktop: two column layout ─────────────── */
+
+.profile-bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
 }
 
 /* ── Activity Stats ─────────────────────────── */
@@ -1998,9 +2009,10 @@ input[type="checkbox"]:checked {
     align-items: center;
     gap: 5px;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.75rem;
     border-radius: 10px;
     transition: background 0.2s;
+    flex: 1;
 }
 
 .activity-block:hover {
@@ -2008,12 +2020,12 @@ input[type="checkbox"]:checked {
 }
 
 .activity-block i {
-    font-size: 22px;
+    font-size: 24px;
     color: #c9a84c;
 }
 
 .activity-block .count {
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 700;
     color: #f5e6c8;
     line-height: 1.1;
@@ -2033,7 +2045,7 @@ input[type="checkbox"]:checked {
     background: #0f1e35;
     border: 1px solid #2a3f5f;
     border-radius: 14px;
-    padding: 1.25rem 1.5rem;
+    padding: 1.25rem 1.75rem;
     margin-bottom: 1rem;
 }
 
@@ -2041,7 +2053,7 @@ input[type="checkbox"]:checked {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 12px 0;
 }
 
 .detail-row.divider {
@@ -2054,7 +2066,7 @@ input[type="checkbox"]:checked {
     margin: 0;
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
 }
 
 .detail-label i {
@@ -2074,12 +2086,12 @@ input[type="checkbox"]:checked {
 
 .edit-profile-btn {
     width: 100%;
-    padding: 12px;
+    padding: 13px;
     background: transparent;
     border: 1px solid #c9a84c;
     border-radius: 10px;
     color: #c9a84c;
-    font-size: 14px;
+    font-size: 15px;
     font-family: 'Georgia', serif;
     font-weight: 600;
     letter-spacing: 0.4px;
@@ -2098,7 +2110,8 @@ input[type="checkbox"]:checked {
 /* ── Edit Profile Page ──────────────────────── */
 
 .edit-profile {
-    max-width: 540px;
+    width: 90%;
+    max-width: 900px;
     margin: 2rem auto;
     padding: 0 1rem 4rem;
     font-family: 'Georgia', serif;
@@ -2115,8 +2128,8 @@ input[type="checkbox"]:checked {
 }
 
 .ep-back-btn {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 9px;
     border: 1px solid #2a3f5f;
     background: #0f1e35;
@@ -2157,15 +2170,15 @@ input[type="checkbox"]:checked {
 }
 
 .ep-avatar-circle {
-    width: 88px;
-    height: 88px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     background: rgba(201, 168, 76, 0.12);
     border: 2px solid #c9a84c;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 30px;
+    font-size: 32px;
     font-weight: 600;
     color: #c9a84c;
     position: relative;
@@ -2184,8 +2197,8 @@ input[type="checkbox"]:checked {
     position: absolute;
     bottom: 2px;
     right: 2px;
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     background: #0f1e35;
     border: 1px solid #2a3f5f;
@@ -2209,7 +2222,7 @@ input[type="checkbox"]:checked {
     align-items: center;
     gap: 8px;
     font-size: 13px;
-    padding: 10px 14px;
+    padding: 10px 16px;
     border-radius: 9px;
     margin-bottom: 1rem;
 }
@@ -2232,7 +2245,7 @@ input[type="checkbox"]:checked {
     background: #0f1e35;
     border: 1px solid #2a3f5f;
     border-radius: 14px;
-    padding: 1.5rem 1.5rem 1.25rem;
+    padding: 1.5rem 1.75rem 1.25rem;
     margin-bottom: 1rem;
 }
 
@@ -2266,7 +2279,7 @@ input[type="checkbox"]:checked {
 .ep-input {
     width: 100%;
     box-sizing: border-box;
-    padding: 10px 14px;
+    padding: 11px 14px;
     font-size: 14px;
     font-family: 'Georgia', serif;
     background: #081629;
@@ -2305,6 +2318,15 @@ input[type="checkbox"]:checked {
     font-size: 11px;
     color: #6b84a0;
     margin: 5px 0 0;
+}
+
+/* ── Desktop: two column form layout ────────── */
+
+.ep-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: start;
 }
 
 /* ── Password Toggle ────────────────────────── */
@@ -2680,4 +2702,147 @@ input[type="checkbox"]:checked {
   .landing-stats-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ── Responsive: Tablet (≥768px) ────────────── */
+
+@media (min-width: 768px) {
+    .profile {
+        padding: 2rem 2rem 4rem;
+    }
+
+    .img-round,
+    .profile-avatar-icon {
+        width: 90px;
+        height: 90px;
+        font-size: 90px;
+    }
+
+    .name h3 {
+        font-size: 24px;
+    }
+
+    .activity-block .count {
+        font-size: 28px;
+    }
+}
+
+/* ── Responsive: Desktop (≥1024px) ─────────── */
+
+@media (min-width: 1024px) {
+    .profile {
+        padding: 2.5rem 2rem 4rem;
+    }
+
+    /* Two column: stats on left, account details on right */
+    .profile-bottom-grid {
+        grid-template-columns: 1fr 1.6fr;
+        align-items: start;
+    }
+
+    /* Pull activity overview into the grid */
+    .activity-overview {
+        flex-direction: column;
+        margin-bottom: 0;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 1.5rem 1rem;
+    }
+
+    .activity-block {
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .activity-block .count {
+        font-size: 32px;
+    }
+
+    .activity-block i {
+        font-size: 28px;
+    }
+
+    /* Account details fills right column */
+    .account-details {
+        margin-bottom: 0;
+    }
+
+    .detail-row {
+        padding: 14px 0;
+    }
+
+    .detail-label,
+    .detail-value {
+        font-size: 14px;
+    }
+}
+
+/* ── Responsive: Large Desktop (≥1280px) ────── */
+
+@media (min-width: 1280px) {
+    .profile {
+        max-width: 1100px;
+    }
+
+    .name h3 {
+        font-size: 26px;
+    }
+}
+
+/* ── Responsive: Tablet (≥768px) ────────────── */
+
+@media (min-width: 768px) {
+    .edit-profile {
+        padding: 2rem 2rem 4rem;
+    }
+
+    .ep-title {
+        font-size: 24px;
+    }
+
+    .ep-avatar-circle {
+        width: 100px;
+        height: 100px;
+        font-size: 36px;
+    }
+
+    .ep-input {
+        padding: 12px 16px;
+        font-size: 15px;
+    }
+}
+
+/* ── Responsive: Desktop (≥1024px) ─────────── */
+
+@media (min-width: 1024px) {
+    .edit-profile {
+        padding: 2.5rem 2rem 4rem;
+    }
+
+    /* Personal info and Security cards side by side */
+    .ep-form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .ep-card {
+        padding: 1.75rem 2rem 1.5rem;
+    }
+
+    .ep-section-label {
+        font-size: 12px;
+        margin-bottom: 1.5rem;
+    }
+
+    .ep-actions {
+        max-width: 420px;
+        margin-left: auto;
+    }
+}
+
+/* ── Responsive: Large Desktop (≥1280px) ────── */
+
+@media (min-width: 1280px) {
+    .edit-profile {
+        max-width: 1100px;
+    }
 }

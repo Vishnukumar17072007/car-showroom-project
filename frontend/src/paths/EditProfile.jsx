@@ -94,121 +94,122 @@ function EditProfile() {
             {success && <p className="ep-msg ep-success"> <i className="bi bi-check-circle"></i>       {success} </p>}
 
             {/* ── Personal Info ── */}
-            <div className="ep-card">
-                <p className="ep-section-label">Personal information</p>
+            <div className="ep-form-grid">
+                <div className="ep-card">
+                    <p className="ep-section-label">Personal information</p>
 
-                <div className="ep-field">
-                    <label className="ep-label">
-                        <i className="bi bi-person"></i> Username
-                    </label>
-                    <input
-                        className="ep-input"
-                        type="text"
-                        value={userName}
-                        onChange={(e) => setUserName(e.target.value)}
-                        placeholder="Enter your name"
-                    />
+                    <div className="ep-field">
+                        <label className="ep-label">
+                            <i className="bi bi-person"></i> Username
+                        </label>
+                        <input
+                            className="ep-input"
+                            type="text"
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
+                            placeholder="Enter your name"
+                        />
+                    </div>
+
+                    <div className="ep-field">
+                        <label className="ep-label">
+                            <i className="bi bi-envelope"></i> Email
+                        </label>
+                        <div className="ep-input-wrap">
+                            <input
+                                className="ep-input ep-input-disabled"
+                                type="email"
+                                value={user?.email || ""}
+                                disabled
+                            />
+                            <i className="bi bi-lock ep-lock-icon"></i>
+                        </div>
+                        <p className="ep-hint">Email cannot be changed.</p>
+                    </div>
+
+                    <div className="ep-field">
+                        <label className="ep-label">
+                            <i className="bi bi-telephone"></i> Phone
+                        </label>
+                        <input
+                            className="ep-input"
+                            type="tel"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            placeholder="Enter your phone number"
+                        />
+                    </div>
                 </div>
+                {/* ── Security ── */}
+                <div className="ep-card">
+                    <p className="ep-section-label">Security</p>
 
-                <div className="ep-field">
-                    <label className="ep-label">
-                        <i className="bi bi-envelope"></i> Email
-                    </label>
-                    <div className="ep-input-wrap">
+                    <div className="ep-field" style={{ marginBottom: 0 }}>
+                        <label className="ep-label">
+                            <i className="bi bi-lock"></i> Password
+                        </label>
                         <input
                             className="ep-input ep-input-disabled"
-                            type="email"
-                            value={user?.email || ""}
+                            type="password"
+                            value="placeholder"
                             disabled
                         />
-                        <i className="bi bi-lock ep-lock-icon"></i>
                     </div>
-                    <p className="ep-hint">Email cannot be changed.</p>
-                </div>
 
-                <div className="ep-field">
-                    <label className="ep-label">
-                        <i className="bi bi-telephone"></i> Phone
-                    </label>
-                    <input
-                        className="ep-input"
-                        type="tel"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        placeholder="Enter your phone number"
-                    />
-                </div>
-            </div>
+                    <button
+                        className="ep-toggle-pw"
+                        onClick={() => {
+                            setShowPasswordFields(!showPasswordFields);
+                            setCurrentPassword("");
+                            setNewPassword("");
+                            setConfirmPassword("");
+                        }}
+                    >
+                        <i className={`bi ${showPasswordFields ? "bi-x-lg" : "bi-key"}`}></i>
+                        {showPasswordFields ? " Cancel password change" : " Change password"}
+                    </button>
 
-            {/* ── Security ── */}
-            <div className="ep-card">
-                <p className="ep-section-label">Security</p>
-
-                <div className="ep-field" style={{ marginBottom: 0 }}>
-                    <label className="ep-label">
-                        <i className="bi bi-lock"></i> Password
-                    </label>
-                    <input
-                        className="ep-input ep-input-disabled"
-                        type="password"
-                        value="placeholder"
-                        disabled
-                    />
-                </div>
-
-                <button
-                    className="ep-toggle-pw"
-                    onClick={() => {
-                        setShowPasswordFields(!showPasswordFields);
-                        setCurrentPassword("");
-                        setNewPassword("");
-                        setConfirmPassword("");
-                    }}
-                >
-                    <i className={`bi ${showPasswordFields ? "bi-x-lg" : "bi-key"}`}></i>
-                    {showPasswordFields ? " Cancel password change" : " Change password"}
-                </button>
-
-                {showPasswordFields && (
-                    <div className="ep-pw-fields">
-                        <div className="ep-field">
-                            <label className="ep-label">
-                                <i className="bi bi-lock"></i> Current password
-                            </label>
-                            <input
-                                className="ep-input"
-                                type="password"
-                                value={currentPassword}
-                                onChange={(e) => setCurrentPassword(e.target.value)}
-                                placeholder="Enter current password"
-                            />
+                    {showPasswordFields && (
+                        <div className="ep-pw-fields">
+                            <div className="ep-field">
+                                <label className="ep-label">
+                                    <i className="bi bi-lock"></i> Current password
+                                </label>
+                                <input
+                                    className="ep-input"
+                                    type="password"
+                                    value={currentPassword}
+                                    onChange={(e) => setCurrentPassword(e.target.value)}
+                                    placeholder="Enter current password"
+                                />
+                            </div>
+                            <div className="ep-field">
+                                <label className="ep-label">
+                                    <i className="bi bi-lock-open"></i> New password
+                                </label>
+                                <input
+                                    className="ep-input"
+                                    type="password"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    placeholder="Min. 8 characters"
+                                />
+                            </div>
+                            <div className="ep-field" style={{ marginBottom: 0 }}>
+                                <label className="ep-label">
+                                    <i className="bi bi-lock-open"></i> Confirm password
+                                </label>
+                                <input
+                                    className="ep-input"
+                                    type="password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    placeholder="Repeat new password"
+                                />
+                            </div>
                         </div>
-                        <div className="ep-field">
-                            <label className="ep-label">
-                                <i className="bi bi-lock-open"></i> New password
-                            </label>
-                            <input
-                                className="ep-input"
-                                type="password"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                                placeholder="Min. 8 characters"
-                            />
-                        </div>
-                        <div className="ep-field" style={{ marginBottom: 0 }}>
-                            <label className="ep-label">
-                                <i className="bi bi-lock-open"></i> Confirm password
-                            </label>
-                            <input
-                                className="ep-input"
-                                type="password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                placeholder="Repeat new password"
-                            />
-                        </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
 
             {/* ── Action Buttons ── */}
