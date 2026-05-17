@@ -140,7 +140,7 @@ input, select, textarea { font-family: var(--font-body); }
 .side-menu {
   background-color: var(--bg-surface);
   border-right: 1px solid var(--border);
-  height: calc(100vh - 54px);
+  height: calc(100vh - 100px);
   width: 186px;
   min-width: 186px;
   padding: 10px 8px;
@@ -1863,7 +1863,7 @@ input[type="checkbox"]:checked {
 .profile {
     width: 90%;
     max-width: 900px;
-    height: calc(100vh - 54px);
+    height: calc(100vh - 100px);
     margin: 2rem auto;
     padding: 0 1rem 4rem;
     font-family: 'Georgia', serif;
