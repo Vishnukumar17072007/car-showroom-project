@@ -140,7 +140,7 @@ input, select, textarea { font-family: var(--font-body); }
 .side-menu {
   background-color: var(--bg-surface);
   border-right: 1px solid var(--border);
-  height: calc(100vh);
+  height: calc(100vh - 54px);
   width: 186px;
   min-width: 186px;
   padding: 10px 8px;
@@ -1683,10 +1683,10 @@ input[type="checkbox"]:checked {
 .support-wrapper {
   display: flex;
   flex-direction: column;
-  height: 626px;
+  height: calc(100vh - 54px);
   width: 100%;
   background: #1a1a1a;
-  overflow: hidden;        /* prevent the whole wrapper from growing */
+  overflow: hidden;
 }
 
 .support-header {
@@ -1863,12 +1863,15 @@ input[type="checkbox"]:checked {
 .profile {
     width: 90%;
     max-width: 900px;
-    height: calc(100vh);
     margin: 2rem auto;
-    padding: 0 1rem 4rem;
+    padding: 0 1rem 2rem;
     font-family: 'Georgia', serif;
     color: #e8dcc8;
-    overflow-y: auto;
+}
+
+.profile-scroll-area {
+  height: calc(100vh - 54px);
+  overflow-y: auto;
 }
 
 /* ── Hero Card ──────────────────────────────── */
