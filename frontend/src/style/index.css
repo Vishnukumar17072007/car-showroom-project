@@ -2115,15 +2115,19 @@ input[type="checkbox"]:checked {
 
 /* ── Edit Profile Page ──────────────────────── */
 
+.edit-profile-scroll-area{
+  width: calc(100vh - 186px);
+  height: calc(100vh - 52px);
+  overflow-y: auto;
+}
+
 .edit-profile {
-    width: calc(100vh - 186px);
+    width: 90%;
     max-width: 900px;
-    height: calc(100vh - 52px);
     margin: 2rem auto;
     padding: 0 1rem 4rem;
     font-family: 'Georgia', serif;
     color: #e8dcc8;
-    overflow-y: auto;
 }
 
 /* ── Header ─────────────────────────────────── */
