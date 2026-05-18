@@ -1869,7 +1869,63 @@ input[type="checkbox"]:checked {
   background-color: var(--border);
 }
 
-/* ── Profile Page ───────────────────────────── */
+/* Use existing data prompt */
+.detailsModal {
+    background-color: rgba(201, 168, 76, 0.06);
+    border: 1px solid rgba(201, 168, 76, 0.25);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.detailsModal p {
+    margin: 0;
+    font-size: 13px;
+    color: #c9a84c;
+}
+
+.btnGroup {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.btnGroup .yes {
+    padding: 6px 18px;
+    border-radius: 6px;
+    border: 1px solid rgba(201, 168, 76, 0.5);
+    background: rgba(201, 168, 76, 0.12);
+    color: #c9a84c;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.btnGroup .yes:hover {
+    background: #c9a84c;
+    color: #0d0d10;
+}
+
+.btnGroup .no {
+    padding: 6px 18px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: #a09da8;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.btnGroup .no:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #f0ede6;
+}
 
 /* ── Profile Page ───────────────────────────── */
 

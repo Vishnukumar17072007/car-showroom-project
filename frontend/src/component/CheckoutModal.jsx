@@ -108,7 +108,7 @@ const CheckoutModal = ({ onClose, carIds }) => {
                     <div className="detailsModal">
                         <p>Want to you your existing data ?</p>
                         <div className="btnGroup">
-                            <button className="yes" onClick={() => {handleUseExistingData}}>YES</button>
+                            <button className="yes" onClick={handleUseExistingData}>YES</button>
                             <button className="no" onClick={() => {setShowModal(false); }}>NO</button>
                         </div>
                     </div>
