@@ -2,30 +2,45 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useOrder } from "../context/order/useOrder";
 import { useCart } from "../context/cart/useCart";   // ← NEW
+import { useAuth } from "../context/auth/useAuth";
 
 const CheckoutModal = ({ onClose, carIds }) => {
+    const { user } = useAuth();
     const { placeOrder } = useOrder();
     const { fetchCart } = useCart();                 // ← NEW
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
-        name: '', mobile: '', address: '', city: '', pincode: ''
+        name: '', phone: '', address: '', city: '',state: '', pincode: ''
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showModal, setShowModal] = useState(true);
 
     const handleChange = (e) => {
         setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
         setError('');
     };
 
+    const handleUseExistingData = () => {
+        setForm({
+            name:    user.userName              || '',
+            phone:   user.phone                 || '',
+            address: user.location?.address     || '',
+            city:    user.location?.city        || '',
+            state:   user.location?.state       || '',
+            pincode: user.location?.pincode?.toString() || '',
+        });
+        setShowModal(false);
+    };
+
     const handleSubmit = async () => {
-        const { name, mobile, address, city, pincode } = form;
-        if (!name.trim() || !mobile.trim() || !address.trim() || !city.trim() || !pincode.trim()) {
+        const { name, phone, address, city, state, pincode } = form;
+        if (!name.trim() || !phone.trim() || !address.trim() || !city.trim() || !state.trim() || !pincode.trim()) {
             setError('Please fill in all fields.');
             return;
         }
-        if (!/^\d{10}$/.test(mobile)) {
+        if (!/^\d{10}$/.test(phone)) {
             setError('Mobile number must be exactly 10 digits.');
             return;
         }
@@ -55,14 +70,14 @@ const CheckoutModal = ({ onClose, carIds }) => {
 
                 <div className="modal_field">
                     <label>Full Name</label>
-                    <input name="name" placeholder="e.g. Vishnu Kumar"
+                    <input name="name" placeholder="e.g. User Name"
                         value={form.name} onChange={handleChange} />
                 </div>
 
                 <div className="modal_field">
                     <label>Mobile Number</label>
-                    <input name="mobile" placeholder="10-digit number"
-                        value={form.mobile} onChange={handleChange} maxLength={10} />
+                    <input name="phone" placeholder="10-digit number"
+                        value={form.phone} onChange={handleChange} maxLength={10} />
                 </div>
 
                 <div className="modal_field">
@@ -78,11 +93,26 @@ const CheckoutModal = ({ onClose, carIds }) => {
                             value={form.city} onChange={handleChange} />
                     </div>
                     <div className="modal_field">
+                        <label>state</label>
+                        <input name="state" placeholder="e.g. Tamil Nadu"
+                            value={form.state} onChange={handleChange} />
+                    </div>
+                    <div className="modal_field">
                         <label>Pincode</label>
                         <input name="pincode" placeholder="6-digit pincode"
                             value={form.pincode} onChange={handleChange} maxLength={6} />
                     </div>
                 </div>
+
+                {showModal && (
+                    <div className="detailsModal">
+                        <p>Want to you your existing data ?</p>
+                        <div className="btnGroup">
+                            <button className="yes" onClick={() => {handleUseExistingData}}>YES</button>
+                            <button className="no" onClick={() => {setShowModal(false); }}>NO</button>
+                        </div>
+                    </div>
+                )}
 
                 {error && <p className="modal_error">{error}</p>}
 

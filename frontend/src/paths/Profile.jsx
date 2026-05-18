@@ -102,6 +102,25 @@ function Profile() {
                                 <p className="detail-label"><i className="bi bi-telephone"></i> Phone</p>
                                 <p className="detail-value">{user.phone}</p>
                             </div>
+                            <div className="detail-row bi bi-geo-alt">Address</div>
+                            <div className="detail-modal divider">
+                                <div className="detail-row divider">
+                                    <p className="detail-label">Address</p>
+                                    <p className="detail-value">{user.location.address}</p>
+                                </div>
+                                <div className="detail-row divider">
+                                    <p className="detail-label">City</p>
+                                    <p className="detail-value">{user.location.city}</p>
+                                </div>
+                                <div className="detail-row divider">
+                                    <p className="detail-label">State</p>
+                                    <p className="detail-value">{user.location.state}</p>
+                                </div>
+                                <div className="detail-row divider">
+                                    <p className="detail-label">Pincode</p>
+                                    <p className="detail-value">{user.location.pincode}</p>
+                                </div>
+                            </div>
                             <div className="detail-row divider">
                                 <p className="detail-label"><i className="bi bi-shield"></i> Role</p>
                                 <p className="detail-value">{user.role}</p>

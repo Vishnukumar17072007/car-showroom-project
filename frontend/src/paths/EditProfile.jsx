@@ -10,8 +10,13 @@ function EditProfile() {
     const { loading, error, success, clearMessages, updateProfile } = useProfile();
 
     // Local form state only — no API logic here
-    const [userName, setUserName] = useState(user?.userName || "");
-    const [phone,    setPhone]    = useState(user?.phone    || "");
+    const [userName, setUserName] = useState(user?.userName                 || "");
+    const [phone,    setPhone]    = useState(user?.phone                    || "");
+    const [address,    setAddress]    = useState(user?.location.address     || "");
+    const [city,    setCity]    = useState(user?.location.city              || "");
+    const [state,    setState]    = useState(user?.location.state           || "");
+    const [pincode,    setPincode]    = useState(user?.location.pincode     || "");
+
 
     const [showPasswordFields, setShowPasswordFields] = useState(false);
     const [currentPassword,    setCurrentPassword]    = useState("");
@@ -35,6 +40,10 @@ function EditProfile() {
     function validate() {
         if (!userName.trim()) return { ok: false, msg: "Username cannot be empty." };
         if (!phone.trim())    return { ok: false, msg: "Phone cannot be empty." };
+        if (!address.trim())    return { ok: false, msg: "address cannot be empty." };
+        if (!city.trim())    return { ok: false, msg: "city cannot be empty." };
+        if (!state.trim())    return { ok: false, msg: "state cannot be empty." };
+        if (!pincode.trim())    return { ok: false, msg: "pincode cannot be empty." };
         if (showPasswordFields) {
             if (!currentPassword)          return { ok: false, msg: "Please enter your current password." };
             if (newPassword.length < 6)    return { ok: false, msg: "New password must be at least 6 characters." };
@@ -52,7 +61,7 @@ function EditProfile() {
             return;
         }
 
-        const data = { userName, phone };
+        const data = { userName, phone, address, city, state, pincode };
         if (showPasswordFields) {
             data.currentPassword = currentPassword;
             data.newPassword     = newPassword;
@@ -138,6 +147,61 @@ function EditProfile() {
                                 onChange={(e) => setPhone(e.target.value)}
                                 placeholder="Enter your phone number"
                             />
+                        </div>
+                        <div className="ep-field">
+                            <label className="ep-label">
+                                <i className="bi bi-geo-alt"></i> Address
+                            </label>
+                            <div className="ep-modalContainer">
+                                <div className="ep-field">
+                                    <label className="ep-label">
+                                         Address
+                                    </label>
+                                    <input
+                                        className="ep-input"
+                                        type="textarea"
+                                        value={address}
+                                        onChange={(e) => setAddress(e.target.value)}
+                                        placeholder="Enter your address"
+                                    />
+                                </div>
+                                <div className="ep-field">
+                                    <label className="ep-label">
+                                         City
+                                    </label>
+                                    <input
+                                        className="ep-input"
+                                        type="text"
+                                        value={city}
+                                        onChange={(e) => setCity(e.target.value)}
+                                        placeholder="Enter your city"
+                                    />
+                                </div>
+                                <div className="ep-field">
+                                    <label className="ep-label">
+                                         State
+                                    </label>
+                                    <input
+                                        className="ep-input"
+                                        type="text"
+                                        value={state}
+                                        onChange={(e) => setState(e.target.value)}
+                                        placeholder="Enter your state"
+                                    />
+                                </div>
+                                <div className="ep-field">
+                                    <label className="ep-label">
+                                         Pincode
+                                    </label>
+                                    <input
+                                        className="ep-input"
+                                        type="text"
+                                        value={pincode}
+                                        onChange={(e) => setPincode(e.target.value)}
+                                        placeholder="Enter your pincode"
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                     {/* ── Security ── */}
