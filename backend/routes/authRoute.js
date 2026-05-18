@@ -105,6 +105,10 @@ router.get('/me', verifyToken, async (req, res) => {
             userName:     user.userName,
             email:        user.email,
             phone:        user.phone,
+            address:      user.address,
+            city:         user.city,
+            state:        user.state,
+            pincode:      user.pincode,
             role:         user.role,
             subscription: user.subscription,
             createdAt:    user.createdAt,
@@ -117,11 +121,11 @@ router.get('/me', verifyToken, async (req, res) => {
 
 router.put("/update", verifyToken, async (req, res) => {
 
-    const { userName, phone, currentPassword, newPassword } = req.body;
+    const { userName, phone, address, city, state, pincode, currentPassword, newPassword } = req.body;
 
     // Basic presence check
-    if (!userName || !phone) {
-        return res.status(400).json({ message: "Username and phone are required." });
+    if (!userName || !phone || !address || !city || !state || !pincode) {
+        return res.status(400).json({ message: "Every fields are required." });
     }
 
     try {
@@ -134,6 +138,10 @@ router.put("/update", verifyToken, async (req, res) => {
         // ── Update basic fields ──────────────────────────
         user.userName = userName.trim();
         user.phone    = phone.trim();
+        user.address    = address.trim();
+        user.city    = city.trim();
+        user.state    = state.trim();
+        user.pincode    = pincode.trim();
 
         // ── Update password only if both fields are sent ─
         if (currentPassword && newPassword) {
@@ -160,6 +168,10 @@ router.put("/update", verifyToken, async (req, res) => {
             userName:     user.userName,
             email:        user.email,
             phone:        user.phone,
+            address:        user.address,
+            city:        user.city,
+            state:        user.state,
+            pincode:        user.pincode,
             role:         user.role,
             subscription: user.subscription,
             createdAt:    user.createdAt,
