@@ -52,8 +52,13 @@ export function AuthProvider({children}){
         setUser(null);
     }
 
+    async function checkAuth() {
+        const res = await API.get('/auth/me');
+        setUser(res.data);
+    }
+
     return(
-        <AuthContext.Provider value={{user, register, login, logout, authLoading}}>
+        <AuthContext.Provider value={{user, register, login, logout, checkAuth, authLoading}}>
             {children}
         </AuthContext.Provider>
     );
