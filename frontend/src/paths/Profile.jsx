@@ -106,19 +106,19 @@ function Profile() {
                             <div className="detail-modal divider">
                                 <div className="detail-row divider">
                                     <p className="detail-label">Address</p>
-                                    <p className="detail-value">{user.location.address}</p>
+                                    <p className="detail-value">{user.location?.address}</p>
                                 </div>
                                 <div className="detail-row divider">
                                     <p className="detail-label">City</p>
-                                    <p className="detail-value">{user.location.city}</p>
+                                    <p className="detail-value">{user.location?.city}</p>
                                 </div>
                                 <div className="detail-row divider">
                                     <p className="detail-label">State</p>
-                                    <p className="detail-value">{user.location.state}</p>
+                                    <p className="detail-value">{user.location?.state}</p>
                                 </div>
                                 <div className="detail-row divider">
                                     <p className="detail-label">Pincode</p>
-                                    <p className="detail-value">{user.location.pincode}</p>
+                                    <p className="detail-value">{user.location?.pincode}</p>
                                 </div>
                             </div>
                             <div className="detail-row divider">

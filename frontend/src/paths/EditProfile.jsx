@@ -12,10 +12,10 @@ function EditProfile() {
     // Local form state only — no API logic here
     const [userName, setUserName] = useState(user?.userName                 || "");
     const [phone,    setPhone]    = useState(user?.phone                    || "");
-    const [address,    setAddress]    = useState(user?.location.address     || "");
-    const [city,    setCity]    = useState(user?.location.city              || "");
-    const [state,    setState]    = useState(user?.location.state           || "");
-    const [pincode,    setPincode]    = useState(user?.location.pincode     || "");
+    const [address,    setAddress]    = useState(user?.location?.address     || "");
+    const [city,    setCity]    = useState(user?.location?.city              || "");
+    const [state,    setState]    = useState(user?.location?.state           || "");
+    const [pincode,    setPincode]    = useState(user?.location?.pincode     || "");
 
 
     const [showPasswordFields, setShowPasswordFields] = useState(false);
