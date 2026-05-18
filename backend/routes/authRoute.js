@@ -105,10 +105,7 @@ router.get('/me', verifyToken, async (req, res) => {
             userName:     user.userName,
             email:        user.email,
             phone:        user.phone,
-            address:      user.location.address,
-            city:         user.location.city,
-            state:        user.location.state,
-            pincode:      user.location.pincode,
+            location:     user.location,
             role:         user.role,
             subscription: user.subscription,
             createdAt:    user.createdAt,
@@ -136,12 +133,12 @@ router.put("/update", verifyToken, async (req, res) => {
         }
 
         // ── Update basic fields ──────────────────────────
-        user.userName = userName.trim();
-        user.phone    = phone.trim();
-        user.location.address    = address.trim();
-        user.location.city    = city.trim();
-        user.location.state    = state.trim();
-        user.location.pincode    = pincode.trim();
+        user.userName           = userName.trim();
+        user.phone              = phone.trim();
+        user.location.address   = address.trim();
+        user.location.city      = city.trim();
+        user.location.state     = state.trim();
+        user.location.pincode   = pincode;
 
         // ── Update password only if both fields are sent ─
         if (currentPassword && newPassword) {
@@ -168,10 +165,7 @@ router.put("/update", verifyToken, async (req, res) => {
             userName:     user.userName,
             email:        user.email,
             phone:        user.phone,
-            address:      user.location.address,
-            city:         user.location.city,
-            state:        user.location.state,
-            pincode:      user.location.pincode,
+            location:     user.location,
             role:         user.role,
             subscription: user.subscription,
             createdAt:    user.createdAt,
