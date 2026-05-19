@@ -47,7 +47,7 @@ function WishList(){
                                     <p style={{fontWeight:"lighter", margin:"0%"}}>{car.brand}.{car.bodyType}</p>
                                     <p className='rating'>⭐{car.rating}</p>
                                 </div>
-                                <b className='d-block'>${car.price}</b>
+                                <b className='d-block'>₹{car.price?.toLocaleString('en-IN')}</b>
                                 <button className={`bi bi-cart-plus-fill me-1 btn ${isInCart(car._id) ? "btn-remove" : "btn-add"}`} onClick={() => CartToggle(car)}>
                                 {isInCart(car?._id) ? "Remove from Cart" : "Add to Cart"}
                                 </button>

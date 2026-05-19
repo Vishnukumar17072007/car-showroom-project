@@ -62,7 +62,7 @@ router.get('/:id', async (req, res) => {
 //verifying role using token
 router.post('/addCar', verifyToken, verifyRole("admin"), async(req, res) => {
   try{
-    const {brand, model, bodyType, image, price, rating, available} = req.body;
+    const {carName, brand, model, bodyType, image, frontImage, rearImage, leftSideImage, rightSideImage, price, rating, available, fuelType, transmission, engineType, seats, mileage} = req.body;
 
     const newCar = new Car({
       carName : brand + " " + model,
@@ -70,6 +70,11 @@ router.post('/addCar', verifyToken, verifyRole("admin"), async(req, res) => {
       model,
       bodyType,
       image,
+      fuelType,
+      transmission,
+      engineType,
+      seats,
+      mileage,
       price,
       rating,
       available: available ?? 1
@@ -87,11 +92,11 @@ router.post('/addCar', verifyToken, verifyRole("admin"), async(req, res) => {
 //verifying role to update any car list
 router.put('/:id', verifyToken, verifyRole("admin"), async(req, res) => {
   try{
-    const {brand, model, bodyType, image, price, rating} = req.body;
+    const {brand, model, bodyType, image, frontImage, rearImage, leftSideImage, rightSideImage, price, rating, available, fuelType, transmission, engineType, seats, mileage,} = req.body;
 
     const updateCar = await Car.findByIdAndUpdate(
       req.params.id,
-      { $set: { carName: brand + " " + model, brand, model, bodyType, image, price, rating } },
+      { $set: { carName: brand + " " + model, brand, model, bodyType, image, frontImage, rearImage, leftSideImage, rightSideImage, price, rating, available, fuelType, transmission, engineType, seats, mileage, } },
       { returnDocument: 'after' }
     );
 
