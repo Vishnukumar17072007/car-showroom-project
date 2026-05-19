@@ -81,7 +81,7 @@ function Profile() {
                                 <strong className="count">{wishListCount}</strong>
                                 <p>WISHLIST</p>
                             </div>
-                            <div className="col-4 activity-block divider" onClick={() => navigate("/addToCart")}>
+                            <div className="col-4 activity-block divider" onClick={() => navigate("/cartList")}>
                                 <i className="bi bi-cart3"></i>
                                 <strong className="count">{cartListCount}</strong>
                                 <p>CART</p>

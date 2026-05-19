@@ -46,11 +46,11 @@ function SideNavbar() {
         ["bi bi-house",     "Home",     "/"],
         ["bi bi-car-front", "Vehicles", "/vehicles"],
         ["bi bi-heart",     "WishList", "/wishlist"],
-        ["bi bi-cart",      "Cart",     "/addToCart"],
+        ["bi bi-cart",      "Cart",     "/cartList"],
         ["bi bi-bag-check", "Orders",   "/orders"],
     ];
 
-    const protectedRoutes = new Set(["/wishlist", "/addToCart", "/orders"]);
+    const protectedRoutes = new Set(["/wishlist", "/cartList", "/orders"]);
 
     // Clear upgrade-plan active highlight whenever user navigates anywhere
     useEffect(() => {
