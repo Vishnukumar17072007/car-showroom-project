@@ -96,10 +96,6 @@ router.get('/me', verifyToken, async (req, res) => {
             return res.status(400).json({ message: "User not found." });
         }
 
-        // BEFORE — only returned userId and role, Profile page got undefined for everything else
-        // res.status(200).json({ userId: user._id, role: user.role });
-
-        // AFTER — return everything the Profile page needs
         res.status(200).json({
             userId:       user._id,
             userName:     user.userName,

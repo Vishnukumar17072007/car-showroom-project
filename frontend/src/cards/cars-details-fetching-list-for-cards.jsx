@@ -33,11 +33,15 @@ function CarDetailsFetchingListForCards({filters, search}){
     const [carDetails, error, loading] = useFetch(url);
 
     async function handleUpdateSubmit() {
-        const { brand, model, bodyType, image, price, rating, available } = updateCar;
+        const { brand, model, image, frontImage, rearImage, rightSideImage, leftSideImage, bodyType, fuelType, transmission, seats, engineType, mileage, price, rating, available } = updateCar;
     
         // ✅ required field check
-        if (!brand?.trim() || !model?.trim() || !bodyType?.trim() || !image?.trim()) {
-            toast.error('Brand, Model, Body Type and Image URL are required.');
+        if (!brand?.trim() || !model?.trim() || !bodyType?.trim() || !image?.trim() || !frontImage?.trim() || !rearImage?.trim() || !rightSideImage?.trim() || !leftSideImage?.trim() || !fuelType?.trim() || !transmission?.trim() || !seats?.trim() || !engineType?.trim() || !mileage?.trim()) {
+            toast.error('Every fields are required. Must fill all fields');
+            return;
+        }
+        if (!seats) {
+            toast.error('Please enter seats count.');
             return;
         }
         if (!price || price <= 0) {
@@ -54,19 +58,24 @@ function CarDetailsFetchingListForCards({filters, search}){
             return;
         }
     
-        await API.post('/cars/addCar', updateCar);
-        setShowUpdateForm(false);
-        handleRefresh();
-        toast.success('Car added successfully!');
+        try{
+            await API.post('/cars/addCar', updateCar);
+            setShowUpdateForm(false);
+            handleRefresh();
+            toast.success('Car added successfully!');
+        }
+        catch( err ){
+            toast.error(err.message || "Failed to add car!");
+        }
     }
 
     if(loading){
         return (
             <>
-                {!error && <CarGridSkeleton count={15} />}
+                {!error && <CarGridSkeleton count={20} />}
                 {error && <p>{error}</p>}
             </>
-    )
+        );
     }
     
     // carDetails.sort((x,y) => x.price - y.price);//x is index 1 and y is index 2, if true changes made in ascending order
@@ -82,7 +91,7 @@ function CarDetailsFetchingListForCards({filters, search}){
     }
 
     const CarDetailsFetchingListForCards = (carDetails || []).map((Detail)=>{
-        return <Cards key = {Detail._id} _id={Detail._id} brand={Detail.brand} model={Detail.model} bodyType={Detail.bodyType} image={Detail.image} price={Detail.price} rating={Detail.rating} available={Detail.available} onUpdate={handleRefresh}/>
+        return <Cards key = {Detail._id} _id={Detail._id} brand={Detail.brand} model={Detail.model} bodyType={Detail.bodyType} image={Detail.image} frontImage={Detail.frontImage} rearImage={Detail.rearImage} leftSideImage={Detail.leftSideImage} rightSideImage={Detail.rightSideImage} transmission={Detail.transmission} fuelType={Detail.fuelType} seats={Detail.seats} mileage={Detail.mileage} engineType={Detail.engineType} price={Detail.price} rating={Detail.rating} available={Detail.available} onUpdate={handleRefresh}/>
     });
 
     return(
@@ -101,27 +110,35 @@ function CarDetailsFetchingListForCards({filters, search}){
                     </div>
                 )}
 
-                {showUpdateForm && (<div className="updateForm">
-                    <div className="updateFormContent">
-                        <input type="text" className="updateBrand" placeholder='Brand Name' onChange={e => setUpdateCar({...updateCar, brand: e.target.value})}/>
-                        <input type="text" className="updateModel" placeholder='Model Name' onChange={e => setUpdateCar({...updateCar, model: e.target.value})}/>
-                        <input type="text" className="updatebodyType" placeholder='Body Type' onChange={e => setUpdateCar({...updateCar, bodyType: e.target.value})}/>
-                        <input type="text" className="updateImage" placeholder='Image URL' onChange={e => setUpdateCar({...updateCar, image: e.target.value})}/>
-                        <input type="number" className="updatePrice" placeholder='Price Amount in INR' onChange={e => setUpdateCar({...updateCar, price: Number(e.target.value)})}/>
-                        <input type="number" className="updateRating" placeholder='Rating of Car' onChange={e => setUpdateCar({...updateCar, rating: Number(e.target.value)})}/>
-                        <input type="number" className="updateAvailable" placeholder='Stock Count (available units)' onChange={e => setUpdateCar({...updateCar, available: Number(e.target.value)})}/>
-                        <div className="SaveOrCancel-btnGroup">
-                            <button className="cancelbtn btn" onClick={() => { setShowUpdateForm(false) }}>Cancel</button>
-                            <button className="saveBtn btn" onClick={() => {handleUpdateSubmit(updateCar)}}>Save</button>
+                {showUpdateForm && (
+                    <div className="updateForm">
+                        <div className="updateFormContent">
+                            <input type="text" className="updateBrand" placeholder='Brand Name' onChange={e => setUpdateCar({...updateCar, brand: e.target.value})} required/>
+                            <input type="text" className="updateModel" placeholder='Model Name' onChange={e => setUpdateCar({...updateCar, model: e.target.value})} required/>
+                            <input type="text" className="updateImage" placeholder='Image URL' onChange={e => setUpdateCar({...updateCar, image: e.target.value})} required/>
+                            <input type="text" className="updateFrontImage" placeholder='Front side of car Image URL' onChange={e => setUpdateCar({...updateCar, frontImage: e.target.value})} required/>
+                            <input type="text" className="updateRearImage" placeholder='Rear side of car Image URL' onChange={e => setUpdateCar({...updateCar, frontImage: e.target.value})} required/>
+                            <input type="text" className="updateRightSideImage" placeholder='Right side of car Image URL' onChange={e => setUpdateCar({...updateCar, frontImage: e.target.value})} required/>
+                            <input type="text" className="updateLeftSideImage" placeholder='Left side of car Image URL' onChange={e => setUpdateCar({...updateCar, frontImage: e.target.value})} required/>
+                            <input type="text" className="updatebodyType" placeholder='Body Type' onChange={e => setUpdateCar({...updateCar, bodyType: e.target.value})} required/>
+                            <input type="text" className="updateTransmission" placeholder='Transmission' onChange={e => setUpdateCar({...updateCar, transmission: e.target.value})} required/>
+                            <input type="text" className="updateFuelType" placeholder='Fuel Type' onChange={e => setUpdateCar({...updateCar, fuelType: e.target.value})} required/>
+                            <input type="text" className="updateEngineType" placeholder='Engine Type' onChange={e => setUpdateCar({...updateCar, engineType: e.target.value})} required/>
+                            <input type="text" className="updateSeats" placeholder='Seats' onChange={e => setUpdateCar({...updateCar, seats: Number(e.target.value)})} required/>
+                            <input type="text" className="updateMileage" placeholder='Mileage' onChange={e => setUpdateCar({...updateCar, mileage: e.target.value})} required/>
+                            <input type="number" className="updatePrice" placeholder='Price Amount in INR' onChange={e => setUpdateCar({...updateCar, price: Number(e.target.value)})} required/>
+                            <input type="number" className="updateRating" placeholder='Rating of Car' onChange={e => setUpdateCar({...updateCar, rating: Number(e.target.value)})} required/>
+                            <input type="number" className="updateAvailable" placeholder='Stock Count (available units)' onChange={e => setUpdateCar({...updateCar, available: Number(e.target.value)})} required/>
+                            <div className="SaveOrCancel-btnGroup">
+                                <button className="cancelBtn btn" onClick={() => { setShowUpdateForm(false) }}>Cancel</button>
+                                <button className="saveBtn btn" onClick={() => {handleUpdateSubmit(updateCar)}}>Save</button>
+                            </div>
                         </div>
                     </div>
-                </div>)}
-                
+                )}
             </div>
-
         </>
     );
 }
 
-
-export default CarDetailsFetchingListForCards
+export default CarDetailsFetchingListForCards;

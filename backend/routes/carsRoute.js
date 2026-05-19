@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
       if(transmission) query.transmission = { $regex: transmission, $options: "i" };
       if(bodyType) query.bodyType = { $regex: bodyType, $options: "i" };
       if(fuelType) query.fuelType = { $regex: fuelType, $options: "i" };
-      if(maxPrice < 10000000) {
+      if(Number(maxPrice) < 10000000) {
         if(maxPrice) query.price = { $lte: Number(maxPrice) };
       }
       else{
