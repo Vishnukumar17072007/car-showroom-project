@@ -85,7 +85,7 @@ function Cards(props){
                         </div>
                         <p className='p-1' style={{ fontWeight: "lighter", margin: "0%" }}>{props.brand}.{props.bodyType}</p>
                     </div>
-                    <b className='d-block p-1'>${props.price}</b>
+                    <b className='d-block p-1'>₹{car.price?.toLocaleString('en-IN')}</b>
                     {user && <button className={`bi bi-cart-plus-fill me-1 p-1 ${isInCart(car._id) ? "btn-remove" : "btn-add"}`}
                         onClick={() => isInCart(car._id) ? removeFromCart(car._id) : addToCart(car._id)}>
                         {isInCart(car._id) ? "Remove from Cart" : "Add to Cart"}
