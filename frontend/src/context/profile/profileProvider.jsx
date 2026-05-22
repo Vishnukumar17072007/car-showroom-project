@@ -1,75 +1,45 @@
 import { useState } from "react";
 import { useAuth } from "../auth/useAuth";
 import ProfileContext from "./profileContext";
+import API from "../../api/axios";
 
 function ProfileProvider({ children }) {
-
     const { checkAuth } = useAuth();
-
     const [loading, setLoading] = useState(false);
-    const [error,   setError]   = useState("");
+    const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-    const API_URL = import.meta.env.VITE_API_URL;
 
-    // ── Clear messages (call this when the form mounts or resets) ──
     function clearMessages() {
         setError("");
         setSuccess("");
     }
 
-    // ── Main update function ──────────────────────────────────────
-    // Accepts: { userName, phone, currentPassword?, newPassword? }
-    // Returns: true if successful, false if failed
     async function updateProfile(data) {
         setError("");
         setSuccess("");
         setLoading(true);
 
         try {
-            const res = await fetch(`${API_URL}/auth/update`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-                body: JSON.stringify(data),
-            });
+            const res = await API.put('/auth/update', data);
 
-            const json = await res.json();
-
-            if (!res.ok) {
-                setError(json.message || "Update failed. Please try again.");
-                return false;
-            }
-
-            // Refresh the user object in AuthContext
             try {
                 await checkAuth();
-            } catch (authErr) {
-                // checkAuth failing doesn't mean the save failed — ignore it silently
-                console.warn("checkAuth failed after update:", authErr);
+            } catch {
+                // profile saved even if session refresh fails
             }
-            
-            setSuccess("Profile updated successfully!");
+
+            setSuccess(res.data?.message || "Profile updated successfully!");
             return true;
-
-        } catch {
-            setError("Something went wrong. Please check your connection.");
+        } catch (err) {
+            setError(err.response?.data?.message || "Update failed. Please try again.");
             return false;
-
         } finally {
             setLoading(false);
         }
     }
 
-    const value = {
-        loading,
-        error,
-        success,
-        clearMessages,
-        updateProfile,
-    };
-
     return (
-        <ProfileContext.Provider value={value}>
+        <ProfileContext.Provider value={{ loading, error, success, clearMessages, updateProfile }}>
             {children}
         </ProfileContext.Provider>
     );

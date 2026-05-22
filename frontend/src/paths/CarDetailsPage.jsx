@@ -79,11 +79,6 @@ function CarDetailsPage() {
 
     return (
         <>
-            <link
-                href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap"
-                rel="stylesheet"
-            />
-
             <style>{`
                 .cd-page { font-family: 'Barlow', sans-serif; background: #f4f4f4; width: 100%; min-height: calc(100vh - 54px); height: calc(100vh - 54px); overflow-y: auto; }
                 .cd-breadcrumb { background: #1a1a2e; padding: 12px 24px; color: #aaa; font-size: 0.82rem; letter-spacing: 0.5px; }
@@ -200,6 +195,8 @@ function CarDetailsPage() {
                             src={gallery[activeImg] || car.image}
                             alt={`${car.brand} ${car.model}`}
                             className="cd-main-img"
+                            loading="lazy"
+                            decoding="async"
                         />
 
                         <div className="cd-thumbs">
@@ -210,6 +207,8 @@ function CarDetailsPage() {
                                     alt={`${car.brand} ${car.model} view ${i + 1}`}
                                     className={`cd-thumb ${activeImg === i ? "active" : ""}`}
                                     onClick={() => setActiveImg(i)}
+                                    loading="lazy"
+                                    decoding="async"
                                 />
                             ))}
                         </div>

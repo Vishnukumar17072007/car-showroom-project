@@ -101,20 +101,21 @@ function SubscriptionModal({ onClose }){
                                 </ul>
 
                                 <button
-                                    disabled={isCurrent}
+                                    disabled
+                                    title="Subscription upgrades coming soon"
                                     style={{
                                         width: "100%",
                                         padding: "8px",
                                         borderRadius: "8px",
                                         border: "none",
-                                        background: isCurrent ? "#333" : plan.color,
-                                        color: isCurrent ? "#888" : "white",
+                                        background: isCurrent ? "#333" : "#444",
+                                        color: "#888",
                                         fontWeight: "600",
-                                        cursor: isCurrent ? "not-allowed" : "pointer",
+                                        cursor: "not-allowed",
                                         fontSize: "13px"
                                     }}
                                 >
-                                    {isCurrent ? "Current Plan" : `Get ${plan.name}`}
+                                    {isCurrent ? "Current Plan" : "Coming soon"}
                                 </button>
                             </div>
                         );

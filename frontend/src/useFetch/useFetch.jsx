@@ -1,4 +1,14 @@
 import { useEffect, useState } from "react";
+import API from "../api/axios";
+
+function toApiPath(url) {
+    const base = import.meta.env.VITE_API_URL || '';
+    if (base && url.startsWith(base)) {
+        const path = url.slice(base.length);
+        return path.startsWith('/') ? path : `/${path}`;
+    }
+    return url.startsWith('/') ? url : `/${url}`;
+}
 
 const useFetch = (url) => {
     const [data, setData] = useState(null);
@@ -6,36 +16,30 @@ const useFetch = (url) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (!url) {
+            setLoading(false);
+            return undefined;
+        }
+
         const controller = new AbortController();
-        const signal = controller.signal;
         setLoading(true);
         setError(null);
-        
-        fetch(url, {
-            signal,
-            credentials: 'include'   // ← add this
-        })
-        .then(response => {
-            if(!response.ok){
-                throw Error("Couldn't fetch the data");
-            }
-            return response.json()
-        })
-        .then(data => {
-            setData(data);
-            setLoading(false);
-        })
-        .catch(err => {
-            if (err.name === "AbortError") return;
-                setError(err.message);
-                setLoading(false);
-        })
 
-        return ()=>{
-            controller.abort();
-        }
-    },[url]);
+        API.get(toApiPath(url), { signal: controller.signal })
+            .then((response) => {
+                setData(response.data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                if (err.name === "CanceledError" || err.code === "ERR_CANCELED") return;
+                setError(err.response?.data?.message || err.message || "Couldn't fetch the data");
+                setLoading(false);
+            });
+
+        return () => controller.abort();
+    }, [url]);
+
     return [data, error, loading];
-}
+};
 
 export default useFetch;

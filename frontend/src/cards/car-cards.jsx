@@ -1,19 +1,18 @@
-import PropTypes from 'prop-types'
-import { Navigate, useNavigate } from 'react-router-dom';
+import { memo, useState } from 'react';
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import { useWishList } from '../context/wish/useWishList';
 import { useCart } from '../context/cart/useCart';
 import { useAuth } from "../context/auth/useAuth";
-import { useState } from 'react';
 import API from '../api/axios';
 import { createPortal } from 'react-dom';
 import toast from 'react-hot-toast';
 
-function Cards(props){
+function Cards(props) {
     const navigate = useNavigate();
-
     const { addToWishList, removeFromWishList, isInWishList } = useWishList();
     const { addToCart, removeFromCart, isInCart } = useCart();
-    const {user} = useAuth();
+    const { user } = useAuth();
 
     const [showEditModal, setShowEditModal] = useState(false);
     const [editData, setEditData] = useState({
@@ -22,30 +21,46 @@ function Cards(props){
         model: props.model,
         bodyType: props.bodyType,
         image: props.image,
+        frontImage: props.frontImage,
+        rearImage: props.rearImage,
+        leftSideImage: props.leftSideImage,
+        rightSideImage: props.rightSideImage,
+        transmission: props.transmission,
+        fuelType: props.fuelType,
+        engineType: props.engineType,
+        seats: props.seats,
+        mileage: props.mileage,
         price: props.price,
         rating: props.rating,
-        available: props.available
+        available: props.available,
     });
 
-    const car = { _id: props._id, brand: props.brand, model: props.model,bodyType: props.bodyType, image: props.image, price: props.price, rating: props.rating,available: props.available }
+    const car = {
+        _id: props._id,
+        brand: props.brand,
+        model: props.model,
+        bodyType: props.bodyType,
+        image: props.image,
+        price: props.price,
+        rating: props.rating,
+        available: props.available,
+    };
 
     async function handleDelete() {
         try {
             await API.patch(`/cars/soft-delete/${props._id}`);
-            props.onUpdate();
-            toast.success("A Car Detail Card have been successfully Deleted.");
-        }
-        catch(err) {
-            toast.error(err.response?.data?.message || "Delete Failed");
+            props.onUpdate?.();
+            toast.success("Car deleted successfully.");
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Delete failed");
         }
     }
 
     async function handleEditSubmit() {
         const { brand, model, bodyType, image, price, rating } = editData;
-    
-        // ✅ required field check
+
         if (!brand?.trim() || !model?.trim() || !bodyType?.trim() || !image?.trim()) {
-            toast.error('Brand, Model, Body Type and Image URL are required.');
+            toast.error('Brand, model, body type and image URL are required.');
             return;
         }
         if (!price || price <= 0) {
@@ -56,26 +71,42 @@ function Cards(props){
             toast.error('Rating must be between 1 and 10.');
             return;
         }
-    
+
         try {
             await API.put(`/cars/${props._id}`, editData);
             setShowEditModal(false);
-            props.onUpdate();
+            props.onUpdate?.();
             toast.success('Car updated successfully!');
-        } catch(err) {
-            toast.error(err.response?.data?.message || "Update Failed");
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Update failed");
         }
     }
 
-    return(
+    if (!props.brand) return null;
+
+    return (
         <>
-            {props.brand && (<div className="car-card" >
-                <div className="car_image" onClick={() => { navigate(`/vehicles/${props._id}`)}}>
-                    <img src={props.image} alt="car-image" style={{width: "100%", height:"100%", backgroundColor: "white", borderRadius:"5px"}}></img>
-                    {user && <p className="bi bi-heart-fill wishListToggle" 
-                        onClick={() => isInWishList(car._id) ? removeFromWishList(car._id) : addToWishList(car._id)} 
-                        style={{color: isInWishList(car._id) ? "red" : "var(--gold)"}}>
-                    </p>}
+            <div className="car-card">
+                <div className="car_image" onClick={() => navigate(`/vehicles/${props._id}`)}>
+                    <img
+                        src={props.image}
+                        alt={`${props.brand} ${props.model}`}
+                        loading="lazy"
+                        decoding="async"
+                        width={300}
+                        height={200}
+                        style={{ width: "100%", height: "100%", backgroundColor: "white", borderRadius: "5px" }}
+                    />
+                    {user && (
+                        <p
+                            className="bi bi-heart-fill wishListToggle"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                isInWishList(car._id) ? removeFromWishList(car._id) : addToWishList(car._id);
+                            }}
+                            style={{ color: isInWishList(car._id) ? "red" : "var(--gold)" }}
+                        />
+                    )}
                 </div>
                 <div className="car_card_body">
                     <div className="car_title">
@@ -86,56 +117,62 @@ function Cards(props){
                         <p className='p-1' style={{ fontWeight: "lighter", margin: "0%" }}>{props.brand}.{props.bodyType}</p>
                     </div>
                     <b className='d-block p-1'>₹{car.price?.toLocaleString('en-IN')}</b>
-                    {user && <button className={`bi bi-cart-plus-fill me-1 p-1 ${isInCart(car._id) ? "btn-remove" : "btn-add"}`}
-                        onClick={() => isInCart(car._id) ? removeFromCart(car._id) : addToCart(car._id)}>
-                        {isInCart(car._id) ? "Remove from Cart" : "Add to Cart"}
-                    </button>}
-                    {user?.role==="admin" && (
+                    {user && (
+                        <button
+                            type="button"
+                            className={`bi bi-cart-plus-fill me-1 p-1 ${isInCart(car._id) ? "btn-remove" : "btn-add"}`}
+                            onClick={() => isInCart(car._id) ? removeFromCart(car._id) : addToCart(car._id)}
+                        >
+                            {isInCart(car._id) ? "Remove from Cart" : "Add to Cart"}
+                        </button>
+                    )}
+                    {user?.role === "admin" && (
                         <div className="EditOrDeleteCar">
-                            <button className='btn-edit' onClick={() => setShowEditModal(true) }>Edit</button>
-                            <button className="btn-delete" onClick={ handleDelete }>Delete</button>
+                            <button type="button" className='btn-edit' onClick={() => setShowEditModal(true)}>Edit</button>
+                            <button type="button" className="btn-delete" onClick={handleDelete}>Delete</button>
                         </div>
                     )}
                 </div>
-                
-                { showEditModal && createPortal(
+
+                {showEditModal && createPortal(
                     <div className="editModal">
                         <div className="editModalContent">
-                            <input type="text" className="modalBrand" placeholder='Brand Name' onChange={e => setEditData({...editData, brand: e.target.value})} required/>
-                            <input type="text" className="modalModel" placeholder='Model Name' onChange={e => setEditData({...editData, model: e.target.value})} required/>
-                            <input type="text" className="modalImage" placeholder='Image URL' onChange={e => setEditData({...editData, image: e.target.value})} required/>
-                            <input type="text" className="modalFrontImage" placeholder='Front side of car Image URL' onChange={e => setEditData({...editData, frontImage: e.target.value})} required/>
-                            <input type="text" className="modalRearImage" placeholder='Rear side of car Image URL' onChange={e => setEditData({...editData, frontImage: e.target.value})} required/>
-                            <input type="text" className="modalRightSideImage" placeholder='Right side of car Image URL' onChange={e => setEditData({...editData, frontImage: e.target.value})} required/>
-                            <input type="text" className="modalLeftSideImage" placeholder='Left side of car Image URL' onChange={e => setEditData({...editData, frontImage: e.target.value})} required/>
-                            <input type="text" className="modalbodyType" placeholder='Body Type' onChange={e => setEditData({...editData, bodyType: e.target.value})} required/>
-                            <input type="text" className="modalTransmission" placeholder='Transmission' onChange={e => setEditData({...editData, transmission: e.target.value})} required/>
-                            <input type="text" className="modalFuelType" placeholder='Fuel Type' onChange={e => setEditData({...editData, fuelType: e.target.value})} required/>
-                            <input type="text" className="modalEngineType" placeholder='Engine Type' onChange={e => setEditData({...editData, engineType: e.target.value})} required/>
-                            <input type="text" className="modalSeats" placeholder='Seats' onChange={e => setEditData({...editData, seats: Number(e.target.value)})} required/>
-                            <input type="text" className="modalMileage" placeholder='Mileage' onChange={e => setEditData({...editData, mileage: e.target.value})} required/>
-                            <input type="number" className="modalPrice" placeholder='Price Amount in INR' onChange={e => setEditData({...editData, price: Number(e.target.value)})} required/>
-                            <input type="number" className="modalRating" placeholder='Rating of Car' onChange={e => setEditData({...editData, rating: Number(e.target.value)})} required/>
-                            <input type="number" className="modalAvailable" placeholder='Stock Count (available units)' onChange={e => setEditData({...editData, available: Number(e.target.value)})} required/>
+                            <input type="text" placeholder='Brand Name' defaultValue={editData.brand} onChange={e => setEditData({ ...editData, brand: e.target.value })} required />
+                            <input type="text" placeholder='Model Name' defaultValue={editData.model} onChange={e => setEditData({ ...editData, model: e.target.value })} required />
+                            <input type="text" placeholder='Image URL' defaultValue={editData.image} onChange={e => setEditData({ ...editData, image: e.target.value })} required />
+                            <input type="text" placeholder='Front Image URL' defaultValue={editData.frontImage} onChange={e => setEditData({ ...editData, frontImage: e.target.value })} />
+                            <input type="text" placeholder='Rear Image URL' defaultValue={editData.rearImage} onChange={e => setEditData({ ...editData, rearImage: e.target.value })} />
+                            <input type="text" placeholder='Right Side Image URL' defaultValue={editData.rightSideImage} onChange={e => setEditData({ ...editData, rightSideImage: e.target.value })} />
+                            <input type="text" placeholder='Left Side Image URL' defaultValue={editData.leftSideImage} onChange={e => setEditData({ ...editData, leftSideImage: e.target.value })} />
+                            <input type="text" placeholder='Body Type' defaultValue={editData.bodyType} onChange={e => setEditData({ ...editData, bodyType: e.target.value })} required />
+                            <input type="text" placeholder='Transmission' defaultValue={editData.transmission} onChange={e => setEditData({ ...editData, transmission: e.target.value })} />
+                            <input type="text" placeholder='Fuel Type' defaultValue={editData.fuelType} onChange={e => setEditData({ ...editData, fuelType: e.target.value })} />
+                            <input type="text" placeholder='Engine Type' defaultValue={editData.engineType} onChange={e => setEditData({ ...editData, engineType: e.target.value })} />
+                            <input type="number" placeholder='Seats' defaultValue={editData.seats} onChange={e => setEditData({ ...editData, seats: Number(e.target.value) })} />
+                            <input type="text" placeholder='Mileage' defaultValue={editData.mileage} onChange={e => setEditData({ ...editData, mileage: e.target.value })} />
+                            <input type="number" placeholder='Price (INR)' defaultValue={editData.price} onChange={e => setEditData({ ...editData, price: Number(e.target.value) })} required />
+                            <input type="number" placeholder='Rating' defaultValue={editData.rating} onChange={e => setEditData({ ...editData, rating: Number(e.target.value) })} required />
+                            <input type="number" placeholder='Stock count' defaultValue={editData.available} onChange={e => setEditData({ ...editData, available: Number(e.target.value) })} />
                             <div className="SaveOrCancel-btnGroup">
-                                <button className="cancelBtn btn" onClick={() => { setShowEditModal(false) }}>Cancel</button>
-                                <button className="saveBtn btn" onClick={handleEditSubmit}>Save</button>
+                                <button type="button" className="cancelBtn btn" onClick={() => setShowEditModal(false)}>Cancel</button>
+                                <button type="button" className="saveBtn btn" onClick={handleEditSubmit}>Save</button>
                             </div>
                         </div>
                     </div>,
                     document.body
                 )}
-            </div>)}
+            </div>
         </>
     );
 }
 
 Cards.propTypes = {
-    brand : PropTypes.string,
+    _id: PropTypes.string,
+    brand: PropTypes.string,
     model: PropTypes.string,
     bodyType: PropTypes.string,
     image: PropTypes.string,
-    fronImage: PropTypes.string,
+    frontImage: PropTypes.string,
     rearImage: PropTypes.string,
     leftSideImage: PropTypes.string,
     rightSideImage: PropTypes.string,
@@ -145,8 +182,9 @@ Cards.propTypes = {
     mileage: PropTypes.string,
     seats: PropTypes.number,
     price: PropTypes.number,
-    rating : PropTypes.number,
-    onUpdate: PropTypes.func
-}
+    rating: PropTypes.number,
+    available: PropTypes.number,
+    onUpdate: PropTypes.func,
+};
 
-export default Cards;
+export default memo(Cards);

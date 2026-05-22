@@ -81,7 +81,7 @@ function AdminOrders() {
                                     <div>
                                         {/* ✅ shows which user placed this order */}
                                         <p style={{ fontWeight: 600, color: 'var(--text)', margin: 0 }}>
-                                            {order.userId?.name || 'Unknown User'}
+                                            {order.userId?.userName || 'Unknown User'}
                                         </p>
                                         <p style={{ fontSize: '12px', color: 'var(--subtext)', margin: 0 }}>
                                             {order.userId?.email}

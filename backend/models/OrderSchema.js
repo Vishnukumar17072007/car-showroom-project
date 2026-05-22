@@ -13,7 +13,15 @@ const orderSchema = new mongoose.Schema(
                     type: mongoose.Schema.Types.ObjectId,
                     ref: "Car",
                     required: true,
-                }
+                },
+                priceAtPurchase: {
+                    type: Number,
+                    required: true,
+                },
+                carName: {
+                    type: String,
+                    default: "",
+                },
             }
         ],
         totalPrice: {
@@ -50,5 +58,7 @@ const orderSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+
+orderSchema.index({ userId: 1, createdAt: -1 });
 
 module.exports = mongoose.model('Order', orderSchema, "OrderLists");

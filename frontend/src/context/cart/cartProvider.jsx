@@ -2,14 +2,14 @@ import { useState, useEffect, useCallback } from "react";
 import { CartContext } from "./cartContext";
 import { useAuth } from "../auth/useAuth";
 import toast from "react-hot-toast";
-const API_URL = import.meta.env.VITE_API_URL;
+import API from "../../api/axios";
 
 export function CartProvider({ children }) {
     const { user } = useAuth();
     const [cartItems, setCartItems] = useState([]);
     const [cartLoading, setCartLoading] = useState(false);
 
-    const fetchCart = useCallback(async () => {        // ← NEW
+    const fetchCart = useCallback(async () => {
         setCartLoading(true);
         if (!user) {
             setCartItems([]);
@@ -17,9 +17,10 @@ export function CartProvider({ children }) {
             return;
         }
         try {
-            const res = await fetch(`${API_URL}/cart`, { credentials: "include" });
-            const data = await res.json();
-            setCartItems(data.items || data.item || []);
+            const data = await API.get('/cart');
+            setCartItems(data.data?.items || []);
+        } catch {
+            setCartItems([]);
         } finally {
             setCartLoading(false);
         }
@@ -31,26 +32,26 @@ export function CartProvider({ children }) {
 
     const addToCart = async (carIdOrCar) => {
         const carId = typeof carIdOrCar === "string" ? carIdOrCar : carIdOrCar?._id;
-        const res = await fetch(`${API_URL}/cart`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify({ carId })
-        });
-        const data = await res.json();
-        toast.success("Added to Cart!");
-        setCartItems(data?.items || []);
+        try {
+            const res = await API.post('/cart', { carId });
+            toast.success("Added to Cart!");
+            setCartItems(res.data?.items || []);
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Failed to add to cart");
+            throw err;
+        }
     };
 
     const removeFromCart = async (carIdOrCar) => {
         const carId = typeof carIdOrCar === "string" ? carIdOrCar : carIdOrCar?._id;
-        const res = await fetch(`${API_URL}/cart/${carId}`, {
-            method: "DELETE",
-            credentials: "include"
-        });
-        const data = await res.json();
-        toast.success("Removed from Cart.");
-        setCartItems(data?.items || []);
+        try {
+            const res = await API.delete(`/cart/${carId}`);
+            toast.success("Removed from Cart.");
+            setCartItems(res.data?.items || []);
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Failed to remove from cart");
+            throw err;
+        }
     };
 
     const isInCart = (carIdOrCar) => {

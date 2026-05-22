@@ -46,7 +46,7 @@ function EditProfile() {
         if (!pincode.trim())    return { ok: false, msg: "pincode cannot be empty." };
         if (showPasswordFields) {
             if (!currentPassword)          return { ok: false, msg: "Please enter your current password." };
-            if (newPassword.length < 6)    return { ok: false, msg: "New password must be at least 6 characters." };
+            if (newPassword.length < 8)    return { ok: false, msg: "New password must be at least 8 characters." };
             if (newPassword !== confirmPassword) return { ok: false, msg: "New passwords do not match." };
         }
         return { ok: true };

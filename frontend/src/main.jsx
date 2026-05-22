@@ -1,46 +1,65 @@
-import { StrictMode } from 'react'
+import { StrictMode, lazy, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import './style/index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './paths/home.jsx';
-import Vehicles from './paths/vehicles.jsx';
-import CarDetailsPage from './paths/CarDetailsPage.jsx';
-import WishList from './paths/wishList.jsx';
-import Support from './paths/support.jsx';
-import NotFound from './paths/NotFound.jsx'
-import Orders from './paths/orders.jsx'
-import Cart from './paths/cart.jsx'
 import { AuthProvider } from './context/auth/authProvider.jsx'
 import { WishListProvider } from './context/wish/wishListProvider.jsx'
 import { OrderProvider } from './context/order/orderProvider.jsx'
 import { CartProvider } from './context/cart/cartProvider.jsx'
 import ProtectedRoutes from './component/ProtectedRoutes.jsx'
+import AdminRoute from './component/AdminRoute.jsx'
 import { SearchProvider } from './context/search/searchProvider.jsx'
-import AdminOrders from './paths/AdminOrders.jsx';
-import Profile from './paths/Profile.jsx';
-import EditProfile from './paths/EditProfile.jsx';
 import ProfileProvider from './context/profile/profileProvider.jsx';
+
+const Home = lazy(() => import('./paths/home.jsx'));
+const Vehicles = lazy(() => import('./paths/vehicles.jsx'));
+const CarDetailsPage = lazy(() => import('./paths/CarDetailsPage.jsx'));
+const WishList = lazy(() => import('./paths/wishList.jsx'));
+const Support = lazy(() => import('./paths/support.jsx'));
+const NotFound = lazy(() => import('./paths/NotFound.jsx'));
+const Orders = lazy(() => import('./paths/orders.jsx'));
+const Cart = lazy(() => import('./paths/cart.jsx'));
+const AdminOrders = lazy(() => import('./paths/AdminOrders.jsx'));
+const Profile = lazy(() => import('./paths/Profile.jsx'));
+const EditProfile = lazy(() => import('./paths/EditProfile.jsx'));
+
+function PageLoader() {
+  return (
+    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '200px' }}>
+      <div className="spinner-border" role="status" />
+    </div>
+  );
+}
+
+function LazyPage({ children }) {
+  return <Suspense fallback={<PageLoader />}>{children}</Suspense>;
+}
 
 const router = createBrowserRouter([
   {
-    path : "/",
-    element : <App />,
-    errorElement : <NotFound />,
+    path: "/",
+    element: <App />,
+    errorElement: <LazyPage><NotFound /></LazyPage>,
     children: [
-      { index: true,              element: <Home /> },
-      { path: "/vehicles",         element: <Vehicles /> },
-      { path: "/vehicles/:id", element: <CarDetailsPage />},
-      { path: "/support",         element: <Support /> },
+      { index: true, element: <LazyPage><Home /></LazyPage> },
+      { path: "/vehicles", element: <LazyPage><Vehicles /></LazyPage> },
+      { path: "/vehicles/:id", element: <LazyPage><CarDetailsPage /></LazyPage> },
+      { path: "/support", element: <LazyPage><Support /></LazyPage> },
       {
-        element : <ProtectedRoutes />,
+        element: <ProtectedRoutes />,
         children: [
-          { path: "/admin/orders", element: <AdminOrders /> },
-          { path: "/wishlist", element: <WishList /> },
-          { path: "/orders", element: <Orders />},
-          { path: "/cartList", element: <Cart /> },
-          {path: "/profile", element: <Profile />},
-          {path: "/editProfile", element: <EditProfile />},
+          { path: "/wishlist", element: <LazyPage><WishList /></LazyPage> },
+          { path: "/orders", element: <LazyPage><Orders /></LazyPage> },
+          { path: "/cartList", element: <LazyPage><Cart /></LazyPage> },
+          { path: "/profile", element: <LazyPage><Profile /></LazyPage> },
+          { path: "/editProfile", element: <LazyPage><EditProfile /></LazyPage> },
+        ]
+      },
+      {
+        element: <AdminRoute />,
+        children: [
+          { path: "/admin/orders", element: <LazyPage><AdminOrders /></LazyPage> },
         ]
       }
     ]
@@ -64,6 +83,3 @@ createRoot(document.getElementById('root')).render(
     </AuthProvider>
   </StrictMode>,
 )
-
-//"npm run dev" command to run the appilication 
-//can be run using backend directory

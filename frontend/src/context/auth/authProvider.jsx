@@ -20,7 +20,6 @@ export function AuthProvider({children}){
                     // Expected — no cookie, user is a guest
                     setUser(null);
                 } else {
-                    console.log("Unexpected auth error:", err.message);
                     setUser(null);
                 }
             }
@@ -31,18 +30,18 @@ export function AuthProvider({children}){
         restoreSession();
     },[])
 
-    async function register(userName, email, password, phone){
-        const res1 = await API.post('/auth/register', {userName, email, password, phone});
-        const res2 = await API.post('/auth/login', {email, password});
-        setUser(res2.data.user);
-        toast.success("Welcome🙏 how can we help you!?");
-        return res1.data;
+    async function register(userName, email, password, phone) {
+        await API.post('/auth/register', { userName, email, password, phone });
+        const res = await API.post('/auth/login', { email, password });
+        setUser(res.data.user);
+        toast.success("Welcome! How can we help you?");
+        return res.data;
     }
 
     async function login(email, password) {
-        const res = await API.post('/auth/login', {email, password});
+        const res = await API.post('/auth/login', { email, password });
         setUser(res.data.user);
-        toast.success("Welcome again🙏 how can we help you!?");
+        toast.success("Welcome back! How can we help you?");
         return res.data;
     }
 

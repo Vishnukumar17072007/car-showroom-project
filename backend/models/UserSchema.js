@@ -3,20 +3,22 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
     userName: {
         type: String,
-        require: true,
+        required: true,
     },
     email: {
         type: String,
-        require: true,
-        unique: true
+        required: true,
+        unique: true,
+        lowercase: true,
+        trim: true,
     },
     password: {
         type: String,
-        require: true
+        required: true
     },
     phone: {
         type: String,
-        require: true,
+        required: true,
         unique: true
     },
     image: {
@@ -38,12 +40,12 @@ const userSchema = new mongoose.Schema({
         },
         pincode: {
             type: Number,
-            default: ""
+            default: null
         }
     },
     role: {
         type: String,
-        enum: ["user","admin"],
+        enum: ["user", "admin"],
         default: "user"
     },
     subscription: {
@@ -51,6 +53,8 @@ const userSchema = new mongoose.Schema({
         enum: ["free", "pro", "premium"],
         default: "free"
     }
-}, { timestamps: true })
+}, { timestamps: true });
 
-module.exports = mongoose.model("User", userSchema, "UserDetails")
+userSchema.index({ email: 1 });
+
+module.exports = mongoose.model("User", userSchema, "UserDetails");
