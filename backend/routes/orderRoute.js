@@ -21,7 +21,7 @@ async function restoreInventory(items, session) {
             return {
                 updateOne: {
                     filter: {
-                        _id: carId
+                        _id: item.carId._id || item.carId
                     },
                     update: {
                         $inc: {
