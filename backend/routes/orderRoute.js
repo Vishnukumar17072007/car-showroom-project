@@ -12,10 +12,15 @@ const { runInTransaction } = require('../utils/transaction');
 async function restoreInventory(items, session) {
     const bulkOps = items.map((item) => ({
         updateOne: {
-            filter: { _id: item.carId },
-            update: { $inc: { available: 1 } },
-        },
+            filter: {
+                _id: item.carId?._id || item.carId
+            },
+            update: {
+                $inc: { available: 1 }
+            }
+        }
     }));
+
     if (bulkOps.length > 0) {
         const opts = session ? { session } : {};
         await Car.bulkWrite(bulkOps, opts);
@@ -246,10 +251,10 @@ router.put('/admin/:orderId/status', verifyToken, verifyRole('admin'), async (re
                 throw err;
             }
 
-            const wasActive = ['pending', 'confirmed'].includes(found.status);
-            const becomingCancelled = status === 'cancelled' && found.status !== 'cancelled';
-
-            if (becomingCancelled && wasActive) {
+            if (
+                status === 'cancelled' &&
+                ['pending','confirmed'].includes(found.status)
+            ){
                 await restoreInventory(found.items, session);
             }
 

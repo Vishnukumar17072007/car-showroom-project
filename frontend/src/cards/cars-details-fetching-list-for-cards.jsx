@@ -103,12 +103,6 @@ function CarDetailsFetchingListForCards({ filters, search }) {
 
     return (
         <div className="catalog-list-wrap">
-            <CatalogPagination
-                page={currentPage}
-                pages={pages}
-                total={total}
-                onPageChange={setPage}
-            />
 
             <div className="car_card_box d-flex flex-wrap gap-2">
                 {carList.map((detail) => (
