@@ -10,21 +10,38 @@ const { isValidObjectId } = require('../utils/objectId');
 const { runInTransaction } = require('../utils/transaction');
 
 async function restoreInventory(items, session) {
-    const bulkOps = items.map((item) => ({
-        updateOne: {
-            filter: {
-                _id: item.carId?._id || item.carId
-            },
-            update: {
-                $inc: { available: 1 }
-            }
-        }
-    }));
 
-    if (bulkOps.length > 0) {
-        const opts = session ? { session } : {};
-        await Car.bulkWrite(bulkOps, opts);
-    }
+    const bulkOps = items
+        .filter(item => item?.carId)
+        .map((item) => {
+
+            const carId =
+                item.carId._id || item.carId;
+
+            return {
+                updateOne: {
+                    filter: {
+                        _id: carId
+                    },
+                    update: {
+                        $inc: {
+                            available: 1
+                        }
+                    }
+                }
+            };
+        });
+
+    if (!bulkOps.length) return;
+
+    const opts = session
+        ? { session }
+        : {};
+
+    await Car.bulkWrite(
+        bulkOps,
+        opts
+    );
 }
 
 function sessionOpts(session) {
@@ -180,7 +197,10 @@ router.patch('/cancel/:orderId', verifyToken, async (req, res) => {
         if (err.status && err.payload) {
             return res.status(err.status).json(err.payload);
         }
-        console.error('Order PATCH cancel error:', err);
+        console.error(
+            'Order PATCH cancel error:',
+            err.stack
+         );
         res.status(500).json({ message: 'Failed to cancel order' });
     }
 });
@@ -268,7 +288,10 @@ router.put('/admin/:orderId/status', verifyToken, verifyRole('admin'), async (re
         if (err.status && err.payload) {
             return res.status(err.status).json(err.payload);
         }
-        console.error('Admin status update error:', err);
+        console.error(
+            'Admin status update error:',
+            err.stack
+         );
         res.status(500).json({ message: 'Failed to update status' });
     }
 });

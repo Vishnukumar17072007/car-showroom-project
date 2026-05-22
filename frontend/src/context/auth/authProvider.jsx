@@ -31,18 +31,39 @@ export function AuthProvider({children}){
     },[])
 
     async function register(userName, email, password, phone) {
-        await API.post('/auth/register', { userName, email, password, phone });
-        const res = await API.post('/auth/login', { email, password });
-        setUser(res.data.user);
+        await API.post('/auth/register', {
+            userName,
+            email,
+            password,
+            phone
+        });
+    
+        await API.post('/auth/login', {
+            email,
+            password
+        });
+    
+        const profile = await API.get('/auth/me');
+    
+        setUser(profile.data);
+    
         toast.success("Welcome! How can we help you?");
-        return res.data;
+        return profile.data;
     }
-
+    
     async function login(email, password) {
-        const res = await API.post('/auth/login', { email, password });
-        setUser(res.data.user);
+    
+        await API.post('/auth/login', {
+            email,
+            password
+        });
+    
+        const profile = await API.get('/auth/me');
+    
+        setUser(profile.data);
+    
         toast.success("Welcome back! How can we help you?");
-        return res.data;
+        return profile.data;
     }
 
     async function logout(){
