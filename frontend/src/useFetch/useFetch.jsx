@@ -10,6 +10,10 @@ function toApiPath(url) {
     return url.startsWith('/') ? url : `/${url}`;
 }
 
+/**
+ * Generic GET hook. For car lists use useCarsCatalog — it handles pagination shape.
+ * Single-resource responses (e.g. GET /cars/:id) are returned as-is.
+ */
 const useFetch = (url) => {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);

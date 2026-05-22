@@ -14,6 +14,7 @@ const cartRoute = require('./routes/cartRoute');
 const wishListRoute = require('./routes/wishListRoute');
 const orderRoute = require('./routes/orderRoute');
 const authRoutes = require('./routes/authRoute');
+const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 const isProd = process.env.NODE_ENV === 'production';
@@ -34,20 +35,33 @@ const authLimiter = rateLimit({
     message: { message: 'Too many attempts. Please try again later.' },
 });
 
+function getAllowedOrigins() {
+    const defaults = [
+        'http://localhost:5173',
+        'https://car-showroom-project-d4e5.vercel.app',
+        'https://carfield.vercel.app',
+    ];
+    const fromEnv = (process.env.CLIENT_URL || '')
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
+    return [...new Set([...defaults, ...fromEnv])];
+}
+
+const allowedOrigins = getAllowedOrigins();
+const vercelPreview = /^https:\/\/car-showroom-project-d4e5.*\.vercel\.app$/;
+
 app.use(cors({
     origin(origin, callback) {
-        const allowedOrigins = [
-            'http://localhost:5173',
-            'https://car-showroom-project-d4e5.vercel.app',
-            'https://carfield.vercel.app',
-        ];
-        const vercelPreview = /^https:\/\/car-showroom-project-d4e5.*\.vercel\.app$/;
-
-        if (!origin || allowedOrigins.includes(origin) || vercelPreview.test(origin)) {
-            callback(null, true);
-        } else {
-            callback(null, false);
+        // No origin = same-origin or server-to-server tools — allow
+        if (!origin) {
+            return callback(null, true);
         }
+        if (allowedOrigins.includes(origin) || vercelPreview.test(origin)) {
+            return callback(null, true);
+        }
+        // Deny without throwing (callback(null, false))
+        return callback(null, false);
     },
     credentials: true,
 }));
@@ -69,10 +83,7 @@ app.use('/api/cart', cartRoute);
 app.use('/api/wishlist', wishListRoute);
 app.use('/api/order', orderRoute);
 
-app.use((err, req, res, next) => {
-    console.error(err);
-    res.status(err.status || 500).json({ message: 'Internal server error' });
-});
+app.use(errorHandler);
 
 const PORT = process.env.PORT;
 

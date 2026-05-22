@@ -5,9 +5,9 @@ const verifyToken = require('../middleware/verifyToken');
 const verifyRole = require('../middleware/verifyRole');
 const { safeRegex } = require('../utils/regex');
 const { isValidObjectId } = require('../utils/objectId');
+const asyncHandler = require('../utils/asyncHandler');
 
-router.get('/', async (req, res) => {
-    try {
+router.get('/', asyncHandler(async (req, res) => {
         const { brand, model, bodyType, available, transmission, fuelType, maxPrice, search } = req.query;
         const query = { isDeleted: false };
 
@@ -47,7 +47,7 @@ router.get('/', async (req, res) => {
         }
 
         const page = Math.max(1, parseInt(req.query.page, 10) || 1);
-        const limit = Math.min(50, Math.max(1, parseInt(req.query.limit, 10) || 20));
+        const limit = Math.min(50, Math.max(1, parseInt(req.query.limit, 10) || 12));
         const skip = (page - 1) * limit;
 
         const [cars, total] = await Promise.all([
@@ -56,11 +56,7 @@ router.get('/', async (req, res) => {
         ]);
 
         res.json({ cars, total, page, pages: Math.ceil(total / limit) || 1 });
-    } catch (err) {
-        console.error('Cars list error:', err);
-        res.status(500).json({ message: 'Failed to load cars' });
-    }
-});
+}));
 
 router.post('/addCar', verifyToken, verifyRole("admin"), async (req, res) => {
     try {

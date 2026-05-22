@@ -2573,6 +2573,57 @@ input[type="checkbox"]:checked {
     animation: spin 0.8s linear infinite;
 }
 
+/* Catalog pagination */
+.catalog-list-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.catalog-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 8px 12px;
+  margin: 4px 0;
+}
+
+.catalog-pagination-info {
+  color: var(--text, #e8e8e8);
+  font-size: 0.9rem;
+  min-width: 180px;
+  text-align: center;
+}
+
+.catalog-pagination-btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--gold, #e8b500);
+  background: transparent;
+  color: var(--gold, #e8b500);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.catalog-pagination-btn:hover:not(:disabled) {
+  background: var(--gold, #e8b500);
+  color: #1a1a2e;
+}
+
+.catalog-pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.catalog-error {
+  color: #e74c3c;
+  padding: 16px;
+  text-align: center;
+}
+
 /* Media query */
 /* ============================================================
    FILTER TOGGLE — base styles (outside all media queries)

@@ -1,42 +1,35 @@
-import useFetch from "../useFetch/useFetch";
-import Cards from "./car-cards"
+import Cards from "./car-cards";
 import { useAuth } from "../context/auth/useAuth";
 import API from '../api/axios';
-import { useState, useMemo, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import toast from 'react-hot-toast';
 import { CarGridSkeleton } from '../component/PageSkeletons';
+import CatalogPagination from '../component/CatalogPagination';
+import { useCarsCatalog, CARS_PAGE_SIZE } from '../hooks/useCarsCatalog';
 
 function CarDetailsFetchingListForCards({ filters, search }) {
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [updateCar, setUpdateCar] = useState({});
-    const { user } = useAuth();
+    const [page, setPage] = useState(1);
     const [refreshKey, setRefreshKey] = useState(0);
+    const { user } = useAuth();
+
+    // Reset to page 1 when filters or search change
+    useEffect(() => {
+        setPage(1);
+    }, [filters, search]);
 
     const handleRefresh = useCallback(() => {
         setRefreshKey(k => k + 1);
     }, []);
 
-    const params = new URLSearchParams();
-    if (filters?.available) params.append("available", "true");
-    if (filters?.bodyType) params.append("bodyType", filters.bodyType);
-    if (filters?.transmission) params.append("transmission", filters.transmission);
-    if (filters?.fuelType) params.append("fuelType", filters.fuelType);
-    if (filters?.maxPrice) params.append("maxPrice", filters.maxPrice);
-    if (search) params.append("search", search);
-    params.append("limit", "50");
-    params.append("page", "1");
-    if (refreshKey) params.append("_refresh", String(refreshKey));
-
-    const queryString = params.toString();
-    const url = `${import.meta.env.VITE_API_URL}/cars${queryString ? `?${queryString}` : ""}`;
-
-    const [response, error, loading] = useFetch(url);
-
-    const carList = useMemo(() => {
-        if (!response) return [];
-        if (Array.isArray(response)) return response;
-        return response.cars || [];
-    }, [response]);
+    const { cars: carList, page: currentPage, pages, total, loading, error } = useCarsCatalog({
+        filters,
+        search,
+        page,
+        limit: CARS_PAGE_SIZE,
+        refreshKey,
+    });
 
     async function handleUpdateSubmit() {
         const {
@@ -71,6 +64,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
             await API.post('/cars/addCar', updateCar);
             setShowUpdateForm(false);
             setUpdateCar({});
+            setPage(1);
             handleRefresh();
             toast.success('Car added successfully!');
         } catch (err) {
@@ -81,22 +75,41 @@ function CarDetailsFetchingListForCards({ filters, search }) {
     if (loading) {
         return (
             <>
-                {!error && <CarGridSkeleton count={12} />}
-                {error && <p>{error}</p>}
+                {!error && <CarGridSkeleton count={CARS_PAGE_SIZE} />}
+                {error && <p className="catalog-error">{error}</p>}
             </>
         );
     }
 
+    if (error) {
+        return <p className="catalog-error">{error}</p>;
+    }
+
     if (!carList.length) {
         return (
-            <div className="car_card_box d-flex justify-content-center align-items-center" style={{ minHeight: "200px" }}>
-                <p style={{ fontSize: "1.2rem", color: "gray" }}>🚗 No cars found matching your search.</p>
+            <div className="car_card_box d-flex flex-column gap-3">
+                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "200px" }}>
+                    <p style={{ fontSize: "1.2rem", color: "gray" }}>🚗 No cars found matching your search.</p>
+                </div>
+                <CatalogPagination
+                    page={currentPage}
+                    pages={pages}
+                    total={total}
+                    onPageChange={setPage}
+                />
             </div>
         );
     }
 
     return (
-        <>
+        <div className="catalog-list-wrap">
+            <CatalogPagination
+                page={currentPage}
+                pages={pages}
+                total={total}
+                onPageChange={setPage}
+            />
+
             <div className="car_card_box d-flex flex-wrap gap-2">
                 {carList.map((detail) => (
                     <Cards
@@ -158,7 +171,14 @@ function CarDetailsFetchingListForCards({ filters, search }) {
                     </div>
                 )}
             </div>
-        </>
+
+            <CatalogPagination
+                page={currentPage}
+                pages={pages}
+                total={total}
+                onPageChange={setPage}
+            />
+        </div>
     );
 }
 

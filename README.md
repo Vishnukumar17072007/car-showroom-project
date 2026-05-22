@@ -53,7 +53,7 @@ node seed.js
 | `POST /api/auth/register` | Register (role always `user`) |
 | `POST /api/auth/login` | Login |
 | `GET /api/auth/me` | Current user |
-| `GET /api/cars` | Paginated catalog (`?page=1&limit=20`) |
+| `GET /api/cars` | Paginated catalog (`?page=1&limit=12`) — UI has Previous/Next on `/vehicles` |
 | `GET /api/cars/:id` | Car detail |
 | `POST /api/order` | Place order (transactional stock) |
 | `GET /api/order/admin/all` | Admin orders |
