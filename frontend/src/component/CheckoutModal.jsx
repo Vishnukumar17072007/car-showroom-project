@@ -24,12 +24,12 @@ const CheckoutModal = ({ onClose, carIds }) => {
 
     const handleUseExistingData = () => {
         setForm({
-            name:    user.userName              || '',
-            phone:   user.phone                 || '',
-            address: user.location?.address     || '',
-            city:    user.location?.city        || '',
-            state:   user.location?.state       || '',
-            pincode: user.location?.pincode?.toString() || '',
+            name:    user.userName                          || '',
+            phone: user.phone?.replace(/\D/g,'').slice(-10) || '',
+            address: user.location?.address                 || '',
+            city:    user.location?.city                    || '',
+            state:   user.location?.state                   || '',
+            pincode: user.location?.pincode?.toString()     || '',
         });
         setShowModal(false);
     };
