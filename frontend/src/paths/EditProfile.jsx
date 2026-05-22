@@ -10,12 +10,12 @@ function EditProfile() {
     const { loading, error, success, clearMessages, updateProfile } = useProfile();
 
     // Local form state only — no API logic here
-    const [userName, setUserName] = useState(user?.userName                 || "");
-    const [phone,    setPhone]    = useState(user?.phone                    || "");
-    const [address,    setAddress]    = useState(user?.location?.address     || "");
-    const [city,    setCity]    = useState(user?.location?.city              || "");
-    const [state,    setState]    = useState(user?.location?.state           || "");
-    const [pincode,    setPincode]    = useState(user?.location?.pincode     || "");
+    const [userName, setUserName] = useState(String(user?.userName          || ""));
+    const [phone,    setPhone]    = useState(String(user?.phone             || ""));
+    const [address,  setAddress]  = useState(String(user?.location?.address || ""));
+    const [city,     setCity]     = useState(String(user?.location?.city    || ""));
+    const [state,    setState]    = useState(String(user?.location?.state   || ""));
+    const [pincode,  setPincode]  = useState(String(user?.location?.pincode || ""));
 
 
     const [showPasswordFields, setShowPasswordFields] = useState(false);
@@ -38,12 +38,12 @@ function EditProfile() {
 
     // ── Validation (stays in page — it's UI logic, not DB logic) ──
     function validate() {
-        if (!userName.trim()) return { ok: false, msg: "Username cannot be empty." };
-        if (!phone.trim())    return { ok: false, msg: "Phone cannot be empty." };
-        if (!address.trim())    return { ok: false, msg: "address cannot be empty." };
-        if (!city.trim())    return { ok: false, msg: "city cannot be empty." };
-        if (!state.trim())    return { ok: false, msg: "state cannot be empty." };
-        if (!pincode.trim())    return { ok: false, msg: "pincode cannot be empty." };
+        if (!String(userName).trim()) return { ok: false, msg: "Username cannot be empty." };
+        if (!String(phone).trim())    return { ok: false, msg: "Phone cannot be empty." };
+        if (!String(address).trim())    return { ok: false, msg: "address cannot be empty." };
+        if (!String(city).trim())    return { ok: false, msg: "city cannot be empty." };
+        if (!String(state).trim())    return { ok: false, msg: "state cannot be empty." };
+        if (!String(pincode).trim())    return { ok: false, msg: "pincode cannot be empty." };
         if (showPasswordFields) {
             if (!currentPassword)          return { ok: false, msg: "Please enter your current password." };
             if (newPassword.length < 8)    return { ok: false, msg: "New password must be at least 8 characters." };
