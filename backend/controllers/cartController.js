@@ -1,4 +1,4 @@
-const Cart = require("../models/CartSchema");
+const Cart = require("../models/CartListSchema");
 
 const getCart = async (req, res) => {
   const cart = await Cart.findOne({ user: req.user.userId }).populate(

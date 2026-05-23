@@ -1,33 +1,37 @@
-const Wishlist = require("../models/WishlistSchema");
+const Wishlist = require("../models/WishListSchema");
 
 const getWishlist = async (req, res) => {
-  const wishlist = await Wishlist.findOne({ user: req.user.userId }).populate("cars");
-  res.status(200).json( wishlist || { cars: [] } );
+  const wishlist = await Wishlist.findOne({
+    userId: req.user.userId,
+  }).populate("items.carId");
+  res.status(200).json(wishlist || { items: [] });
 };
 
 const addToWishlist = async (req, res) => {
-  let wishlist = await Wishlist.findOne({ user: req.user.userId });
+  let wishlist = await Wishlist.findOne({ userId: req.user.userId });
   if (!wishlist) {
-    wishlist = new Wishlist({user: req.user.userId, cars: [] });
+    wishlist = new Wishlist({ userId: req.user.userId, items: [] });
   }
-  const exists = wishlist.cars.some((car) => car.toString() === req.body.car);
+  const exists = wishlist.items.some(
+    (item) => item.carId.toString() === req.body.car,
+  );
   if (!exists) {
-    wishlist.cars.push(req.body.car);
+    wishlist.items.push({ carId: req.body.car });
   }
   await wishlist.save();
   res.status(200).json({ message: "Added to wishlist", wishlist });
 };
 
 const removeFromWishlist = async (req, res) => {
-  const wishlist = await Wishlist.findOne({ user: req.user.userId });
+  const wishlist = await Wishlist.findOne({ userId: req.user.userId });
   if (!wishlist) {
     const error = new Error("Wishlist not found");
     error.status = 404;
     throw error;
   }
-  wishlist.cars = wishlist.cars.filter((car) => car.toString() !== req.params.id);
+  wishlist.items = wishlist.items.filter((item) => item.carId.toString() !== req.params.id);
   await wishlist.save();
   res.status(200).json({message: "Removed from wishlist"});
 };
 
-module.exports = { getWishlist, addToWishlist, removeFromWishlist };
+module.exports = { getWishlist, addToWishlist, removeFromWishlist};
