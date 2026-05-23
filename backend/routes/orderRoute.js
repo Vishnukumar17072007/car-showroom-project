@@ -9,6 +9,7 @@ const { orderValidation } = require("../validations/orderValidation");
 const { createOrder, getUserOrders, getAllOrders } = require("../controllers/orderController");
 const { updateOrderStatus, deleteOrder } = require("../controllers/orderAdminController");
 
+router.get('/', verifyToken, asyncHandler(getUserOrders));
 router.post( "/", verifyToken, orderValidation, validateRequest, asyncHandler(createOrder) );
 router.get("/my-orders", verifyToken, asyncHandler(getUserOrders));
 router.get("/admin", verifyToken, verifyRole("admin"), asyncHandler(getAllOrders));
