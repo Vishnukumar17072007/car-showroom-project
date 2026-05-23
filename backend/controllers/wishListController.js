@@ -13,10 +13,10 @@ const addToWishlist = async (req, res) => {
     wishlist = new Wishlist({ userId: req.user.userId, items: [] });
   }
   const exists = wishlist.items.some(
-    (item) => item.carId.toString() === req.body.car,
+    (item) => item.carId.toString() === req.body.carId,
   );
   if (!exists) {
-    wishlist.items.push({ carId: req.body.car });
+    wishlist.items.push({ carId: req.body.carId });
   }
   await wishlist.save();
   res.status(200).json({ message: "Added to wishlist", wishlist });

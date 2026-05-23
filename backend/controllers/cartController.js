@@ -1,9 +1,7 @@
 const Cart = require("../models/CartListSchema");
 
 const getCart = async (req, res) => {
-  const cart = await Cart.findOne({ user: req.user.userId }).populate(
-    "cars.car",
-  );
+  const cart = await Cart.findOne({ user: req.user.userId }).populate('items.carId');
 
   res.status(200).json(cart || { cars: [] });
 };
@@ -15,7 +13,7 @@ const addToCart = async (req, res) => {
     cart = new Cart({ user: req.user.userId, cars: [] });
   }
 
-  cart.cars.push({ car: req.body.car, quantity: req.body.quantity || 1 });
+  cart.cars.push({ carId:req.body.carId, quantity: req.body.quantity || 1 });
 
   await cart.save();
 
@@ -39,7 +37,7 @@ const removeFromCart = async (req, res) => {
     throw error;
   }
 
-  cart.cars = cart.cars.filter((item) => item.car.toString() !== req.params.id);
+  cart.cars = cart.cars.filter((item) => item.carId.toString() === req.params.id);
 
   await cart.save();
 
@@ -48,8 +46,4 @@ const removeFromCart = async (req, res) => {
   });
 };
 
-module.exports = {
-  getCart,
-  addToCart,
-  removeFromCart,
-};
+module.exports = { getCart, addToCart, removeFromCart };

@@ -11,8 +11,8 @@ const { updateProfile }=require('../controllers/profileUpdateController');
 
 router.post('/register', registerValidation, validateRequest, asyncHandler(register));
 router.post('/login', loginValidation, validateRequest, asyncHandler(login));
-router.post('/logout', asyncHandler(logout));
-router.get('/me', verifyToken, asyncHandler(getMe));
-router.put('/update', verifyToken, updateProfileValidation, validateRequest, asyncHandler(updateProfile));
+router.post('/logout', verifyToken, asyncHandler(logout));
+router.get('/me', verifyToken, asyncHandler(getProfile));
+router.put('/update', verifyToken, profileValidation, validateRequest, asyncHandler(updateProfile));
 
 module.exports = router;
