@@ -14,6 +14,7 @@ const cartRoute = require('./routes/cartRoute');
 const wishListRoute = require('./routes/wishListRoute');
 const orderRoute = require('./routes/orderRoute');
 const authRoutes = require('./routes/authRoute');
+const chatRoute = require('./routes/chatRoute');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -82,7 +83,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/cart', cartRoute);
 app.use('/api/wishlist', wishListRoute);
 app.use('/api/order', orderRoute);
-
+app.use('/api/chat', chatRoute);
 app.use(errorHandler);
 
 const PORT = process.env.PORT;

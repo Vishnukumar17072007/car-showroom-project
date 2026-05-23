@@ -23,7 +23,6 @@ router.post('/', async (req, res) => {
                 },
             }
         );
-        // Reformat response to match Anthropic shape so frontend needs no change
         res.json({
             content: [{ text: response.data.choices[0].message.content }]
         });

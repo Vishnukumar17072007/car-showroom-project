@@ -50,17 +50,16 @@ function Support() {
           content: m.text,
         }));
 
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          system: SYSTEM_PROMPT,
-          messages: apiMessages,
-        }),
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/chat`, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+              system: SYSTEM_PROMPT,
+              messages: apiMessages,
+          }),
       });
 
       const data = await response.json();
