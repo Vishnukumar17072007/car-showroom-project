@@ -61,7 +61,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
         }
 
         try {
-            await API.post('/cars/addCar', updateCar);
+            await API.post('/cars/', updateCar);
             setShowUpdateForm(false);
             setUpdateCar({});
             setPage(1);
