@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import API from "../api/axios";
 import { normalizeCarsResponse } from "../utils/carsApi";
 
-const DEFAULT_LIMIT = 12;
+const DEFAULT_LIMIT = 11;
 
 function buildCarsQuery({ filters, search, page, limit, refreshKey }) {
     const params = new URLSearchParams();
