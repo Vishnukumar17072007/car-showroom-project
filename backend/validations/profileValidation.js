@@ -3,9 +3,14 @@ const { body: validate } = require("express-validator");
 const updateProfileValidation = [
   validate("userName").trim().notEmpty().withMessage("Username required"),
 
-  validate("phone")
-    .matches(/^[0-9]{10}$/)
-    .withMessage("Phone must contain 10 digits"),
+  validate('phone')
+    .custom((value)=>{
+        const cleanedPhone = value.replace(/\D/g,'');
+        if(cleanedPhone.length!==12 && cleanedPhone.length!==10){
+            throw new Error("Invalid phone number");
+        }
+        return true;
+    }),
 
   validate("address").optional().trim(),
 
