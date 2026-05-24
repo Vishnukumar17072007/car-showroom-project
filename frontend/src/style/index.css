@@ -737,12 +737,17 @@ input[type="checkbox"]:checked {
    .car_card_box{
     flex:1;
     padding:16px;
+    overflow-y:auto;
 
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+
+    /* force 4 cards on desktop */
+    grid-template-columns:repeat(4,minmax(220px,1fr));
 
     gap:16px;
+
     align-items:start;
+    align-content:start;
 }
 
 @media(max-width:1400px){
