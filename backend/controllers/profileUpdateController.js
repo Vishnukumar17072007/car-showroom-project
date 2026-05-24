@@ -15,7 +15,7 @@ const updateProfile = async (req, res) => {
   }
 
   user.userName = userName.trim();
-  user.phone = phone.replace("+91", "").trim();
+  user.phone = phone.replace(/\s+/g,'');
   user.location.address = address.trim();
   user.location.city = city.trim();
   user.location.state = state.trim();
