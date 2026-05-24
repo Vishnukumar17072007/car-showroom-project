@@ -126,7 +126,7 @@ function Cart() {
                         <hr />
                         <button
                             className="btn btn-success w-100"
-                            onClick={() => openCheckout(null)}
+                            onClick={() => openCheckout( cart.map( item => item?.carId?._id || item?.carId ))}
                             disabled={hasUnavailable}
                             title={hasUnavailable ? "Remove unavailable cars from cart to proceed" : ""}
                         >
