@@ -703,17 +703,16 @@ input[type="checkbox"]:checked {
    CAR CARD GRID
    ============================================================ */
 .car_card_box {
-  flex: 1;
-  height: calc(100vh - 54px);
-  max-height: calc(100vh - 54px);
-  padding: 16px;
-  overflow-y: auto;
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  justify-content: stretch;
-  align-content: start;
-  gap: 14px;
+  flex:1;
+  height:calc(100vh - 54px);
+  max-height:calc(100vh - 54px);
+  padding:16px;
+  overflow-y:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,320px);
+  justify-content:start;
+  align-content:start;
+  gap:18px;
 }
 
 .car_card_box::-webkit-scrollbar { display: none; }
@@ -726,7 +725,8 @@ input[type="checkbox"]:checked {
   border: 1px solid var(--border);
   border-radius: 14px;
   overflow: hidden;
-  width: 100%;
+  width:320px;
+  min-height:480px;
   display: flex;
   flex-direction: column;
   transition: all .2s ease;
@@ -740,7 +740,7 @@ input[type="checkbox"]:checked {
 
 .car_image {
   width:100%;
-  height:220px;
+  height:240px;
   overflow:hidden;
   background:#fff;
   display:flex;
