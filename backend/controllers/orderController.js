@@ -7,8 +7,11 @@ const createOrder = async (req, res) => {
 
   const cars = await Car.find({
     _id: {
-      $in: carIds,
+      $in: carIds
     },
+    available: {
+      $gt: 0
+    }
   });
 
   if (!cars.length) {
@@ -44,6 +47,8 @@ const createOrder = async (req, res) => {
   });
 
   await order.save();
+
+  await Car.updateMany({_id: { $in: carIds }},{$inc: {available: -1}});
 
   await Cart.updateOne(
     {

@@ -12,7 +12,7 @@ const getDashboardStats = async (req, res) => {
     Order.find(),
   ]);
 
-  const totalRevenue = orders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
+  const totalRevenue = orders.reduce((sum, order) => sum + Number(order.totalPrice || 0), 0);
 
   res.status(200).json({totalUsers, totalCars, totalOrders, totalRevenue });
 };

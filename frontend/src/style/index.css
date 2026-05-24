@@ -711,7 +711,7 @@ input[type="checkbox"]:checked {
   position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  justify-content: space-between;
+  justify-content: stretch;
   align-content: start;
   gap: 14px;
 }
@@ -724,7 +724,7 @@ input[type="checkbox"]:checked {
 .car-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border);
-  width: 250px;
+  width: 100%;
   border-radius: var(--radius-md);
   height: auto;
   display: flex;
@@ -740,19 +740,19 @@ input[type="checkbox"]:checked {
 }
 
 .car_image {
-  height: 140px;
-  min-height: 140px;
   width: 100%;
-  background-color: var(--bg-hover);
-  border-radius: var(--radius-md) var(--radius-md) 0 0;
-  position: relative;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background-color: var(--bg-hover);
+  position: relative;
 }
 
 .car_image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
   transition: transform 0.3s ease;
 }
 
@@ -925,7 +925,7 @@ input[type="checkbox"]:checked {
 .car-card-update {
   background-color: var(--bg-card);
   border: 1.5px dashed var(--gold-border);
-  width: 200px;
+  width: 100%;
   border-radius: var(--radius-md);
   height: auto;
   display: flex;
@@ -940,8 +940,6 @@ input[type="checkbox"]:checked {
 }
 
 .car_image-update {
-  height: 140px;
-  min-height: 140px;
   width: 100%;
   background-color: var(--bg-hover);
   border-radius: var(--radius-md) var(--radius-md) 0 0;
@@ -1084,7 +1082,7 @@ input[type="checkbox"]:checked {
    ============================================================ */
 .cart_page {
   height: calc(100vh - 54px);
-  overflow: hidden;
+  overflow-y: auto;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -1174,18 +1172,22 @@ input[type="checkbox"]:checked {
 .logForm { padding: 5px; }
 
 .logForm div {
-  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding-bottom: 12px;
 }
 
 .logForm div label {
-  width: 40%;
+  width: 30%;
+  flex-shrink: 0;
   font-size: 13px;
   color: var(--text-secondary);
 }
 
 .logForm div input {
-  width: 75%;
+  width: 100%;
+  flex: 1;
   border-radius: var(--radius-sm);
   background: var(--bg-input);
   border: 1px solid var(--border-hover);
@@ -1237,6 +1239,8 @@ input[type="checkbox"]:checked {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  max-height: 85vh;
+  overflow-y: auto;
   width: 340px;
 }
 
@@ -1279,6 +1283,23 @@ input[type="checkbox"]:checked {
   align-items: center;
   z-index: 999;
   backdrop-filter: blur(4px);
+}
+
+.editModalContent,
+.updateFormContent {
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.editModalContent::-webkit-scrollbar,
+.updateFormContent::-webkit-scrollbar{
+    width:4px;
+}
+
+.editModalContent::-webkit-scrollbar-thumb,
+.updateFormContent::-webkit-scrollbar-thumb{
+    background: var(--gold-border);
+    border-radius:10px;
 }
 
 .updateFormContent {
@@ -1831,7 +1852,7 @@ input[type="checkbox"]:checked {
 }
 
 .orderMenubox {
-  background-color: var(--card);
+  background-color: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 8px;
   z-index: 100;
@@ -1853,7 +1874,7 @@ input[type="checkbox"]:checked {
 }
 
 .orderMenu:hover {
-  background-color: var(--border);
+  background-color: var(--bg-hover);
   color: var(--text);
 }
 
@@ -1866,7 +1887,7 @@ input[type="checkbox"]:checked {
 }
 
 .threeDots:hover {
-  background-color: var(--border);
+  background-color: var(--bg-hover);
 }
 
 /* Use existing data prompt */
@@ -1934,7 +1955,7 @@ input[type="checkbox"]:checked {
     max-width: 900px;
     margin: 2rem auto;
     padding: 0 1rem 2rem;
-    font-family: 'Georgia', serif;
+    font-family: var(--font-body);
     color: #e8dcc8;
 }
 
@@ -2210,7 +2231,7 @@ input[type="checkbox"]:checked {
     border-radius: 10px;
     color: #c9a84c;
     font-size: 15px;
-    font-family: 'Georgia', serif;
+    font-family:var(--font-body);
     font-weight: 600;
     letter-spacing: 0.4px;
     cursor: pointer;
@@ -2238,7 +2259,7 @@ input[type="checkbox"]:checked {
     max-width: 900px;
     margin: 2rem auto;
     padding: 0 1rem 2rem;
-    font-family: 'Georgia', serif;
+    font-family: var(--font-body);
     color: #e8dcc8;
 }
 
@@ -2274,6 +2295,7 @@ input[type="checkbox"]:checked {
 .ep-title {
     margin: 0 0 3px;
     font-size: 22px;
+    font-family: var(--font-display);
     font-weight: 600;
     color: #f5e6c8;
 }
@@ -2405,7 +2427,7 @@ input[type="checkbox"]:checked {
     box-sizing: border-box;
     padding: 11px 14px;
     font-size: 14px;
-    font-family: 'Georgia', serif;
+    font-family: var(--font-body);
     background: #081629;
     border: 1px solid #2a3f5f;
     border-radius: 9px;
@@ -2490,7 +2512,7 @@ input[type="checkbox"]:checked {
     border: none;
     color: #c9a84c;
     font-size: 13px;
-    font-family: 'Georgia', serif;
+    font-family:var(--font-body);
     cursor: pointer;
     padding: 8px 0 0;
     display: flex;
@@ -2525,7 +2547,7 @@ input[type="checkbox"]:checked {
     border-radius: 10px;
     color: #a0b4cc;
     font-size: 14px;
-    font-family: 'Georgia', serif;
+    font-family:var(--font-body);
     cursor: pointer;
     transition: background 0.2s;
 }
@@ -2543,7 +2565,7 @@ input[type="checkbox"]:checked {
     color: #c9a84c;
     font-size: 14px;
     font-weight: 600;
-    font-family: 'Georgia', serif;
+    font-family:var(--font-body);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -2715,8 +2737,7 @@ input[type="checkbox"]:checked {
 
   .car_image,
   .car_image-update {
-    height: 130px;
-    min-height: 130px;
+    aspect-ratio:16/9;
   }
 
   .search-input-field {
@@ -2748,7 +2769,7 @@ input[type="checkbox"]:checked {
   }
 
   .search-input-field {
-    width: 130px;
+    width:min(35vw,140px);
     font-size: 12px;
     padding: 6px 12px;
   }
@@ -2866,7 +2887,7 @@ input[type="checkbox"]:checked {
     left: 0;
     height: calc(100vh - 54px);
     width: 260px;
-    z-index: 40;
+    z-index: 90;
     transform: translateX(-100%);   /* hidden off-screen by default */
     transition: transform 0.28s ease;
   }
@@ -2881,7 +2902,7 @@ input[type="checkbox"]:checked {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.55);
-    z-index: 39;
+    z-index: 89;
     backdrop-filter: blur(2px);
   }
 }
@@ -2893,7 +2914,7 @@ input[type="checkbox"]:checked {
 @media (max-width: 480px) {
 
   .search-input-field {
-    width: 100px;
+    width:min(35vw,110px);
     font-size: 11px;
   }
 

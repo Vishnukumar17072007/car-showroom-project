@@ -95,7 +95,6 @@ function Cards(props) {
                         decoding="async"
                         width={300}
                         height={200}
-                        style={{ width: "100%", height: "100%", backgroundColor: "white", borderRadius: "5px" }}
                     />
                     {user && (
                         <p

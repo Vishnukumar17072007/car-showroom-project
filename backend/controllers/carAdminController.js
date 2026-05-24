@@ -1,148 +1,86 @@
-const Car=require('../models/CarSchema');
-const { isValidObjectId }=
-require('../utils/objectId');
+const Car = require("../models/CarSchema");
+const { isValidObjectId } = require("../utils/objectId");
 
+const updateCar = async (req, res) => {
+  if (!isValidObjectId(req.params.id)) {
+    const error = new Error("Invalid car id");
 
+    error.status = 400;
 
-const updateCar=
-async(req,res)=>{
+    throw error;
+  }
 
-if(
-!isValidObjectId(
-req.params.id
-)
-){
+  const updateCar = await Car.findOneAndUpdate(
+    {
+      _id: req.params.id,
+      isDeleted: false,
+    },
 
-const error=
-new Error(
-"Invalid car id"
-);
+    {
+      $set: {
+        ...req.body,
 
-error.status=400;
+        carName: `${req.body.brand}
+${req.body.model}`,
+      },
+    },
 
-throw error;
+    {
+      new: true,
+    },
+  );
 
-}
+  if (!updateCar) {
+    const error = new Error("Car not found");
 
+    error.status = 404;
 
-const updateCar=
-await Car.findOneAndUpdate(
+    throw error;
+  }
 
-{
-_id:req.params.id,
-isDeleted:false
-},
-
-{
-$set:{
-
-...req.body,
-
-carName:
-`${req.body.brand}
-${req.body.model}`
-
-}
-},
-
-{
-new:true
-}
-
-);
-
-
-if(!updateCar){
-
-const error=
-new Error(
-"Car not found"
-);
-
-error.status=404;
-
-throw error;
-
-}
-
-
-res.status(200)
-.json(updateCar);
-
+  res.status(200).json(updateCar);
 };
 
+const deleteCar = async (req, res) => {
+  if (!isValidObjectId(req.params.id)) {
+    const error = new Error("Invalid car id");
 
+    error.status = 400;
 
-const deleteCar=
-async(req,res)=>{
+    throw error;
+  }
 
-if(
-!isValidObjectId(
-req.params.id
-)
-){
+  const car = await Car.findOneAndUpdate(
+    {
+      _id: req.params.id,
+      isDeleted: false,
+    },
 
-const error=
-new Error(
-"Invalid car id"
-);
+    {
+      $set: {
+        isDeleted: true,
+      },
+    },
 
-error.status=400;
+    {
+      new: true,
+    },
+  );
 
-throw error;
+  if (!car) {
+    const error = new Error("Car not found");
 
-}
+    error.status = 404;
 
+    throw error;
+  }
 
-const car=
-await Car.findOneAndUpdate(
-
-{
-_id:req.params.id,
-isDeleted:false
-},
-
-{
-$set:{
-isDeleted:true
-}
-},
-
-{
-new:true
-}
-
-);
-
-
-if(!car){
-
-const error=
-new Error(
-"Car not found"
-);
-
-error.status=404;
-
-throw error;
-
-}
-
-
-res.status(200)
-.json({
-
-message:
-"Car deleted successfully"
-
-});
-
+  res.status(200).json({
+    message: "Car deleted successfully",
+  });
 };
 
-
-module.exports={
-
-updateCar,
-deleteCar
-
+module.exports = {
+  updateCar,
+  deleteCar,
 };
