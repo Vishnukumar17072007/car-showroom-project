@@ -55,10 +55,17 @@ export function CartProvider({ children }) {
     };
 
     const isInCart = (carIdOrCar) => {
-        const carId = typeof carIdOrCar === "string" ? carIdOrCar : carIdOrCar?._id;
-        if (!carId) return false;
+        const carId= typeof carIdOrCar==="string" ? carIdOrCar : carIdOrCar?._id;        
+        if(!carId)
+            return false;
+        
         const carIdStr = carId.toString();
-        return cartItems.some(item => item?.carId?._id?.toString() === carIdStr);
+
+        return cartItems.some( item => {     
+            const itemId = typeof item?.carId==="object" ? item?.carId?._id : item?.carId;
+            return itemId?.toString() === carIdStr;
+        });
+        
     };
 
     return (
