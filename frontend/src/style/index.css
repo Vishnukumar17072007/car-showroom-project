@@ -736,13 +736,13 @@ input[type="checkbox"]:checked {
    ============================================================ */
    .car_card_box{
     flex:1;
-    height:calc(100vh - 54px);
     padding:16px;
-    overflow-y:auto;
+
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    grid-template-columns:repeat(4,1fr);
+
     gap:16px;
-    align-items:stretch;
+    align-items:start;
 }
 
 @media(max-width:1400px){
@@ -776,11 +776,11 @@ input[type="checkbox"]:checked {
     border:1px solid var(--border);
     border-radius:14px;
     overflow:hidden;
+
     display:flex;
     flex-direction:column;
-    height:100%;
-    min-height:390px;
-    transition:all .2s ease;
+
+    min-height:auto;   /* remove forced height */
 }
 
 .car-card:hover{
@@ -790,15 +790,13 @@ input[type="checkbox"]:checked {
 }
 
 .car_image{
-    width:100%;
-    height:180px;
-    background:#fff;
+  width:100%;
+  height:180px;
+  background:#fff;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    flex-shrink:0;    /* important */
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
 .car_image img{
@@ -810,19 +808,17 @@ input[type="checkbox"]:checked {
 }
 
 .car_card_body{
-    flex:1;           /* important */
-    display:flex;
-    flex-direction:column;
-    padding:14px;
-    gap:10px;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+
+  height:auto;      /* important */
+  flex:none;        /* important */
 }
 
 .car_title{
-    min-height:60px;
-}
-
-.car_card_body > b{
-    margin-top:auto;
+  min-height:50px;
 }
 
 .car-card:hover .car_image img {
