@@ -1,21 +1,13 @@
 const express = require("express");
 const router = express.Router();
-
 const verifyToken = require("../middleware/verifyToken");
 const asyncHandler = require("../utils/asyncHandler");
 const validateRequest = require("../middleware/validationMiddleware");
-
-const {
-  registerValidation,
-  loginValidation,
-} = require("../validations/authValidation");
-
+const {registerValidation, loginValidation} = require("../validations/authValsidation");
 const { updateProfileValidation } = require("../validations/profileValidation");
-
-const { register, login, logout } = require("../controllers/authController");
-
+const { register, login } = require("../controllers/authController");
+const { logout } = require("../controllers/authProfileController");
 const { getProfile } = require("../controllers/profileController");
-
 const { updateProfile } = require("../controllers/profileUpdateController");
 
 router.post(

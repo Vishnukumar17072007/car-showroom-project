@@ -12,6 +12,6 @@ router.get("/", asyncHandler(getCars));
 router.get("/:id", asyncHandler(getCar));
 router.post("/", verifyToken, verifyRole("admin"), addCarValidation, validateRequest, asyncHandler(addCar));
 router.put("/:id", verifyToken, verifyRole("admin"), addCarValidation, validateRequest, asyncHandler(updateCar));
-router.delete("/:id", verifyToken, verifyRole("admin"), asyncHandler(deleteCar));
+router.delete("/soft-delete/:id", verifyToken, verifyRole("admin"), asyncHandler(deleteCar));
 
 module.exports = router;
