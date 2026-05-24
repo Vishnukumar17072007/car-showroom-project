@@ -18,13 +18,13 @@ const {
   deleteOrder,
 } = require("../controllers/orderAdminController");
 
-// USER
+router.patch("/cancel/:id", verifyToken, asyncHandler(updateOrderStatus));
+
+router.delete("/delete/:id", verifyToken, asyncHandler(deleteOrder));
 
 router.post("/", verifyToken, asyncHandler(createOrder));
 
 router.get("/", verifyToken, asyncHandler(getUserOrders));
-
-// ADMIN
 
 router.get(
   "/admin/all",
