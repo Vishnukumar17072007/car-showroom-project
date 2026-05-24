@@ -35,7 +35,7 @@ export function CartProvider({ children }) {
         try {
             const res = await API.post('/cart', { carId });
             toast.success("Added to Cart!");
-            setCartItems(res.data?.items || []);
+            setCartItems(res.data?.cart?.items || []);
         } catch (err) {
             toast.error(err.response?.data?.message || "Failed to add to cart");
             throw err;
@@ -47,7 +47,7 @@ export function CartProvider({ children }) {
         try {
             const res = await API.delete(`/cart/${carId}`);
             toast.success("Removed from Cart.");
-            setCartItems(res.data?.items || []);
+            setCartItems(res.data?.cart?.items || []);
         } catch (err) {
             toast.error(err.response?.data?.message || "Failed to remove from cart");
             throw err;

@@ -37,7 +37,7 @@ const removeFromCart = async (req, res) => {
 
   await cart.save();
 
-  res.status(200).json({ message: "Removed from cart" });
+  res.status(200).json({ message: "Removed from cart", cart });
 };
 
 module.exports = { getCart, addToCart, removeFromCart};
