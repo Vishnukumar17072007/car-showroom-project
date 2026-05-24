@@ -2591,6 +2591,10 @@ input[type="checkbox"]:checked {
   margin: 4px 0;
 }
 
+.car_card_box .pagination{
+  margin-top:20px;
+}
+
 .catalog-pagination-info {
   color: var(--text, #e8e8e8);
   font-size: 0.9rem;
@@ -2697,6 +2701,7 @@ input[type="checkbox"]:checked {
   }
 
   .car_card_box {
+    width:100%;
     grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     padding: 12px;
     gap: 12px;
