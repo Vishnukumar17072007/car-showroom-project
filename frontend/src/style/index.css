@@ -734,20 +734,15 @@ input[type="checkbox"]:checked {
 /* ============================================================
    CAR CARD GRID
    ============================================================ */
-.car_card_box {
-  flex: 1;
-  height: calc(100vh - 54px);
-  padding: 16px;
-  overflow-y: auto;
-
-  display: grid;
-
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-
-  gap: 16px;
-
-  align-items: start;
-  align-content: start;
+   .car_card_box{
+    flex:1;
+    height:calc(100vh - 54px);
+    padding:16px;
+    overflow-y:auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:16px;
+    align-items:stretch;
 }
 
 @media(max-width:1400px){
@@ -781,36 +776,53 @@ input[type="checkbox"]:checked {
     border:1px solid var(--border);
     border-radius:14px;
     overflow:hidden;
-
-    width:100%;
-    min-height:370px;
-
     display:flex;
     flex-direction:column;
+    height:100%;
+    min-height:390px;
+    transition:all .2s ease;
 }
 
-.car-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--gold-border);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, .4);
+.car-card:hover{
+    transform:translateY(-4px);
+    border-color:var(--gold-border);
+    box-shadow:0 8px 25px rgba(0,0,0,.4);
 }
 
 .car_image{
-  width:100%;
-  height:170px;
+    width:100%;
+    height:180px;
+    background:#fff;
 
-  background:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-  display:flex;
-  justify-content:center;
-  align-items:center;
+    flex-shrink:0;    /* important */
 }
 
 .car_image img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  padding:10px;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    padding:10px;
+    transition:.3s;
+}
+
+.car_card_body{
+    flex:1;           /* important */
+    display:flex;
+    flex-direction:column;
+    padding:14px;
+    gap:10px;
+}
+
+.car_title{
+    min-height:60px;
+}
+
+.car_card_body > b{
+    margin-top:auto;
 }
 
 .car-card:hover .car_image img {
@@ -838,22 +850,6 @@ input[type="checkbox"]:checked {
   border-color: var(--gold-border);
 }
 
-.car_card_body {
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background: var(--bg-card);
-}
-
-.car_title{
-  display:flex;
-  flex-direction:column;
-  flex:1;
-  min-height:55px;
-  color:var(--text);
-}
-
 .car_title b {
   font-family: var(--font-display);
   font-size: 15px;
@@ -874,16 +870,6 @@ input[type="checkbox"]:checked {
 .rating {
   font-size: small;
   color: #e8c566;
-}
-
-.car_card_body>b {
-  font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--gold);
-  display: block;
-  margin-bottom: 10px;
-  letter-spacing: 0.3px;
 }
 
 .car_card_body button {
@@ -976,7 +962,6 @@ input[type="checkbox"]:checked {
 .car-card-update {
   background-color: var(--bg-card);
   border: 1.5px dashed var(--gold-border);
-  width: 100%;
   border-radius: var(--radius-md);
   height: auto;
   display: flex;
