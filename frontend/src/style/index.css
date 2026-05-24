@@ -702,16 +702,16 @@ input[type="checkbox"]:checked {
 /* ============================================================
    CAR CARD GRID
    ============================================================ */
-.car_card_box {
-  flex:1;
-  height:calc(100vh - 54px);
-  max-height:calc(100vh - 54px);
-  padding:16px;
-  overflow-y:auto;
-  display:grid;
-  grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
-  gap:16px;
-  align-content:start;
+   .car_card_box{
+    flex:1;
+    height:calc(100vh - 54px);
+    padding:16px;
+    overflow-y:auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:18px;
+    align-items:start;
+    align-content:start;
 }
 
 .car_card_box::-webkit-scrollbar { display: none; }
@@ -720,15 +720,16 @@ input[type="checkbox"]:checked {
    CAR CARD
    ============================================================ */
 .car-card {
+  position:relative; /* important */
   background:var(--bg-card);
   border:1px solid var(--border);
   border-radius:14px;
   overflow:hidden;
   width:100%;
-  min-height:420px;
+  min-height:380px;
   display:flex;
   flex-direction:column;
-  transition:all .2s ease;
+  transition:.2s ease;
 }
 
 .car-card:hover {
@@ -739,44 +740,39 @@ input[type="checkbox"]:checked {
 
 .car_image{
   width:100%;
-  height:180px;   /* reduced */
+  height:180px;
   overflow:hidden;
   background:#fff;
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
 }
 
 .car_image img{
   width:100%;
   height:100%;
   object-fit:contain;
-  padding:10px;
+  padding:14px;
 }
 
 .car-card:hover .car_image img {
   transform: scale(1.05);
 }
 
-.wishListToggle {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 1;
-  background: rgba(13, 13, 16, 0.65);
-  border: 1px solid var(--border-hover);
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.18s ease;
-  backdrop-filter: blur(4px);
-  font-size: 13px;
-  margin: 0;
-  padding: 0;
+.wishListToggle{
+  position:absolute;
+  top:12px;
+  right:12px;
+  z-index:100;
+  width:34px;
+  height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(13,13,16,.8);
+  border-radius:50%;
+  border:1px solid var(--gold-border);
+  color:red;
 }
 
 .wishListToggle:hover {
