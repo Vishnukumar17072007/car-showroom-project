@@ -6,7 +6,7 @@ import { CartListSkeleton } from '../component/PageSkeletons';
 
 function Cart() {
     const [showCheckout, setShowCheckout] = useState(false);
-    const [selectedCarIds, setSelectedCarIds] = useState(null); // ← NEW
+    const [selectedCarIds, setSelectedCarIds] = useState(null);
 
     const { cartItems: cart, removeFromCart, cartLoading } = useCart();
     const navigate = useNavigate();

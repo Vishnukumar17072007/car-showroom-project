@@ -52,8 +52,8 @@ const CheckoutModal = ({ onClose, carIds }) => {
         setLoading(true);
         try {
             await placeOrder(form, carIds);
+            onClose(); // close modal first
             await fetchCart();    // ← NEW: re-sync cart after order placed
-            onClose();
             navigate('/orders');
         } catch (err) {
             setError(err.message || 'Something went wrong. Please try again.');
