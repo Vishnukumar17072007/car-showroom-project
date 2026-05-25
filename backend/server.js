@@ -17,6 +17,7 @@ const authRoutes = require('./routes/authRoute');
 const chatRoute = require('./routes/chatRoute');
 const errorHandler = require('./middleware/errorHandler');
 const notificationRoute = require('./routes/notificationRoute');
+const dashboardRoute = require('./routes/dashboardRoute');
 
 const app = express();
 const isProd = process.env.NODE_ENV === 'production';
@@ -86,6 +87,7 @@ app.use('/api/wishlist', wishListRoute);
 app.use('/api/order', orderRoute);
 app.use('/api/chat', chatRoute);
 app.use('/api/notifications', notificationRoute);
+app.use('/api/dashboard', dashboardRoute);
 app.use(errorHandler);
 
 const PORT = process.env.PORT;

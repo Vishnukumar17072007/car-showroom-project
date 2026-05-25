@@ -92,7 +92,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
     }
 
     if ( !available || available < 0 ) {
-      toast.error("Stock count cannot be negative.");
+      toast.error("Enter a valid Stock count.");
       return;
     }
 

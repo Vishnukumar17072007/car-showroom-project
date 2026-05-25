@@ -23,6 +23,7 @@ const Cart = lazy(() => import('./paths/cart.jsx'));
 const AdminOrders = lazy(() => import('./paths/AdminOrders.jsx'));
 const Profile = lazy(() => import('./paths/Profile.jsx'));
 const EditProfile = lazy(() => import('./paths/EditProfile.jsx'));
+const AdminDashboard = lazy(() => import('./paths/AdminDashboard.jsx'));
 
 function PageLoader() {
   return (
@@ -60,6 +61,7 @@ const router = createBrowserRouter([
         element: <AdminRoute />,
         children: [
           { path: "/admin/orders", element: <LazyPage><AdminOrders /></LazyPage> },
+          { path: "/admin/dashboard", element: <LazyPage><AdminDashboard /></LazyPage> },
         ]
       }
     ]
