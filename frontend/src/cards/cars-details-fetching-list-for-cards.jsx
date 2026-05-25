@@ -76,8 +76,8 @@ function CarDetailsFetchingListForCards({ filters, search }) {
       return;
     }
 
-    if (!seats) {
-      toast.error("Please enter seats count.");
+    if (!seats || seats < 1) {
+      toast.error("Please enter a valid seat count.");
       return;
     }
 
@@ -87,16 +87,11 @@ function CarDetailsFetchingListForCards({ filters, search }) {
     }
 
     if (!rating || rating < 1 || rating > 10) {
-      toast.error("Rating must be between 1 and 10.");
+      toast.error("Valid Rating must be between 1 and 10.");
       return;
     }
 
-    if (
-      available === undefined ||
-      available === null ||
-      available === "" ||
-      available < 0
-    ) {
+    if ( !available || available < 0 ) {
       toast.error("Stock count cannot be negative.");
       return;
     }
