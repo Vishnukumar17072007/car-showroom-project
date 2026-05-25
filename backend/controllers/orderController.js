@@ -82,6 +82,7 @@ const getUserOrders = async (req, res) => {
   .sort({
     createdAt: -1,
   });
+  res.status(200).json(orders);
 };
 
 const getAllOrders = async (req, res) => {
