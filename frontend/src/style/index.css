@@ -744,7 +744,7 @@ input[type="checkbox"]:checked {
   height: 140px;
   min-height: 140px;
   width: 100%;
-  background-color: var(--bg-hover);
+  background-color: white;
   border-radius: var(--radius-md) var(--radius-md) 0 0;
   position: relative;
   overflow: hidden;
@@ -1302,7 +1302,19 @@ input[type="checkbox"]:checked {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 340px;
+  width: 600px;
+  height: 500px;
+  overflow-y: auto;
+}
+
+.updateFormContent::-webkit-scrollbar {display: none;}
+
+.updateFormContent label{
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
 
 .updateFormContent input {

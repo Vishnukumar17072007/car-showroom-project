@@ -206,6 +206,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
       {showUpdateForm && (
         <div className="updateForm">
           <div className="updateFormContent">
+            <label>Brand Name: </label>
             <input
               type="text"
               placeholder="Brand Name"
@@ -213,6 +214,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
                 setUpdateCar({ ...updateCar, brand: e.target.value })
               }
             />
+            <label>Modal Name: </label>
             <input
               type="text"
               placeholder="Model Name"
@@ -220,6 +222,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
                 setUpdateCar({ ...updateCar, model: e.target.value })
               }
             />
+            <label>Image URL: </label>
             <input
               type="text"
               placeholder="Image URL"
@@ -227,6 +230,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
                 setUpdateCar({ ...updateCar, image: e.target.value })
               }
             />
+            <label>Front Image URL: </label>
             <input
               type="text"
               placeholder="Front Image URL"
@@ -234,6 +238,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
                 setUpdateCar({ ...updateCar, frontImage: e.target.value })
               }
             />
+            <label>Rear Image URL: </label>
             <input
               type="text"
               placeholder="Rear Image URL"
@@ -241,6 +246,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
                 setUpdateCar({ ...updateCar, rearImage: e.target.value })
               }
             />
+            <label>Right Side Image URL: </label>
             <input
               type="text"
               placeholder="Right Side Image URL"
@@ -248,6 +254,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
                 setUpdateCar({ ...updateCar, rightSideImage: e.target.value })
               }
             />
+            <label>Left Side Image URL: </label>
             <input
               type="text"
               placeholder="Left Side Image URL"
@@ -255,6 +262,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
                 setUpdateCar({ ...updateCar, leftSideImage: e.target.value })
               }
             />
+            <label>Body Type: </label>
             <input
               type="text"
               placeholder="Body Type"
@@ -262,13 +270,15 @@ function CarDetailsFetchingListForCards({ filters, search }) {
                 setUpdateCar({ ...updateCar, bodyType: e.target.value })
               }
             />
+            <label>Transmission Type: </label>
             <input
               type="text"
-              placeholder="Transmission"
+              placeholder="Transmission Type"
               onChange={(e) =>
                 setUpdateCar({ ...updateCar, transmission: e.target.value })
               }
             />
+            <label>Fuel Type: </label>
             <input
               type="text"
               placeholder="Fuel Type"
@@ -276,6 +286,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
                 setUpdateCar({ ...updateCar, fuelType: e.target.value })
               }
             />
+            <label>Engine Type: </label>
             <input
               type="text"
               placeholder="Engine Type"
@@ -283,6 +294,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
                 setUpdateCar({ ...updateCar, engineType: e.target.value })
               }
             />
+            <label>Seats: </label>
             <input
               type="number"
               placeholder="Seats"
@@ -290,6 +302,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
                 setUpdateCar({ ...updateCar, seats: Number(e.target.value) })
               }
             />
+            <label>Mileage: </label>
             <input
               type="text"
               placeholder="Mileage"
@@ -297,6 +310,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
                 setUpdateCar({ ...updateCar, mileage: e.target.value })
               }
             />
+            <label>Price: </label>
             <input
               type="number"
               placeholder="Price"
@@ -304,6 +318,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
                 setUpdateCar({ ...updateCar, price: Number(e.target.value) })
               }
             />
+            <label>Rating: </label>
             <input
               type="number"
               placeholder="Rating"
@@ -311,6 +326,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
                 setUpdateCar({ ...updateCar, rating: Number(e.target.value) })
               }
             />
+            <label>Stock: </label>
             <input
               type="number"
               placeholder="Stock count"
