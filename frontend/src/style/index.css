@@ -1237,6 +1237,7 @@ input[type="checkbox"]:checked {
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
   gap: 10px;
   width: 340px;
 }
