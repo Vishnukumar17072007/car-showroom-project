@@ -35,7 +35,7 @@ validate('rating')
 .optional()
 .isFloat({
 min:0,
-max:5
+max:10
 })
 .withMessage(
 "Rating must be 0-5"
