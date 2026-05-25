@@ -31,16 +31,42 @@ export function CartProvider({ children }) {
   }, [fetchCart]);
 
   const addToCart = async (carIdOrCar) => {
-    const carId = typeof carIdOrCar === "string" ? carIdOrCar : carIdOrCar?._id;
+    const car =
+      typeof carIdOrCar === "string"
+        ? { _id: carIdOrCar }
+        : carIdOrCar;
+  
     try {
-      await API.post("/cart", { carId });
+      // Instant UI update
+      setCartItems(prev => [
+        ...prev,
+        { carId: car }
+      ]);
+  
+      await API.post("/cart", { carId: car._id });
+  
       toast.success("Added to Cart!");
-      await fetchCart();
+  
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to add to cart");
+  
+      // rollback if API fails
+      setCartItems(prev =>
+        prev.filter(
+          item =>
+            (typeof item.carId === "object"
+              ? item.carId._id
+              : item.carId) !== car._id
+        )
+      );
+  
+      toast.error(
+        err.response?.data?.message ||
+        "Failed to add to cart"
+      );
+  
       throw err;
     }
-  };
+  };    
 
   const removeFromCart = async (carIdOrCar) => {
     const carId = typeof carIdOrCar === "string" ? carIdOrCar : carIdOrCar?._id;
