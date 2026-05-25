@@ -76,27 +76,21 @@ const createOrder = async (req, res) => {
 const getUserOrders = async (req, res) => {
   const orders = await Order.find({
     userId: req.user.userId,
+    deletedByUser: false,
   })
-
-    .populate("items.carId")
-
-    .sort({
-      createdAt: -1,
-    });
-
-  res.status(200).json(orders);
+  .populate("items.carId")
+  .sort({
+    createdAt: -1,
+  });
 };
 
 const getAllOrders = async (req, res) => {
   const orders = await Order.find()
-
-    .populate("userId", "userName email")
-
-    .populate("items.carId")
-
-    .sort({
-      createdAt: -1,
-    });
+  .populate("userId", "userName email")
+  .populate("items.carId")
+  .sort({
+    createdAt: -1,
+  });
 
   res.status(200).json(orders);
 };

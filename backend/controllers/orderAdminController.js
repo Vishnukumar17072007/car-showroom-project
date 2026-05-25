@@ -12,37 +12,53 @@ const updateOrderStatus = async (req, res) => {
   }
 
   // User cancel route
-  if (req.originalUrl.includes("/cancel/")) {
-    order.status = "cancelled";
-  }
+  const isUserCancel = req.route.path === "/cancel/:id";
 
-  // Admin update route
-  else {
+  if (isUserCancel) {
+    order.status = "cancelled";
+  } else {
     order.status = req.body.status;
   }
 
   await order.save();
 
-  res.status(200).json({
-    message: "Order updated",
-
-    order,
-  });
+  res.status(200).json({ message: "Order updated", order });
 };
 
 const deleteOrder = async (req, res) => {
-  const order = await Order.findByIdAndDelete(req.params.id);
+  const order = await Order.findById(req.params.id);
 
   if (!order) {
     const error = new Error("Order not found");
-
     error.status = 404;
-
     throw error;
   }
 
+  // Allow deleting only cancelled orders
+  if (order.status !== "cancelled") {
+    const error = new Error(
+      "Only cancelled orders can be removed from history",
+    );
+
+    error.status = 400;
+    throw error;
+  }
+
+  // Already deleted check
+  if (order.deletedByUser) {
+    const error = new Error("Order already removed from history");
+
+    error.status = 400;
+    throw error;
+  }
+
+  order.deletedByUser = true;
+  order.deletedAt = new Date();
+
+  await order.save();
+
   res.status(200).json({
-    message: "Order deleted",
+    message: "Order removed from history",
   });
 };
 
