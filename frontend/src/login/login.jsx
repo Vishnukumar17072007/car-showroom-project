@@ -66,11 +66,8 @@ function LoginTab({ onClose }) {
             return;
         }
 
-        // ── combine country code + number ──
-        const fullPhone = `+91 ${phone}`;
-
         try {
-            await register(userName, email, password, fullPhone);
+            await register(userName, email, password, phone);
             setUserName("");
             setEmail("");
             setPassword("");
