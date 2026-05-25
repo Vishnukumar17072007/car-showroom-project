@@ -1,4 +1,4 @@
-const { validate } = require('express-validator');
+const { body: validate } = require('express-validator');
 
 const addCarValidation=[
 
