@@ -725,7 +725,6 @@ input[type="checkbox"]:checked {
   background-color: var(--bg-card);
   border: 1px solid var(--border);
   width: 250px;
-  margin-left: 13px; 
   border-radius: var(--radius-md);
   height: auto;
   display: flex;

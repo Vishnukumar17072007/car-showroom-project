@@ -86,7 +86,7 @@ function Cards(props) {
 
     return (
         <>
-            <div className="car-card">
+            <div className="car-card" style={{marginLeft: "13px"}}>
                 <div className="car_image" onClick={() => navigate(`/vehicles/${props._id}`)}>
                     <img
                         src={props.image}
