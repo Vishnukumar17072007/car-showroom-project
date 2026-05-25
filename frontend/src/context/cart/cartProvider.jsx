@@ -70,11 +70,22 @@ export function CartProvider({ children }) {
 
   const removeFromCart = async (carIdOrCar) => {
     const carId = typeof carIdOrCar === "string" ? carIdOrCar : carIdOrCar?._id;
+    const previousItems = cartItems;
     try {
+      setCartItems(prev =>
+        prev.filter(item => {
+          const itemId =
+            typeof item.carId === "object"
+              ? item.carId._id
+              : item.carId;
+  
+          return itemId?.toString() !== carId;
+        })
+      );
       await API.delete(`/cart/${carId}`);
       toast.success("Removed from Cart.");
-      await fetchCart();
     } catch (err) {
+      setCartItems(previousItems);
       toast.error(err.response?.data?.message || "Failed to remove from cart");
       throw err;
     }

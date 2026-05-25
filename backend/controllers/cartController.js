@@ -1,9 +1,9 @@
 const Cart = require("../models/CartListSchema");
 
 const getCart = async (req, res) => {
-  const cart = await Cart.findOne({userId: req.user.userId}).populate("items.carId");
+  const cart = await Cart.findOne({ userId: req.user.userId }).populate("items.carId").lean();
 
-  res.status(200).json( cart || { items: [] });
+  res.status(200).json(cart || { items: [] });
 };
 
 const addToCart = async (req, res) => {
@@ -13,23 +13,37 @@ const addToCart = async (req, res) => {
     { userId: req.user.userId },
     {
       $addToSet: {
-        items: { carId }
-      }
+        items: { carId },
+      },
     },
     {
       upsert: true,
-      new: true
-    }
+      new: true,
+    },
   );
 
   res.status(200).json({
     message: "Added to cart",
-    cart
+    cart,
   });
 };
 
 const removeFromCart = async (req, res) => {
-  const cart = await Cart.findOne({userId: req.user.userId});
+  const cart = await Cart.findOneAndUpdate(
+    {
+      userId: req.user.userId,
+    },
+    {
+      $pull: {
+        items: {
+          carId: req.params.id,
+        },
+      },
+    },
+    {
+      new: true,
+    },
+  );
 
   if (!cart) {
     const error = new Error("Cart not found");
@@ -37,11 +51,10 @@ const removeFromCart = async (req, res) => {
     throw error;
   }
 
-  cart.items = cart.items.filter((item) => item.carId.toString() !== req.params.id);
-
-  await cart.save();
-
-  res.status(200).json({ message: "Removed from cart", cart });
+  res.status(200).json({
+    message: "Removed from cart",
+    cart,
+  });
 };
 
-module.exports = { getCart, addToCart, removeFromCart};
+module.exports = { getCart, addToCart, removeFromCart} ;
