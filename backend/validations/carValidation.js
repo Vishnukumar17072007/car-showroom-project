@@ -1,6 +1,4 @@
-const { body: validate } =
-require('express-validator');
-
+const { validate } = require('express-validator');
 
 const addCarValidation=[
 
@@ -23,6 +21,75 @@ validate('bodyType')
 .notEmpty()
 .withMessage(
 "Body type required"
+),
+
+validate('image')
+.trim()
+.notEmpty()
+.withMessage(
+"image required"
+),
+
+validate('frontImage')
+.trim()
+.notEmpty()
+.withMessage(
+"frontImage required"
+),
+
+validate('rearImage')
+.trim()
+.notEmpty()
+.withMessage(
+"rearImage required"
+),
+
+validate('rightSideImage')
+.trim()
+.notEmpty()
+.withMessage(
+"rightSideImage required"
+),
+
+validate('leftSideImage')
+.trim()
+.notEmpty()
+.withMessage(
+"leftSideImage required"
+),
+
+validate('fuelType')
+.trim()
+.notEmpty()
+.withMessage(
+"Fuel type required"
+),
+
+validate('transmission')
+.trim()
+.notEmpty()
+.withMessage(
+"transmission type required"
+),
+
+validate('engineType')
+.trim()
+.notEmpty()
+.withMessage(
+"Engine type required"
+),
+
+validate('mileage')
+.trim()
+.notEmpty()
+.withMessage(
+"Mileage required"
+),
+
+validate('available')
+.isNumeric()
+.withMessage(
+"available required"
 ),
 
 validate('price')

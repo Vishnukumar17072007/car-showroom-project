@@ -41,6 +41,15 @@ function Cards(props) {
         model: props.model,
         bodyType: props.bodyType,
         image: props.image,
+        frontImage: props.frontImage,
+        rearImage: props.rearImage,
+        leftSideImage: props.leftSideImage,
+        rightSideImage: props.rightSideImage,
+        transmission: props.transmission,
+        fuelType: props.fuelType,
+        engineType: props.engineType,
+        seats: props.seats,
+        mileage: props.mileage,
         price: props.price,
         rating: props.rating,
         available: props.available,
@@ -57,18 +66,68 @@ function Cards(props) {
     }
 
     async function handleEditSubmit() {
-        const { brand, model, bodyType, image, price, rating } = editData;
+        const { brand,
+            model,
+            bodyType,
+            image,
+            frontImage,
+            rearImage,
+            leftSideImage,
+            rightSideImage,
+            transmission,
+            fuelType,
+            engineType,
+            seats,
+            mileage,
+            price,
+            rating,
+            available } = editData;
 
-        if (!brand?.trim() || !model?.trim() || !bodyType?.trim() || !image?.trim()) {
-            toast.error('Brand, model, body type and image URL are required.');
-            return;
-        }
+            if (
+                !brand?.trim() ||
+                !model?.trim() ||
+                !bodyType?.trim() ||
+                !image?.trim() ||
+                !frontImage?.trim() ||
+                !rearImage?.trim() ||
+                !rightSideImage?.trim() ||
+                !leftSideImage?.trim() ||
+                !fuelType?.trim() ||
+                !transmission?.trim() ||
+                !engineType?.trim() ||
+                !mileage?.trim()
+              ) {
+                toast.error("All fields are required.");
+                return;
+              }
         if (!price || price <= 0) {
             toast.error('Please enter a valid price.');
             return;
         }
         if (!rating || rating < 1 || rating > 10) {
             toast.error('Rating must be between 1 and 10.');
+            return;
+        }
+        if (seats === undefined ||
+            seats === null ||
+            seats === "") {
+            toast.error('All fields are required');
+            return;
+        }
+        if (seats < 1) {
+            toast.error('Seat count must be greater than ZERO');
+            return;
+        }
+        if (
+                available === undefined ||
+                available === null ||
+                available === ""
+            ) {
+            toast.error("All fields are required.");
+            return;
+        }
+        if (available < 0) {
+            toast.error('Available count cannot be negative');
             return;
         }
 
