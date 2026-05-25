@@ -136,21 +136,37 @@ function Cards(props) {
                 {showEditModal && createPortal(
                     <div className="editModal">
                         <div className="editModalContent">
+                            <label>Brand Name: </label>
                             <input type="text" placeholder='Brand Name' defaultValue={editData.brand} onChange={e => setEditData({ ...editData, brand: e.target.value })} required />
+                            <label>Modal Name: </label>
                             <input type="text" placeholder='Model Name' defaultValue={editData.model} onChange={e => setEditData({ ...editData, model: e.target.value })} required />
+                            <label>Image Url: </label>
                             <input type="text" placeholder='Image URL' defaultValue={editData.image} onChange={e => setEditData({ ...editData, image: e.target.value })} required />
+                            <label>Front Image URL: </label>
                             <input type="text" placeholder='Front Image URL' defaultValue={editData.frontImage} onChange={e => setEditData({ ...editData, frontImage: e.target.value })} />
+                            <label>Rear Image URL: </label>
                             <input type="text" placeholder='Rear Image URL' defaultValue={editData.rearImage} onChange={e => setEditData({ ...editData, rearImage: e.target.value })} />
+                            <label>Right Side Image URL: </label>
                             <input type="text" placeholder='Right Side Image URL' defaultValue={editData.rightSideImage} onChange={e => setEditData({ ...editData, rightSideImage: e.target.value })} />
+                            <label>Left Side Image URL: </label>
                             <input type="text" placeholder='Left Side Image URL' defaultValue={editData.leftSideImage} onChange={e => setEditData({ ...editData, leftSideImage: e.target.value })} />
+                            <label>Body Type: </label>
                             <input type="text" placeholder='Body Type' defaultValue={editData.bodyType} onChange={e => setEditData({ ...editData, bodyType: e.target.value })} required />
+                            <label>Transmission Type: </label>
                             <input type="text" placeholder='Transmission' defaultValue={editData.transmission} onChange={e => setEditData({ ...editData, transmission: e.target.value })} />
+                            <label>Fuel Type: </label>
                             <input type="text" placeholder='Fuel Type' defaultValue={editData.fuelType} onChange={e => setEditData({ ...editData, fuelType: e.target.value })} />
+                            <label>Engine Type: </label>
                             <input type="text" placeholder='Engine Type' defaultValue={editData.engineType} onChange={e => setEditData({ ...editData, engineType: e.target.value })} />
+                            <label>Seats: </label>
                             <input type="number" placeholder='Seats' defaultValue={editData.seats} onChange={e => setEditData({ ...editData, seats: Number(e.target.value) })} />
+                            <label>Mileage: </label>
                             <input type="text" placeholder='Mileage' defaultValue={editData.mileage} onChange={e => setEditData({ ...editData, mileage: e.target.value })} />
+                            <label>Price: </label>
                             <input type="number" placeholder='Price (INR)' defaultValue={editData.price} onChange={e => setEditData({ ...editData, price: Number(e.target.value) })} required />
+                            <label>Rating: </label>
                             <input type="number" placeholder='Rating' defaultValue={editData.rating} onChange={e => setEditData({ ...editData, rating: Number(e.target.value) })} required />
+                            <label>Stock: </label>
                             <input type="number" placeholder='Stock count' defaultValue={editData.available} onChange={e => setEditData({ ...editData, available: Number(e.target.value) })} />
                             <div className="SaveOrCancel-btnGroup">
                                 <button type="button" className="cancelBtn btn" onClick={() => setShowEditModal(false)}>Cancel</button>

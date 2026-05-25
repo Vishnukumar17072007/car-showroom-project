@@ -1240,9 +1240,18 @@ input[type="checkbox"]:checked {
   overflow-y: auto;
   gap: 10px;
   width: 340px;
+  height: 600px;
 }
 
 .editModalContent::-webkit-scrollbar { display: none; }
+
+.editModalContent label{
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
 
 .editModalContent input {
   padding: 9px 12px;
