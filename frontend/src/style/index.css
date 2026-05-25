@@ -1237,10 +1237,12 @@ input[type="checkbox"]:checked {
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
   gap: 10px;
   width: 340px;
 }
+
+.editModalContent::-webkit-scrollbar { display: none; }
 
 .editModalContent input {
   padding: 9px 12px;
