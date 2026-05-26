@@ -38,9 +38,9 @@ export function CartProvider({ children }) {
 
     try {
       setCartLoading(true);
-      if (typeof carIdOrCar !== "string") {
-        setCartItems((prev) => [...prev, { carId: car }]);
-      }
+
+      // instant UI update
+      setCartItems((prev) => [...prev, { carId: car }]);
 
       await API.post("/cart", {
         carId: car._id,
@@ -48,10 +48,9 @@ export function CartProvider({ children }) {
 
       toast.success("Added to Cart!");
     } catch (err) {
+      
       setCartItems(previousItems);
-
       toast.error(err.response?.data?.message || "Failed to add to cart");
-
       throw err;
     } finally {
       setCartLoading(false);
