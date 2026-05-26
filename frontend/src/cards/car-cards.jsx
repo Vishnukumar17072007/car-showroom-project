@@ -59,7 +59,7 @@ function Cards(props) {
     async function handleDelete() {
         try {
             await API.patch(`/cars/soft-delete/${props._id}`);
-            setLoading[false];
+            setLoading(false);
             props.onUpdate?.();
             toast.success("Car deleted successfully.");
         } catch (err) {
@@ -135,7 +135,7 @@ function Cards(props) {
 
         try {
             await API.put(`/cars/${props._id}`, editData);
-            setLoading[false];
+            setLoading(false);
             setShowEditModal(false);
             props.onUpdate?.();
             toast.success('Car updated successfully!');
@@ -182,7 +182,7 @@ function Cards(props) {
                         <button
                             type="button"
                             className={`bi bi-cart-plus-fill me-1 p-1 ${isInCart(car._id) ? "btn-remove" : "btn-add"}`}
-                            onClick={() => {isInCart(car._id) ? removeFromCart(car._id) : addToCart(car._id); setLoading[true]}}
+                            onClick={() => {isInCart(car._id) ? removeFromCart(car._id) : addToCart(car); setLoading(true)}}
                             disabled={loading}
                         >
                             {isInCart(car._id) ? "Remove from Cart" : "Add to Cart"}
@@ -190,8 +190,8 @@ function Cards(props) {
                     )}
                     {user?.role === "admin" && (
                         <div className="EditOrDeleteCar">
-                            <button type="button" className='btn-edit' onClick={() => {setShowEditModal(true); setLoading[true]}} disabled={loading}>Edit</button>
-                            <button type="button" className="btn-delete" onClick={() => {handleDelete; setLoading[true]}} disabled={loading}>Delete</button>
+                            <button type="button" className='btn-edit' onClick={() => {setShowEditModal(true); setLoading(true)}} disabled={loading}>Edit</button>
+                            <button type="button" className="btn-delete" onClick={() => {handleDelete; setLoading(true)}} disabled={loading}>Delete</button>
                         </div>
                     )}
                 </div>
@@ -233,7 +233,7 @@ function Cards(props) {
                             <input type="number" placeholder='Stock count' defaultValue={editData.available} onChange={e => setEditData({ ...editData, available: Number(e.target.value) })} />
                             <div className="SaveOrCancel-btnGroup">
                                 <button type="button" className="cancelBtn btn" onClick={() => setShowEditModal(false)}>Cancel</button>
-                                <button type="button" className="saveBtn btn" onClick={() => {handleEditSubmit; setLoading[true]}} disabled={loading}>Save</button>
+                                <button type="button" className="saveBtn btn" onClick={() => {handleEditSubmit; setLoading(true)}} disabled={loading}>Save</button>
                             </div>
                         </div>
                     </div>,

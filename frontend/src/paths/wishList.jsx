@@ -17,7 +17,7 @@ function WishList(){
             removeFromCart(carId);
         }
         else{
-            addToCart(carId);
+            addToCart(car);
         }
     }
 

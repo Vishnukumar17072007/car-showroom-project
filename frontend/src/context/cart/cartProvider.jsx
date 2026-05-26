@@ -48,7 +48,7 @@ export function CartProvider({ children }) {
 
       toast.success("Added to Cart!");
     } catch (err) {
-      
+
       setCartItems(previousItems);
       toast.error(err.response?.data?.message || "Failed to add to cart");
       throw err;
@@ -83,12 +83,16 @@ export function CartProvider({ children }) {
 
   const isInCart = (carIdOrCar) => {
     const carId = typeof carIdOrCar === "string" ? carIdOrCar : carIdOrCar?._id;
+
     if (!carId) return false;
+
     const carIdStr = carId.toString();
+
     return cartItems.some((item) => {
-      const itemId =
-        typeof item?.carId === "object" ? item?.carId?._id : item?.carId;
-      return itemId?.toString() === carIdStr;
+      const itemId = typeof item?.carId === "object" 
+        ? item?.carId?._id 
+        : item?.carId;
+      return itemId?.toString() === carIdStr.toString();
     });
   };
 
