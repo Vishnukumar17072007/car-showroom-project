@@ -41,6 +41,7 @@ const authLimiter = rateLimit({
 function getAllowedOrigins() {
     const defaults = [
         'http://localhost:5173',
+        'http://localhost:1200',
         'https://car-showroom-project-d4e5.vercel.app',
         'https://carfield.vercel.app',
     ];
