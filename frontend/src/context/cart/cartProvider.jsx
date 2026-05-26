@@ -37,34 +37,21 @@ export function CartProvider({ children }) {
         : carIdOrCar;
   
     try {
-      // Instant UI update
-      setCartItems(prev => [
-        ...prev,
-        { carId: car }
-      ]);
-  
+      setCartLoading(true);
       await API.post("/cart", { carId: car._id });
-  
+      await fetchCart();
       toast.success("Added to Cart!");
   
     } catch (err) {
-  
-      // rollback if API fails
-      setCartItems(prev =>
-        prev.filter(
-          item =>
-            (typeof item.carId === "object"
-              ? item.carId._id
-              : item.carId) !== car._id
-        )
-      );
-  
-      toast.error(
+        toast.error(
         err.response?.data?.message ||
         "Failed to add to cart"
       );
   
       throw err;
+    }
+    finally {
+      setCartLoading(false);
     }
   };    
 
@@ -72,6 +59,7 @@ export function CartProvider({ children }) {
     const carId = typeof carIdOrCar === "string" ? carIdOrCar : carIdOrCar?._id;
     const previousItems = cartItems;
     try {
+      setCartLoading(true);
       setCartItems(prev =>
         prev.filter(item => {
           const itemId =
@@ -83,8 +71,10 @@ export function CartProvider({ children }) {
         })
       );
       await API.delete(`/cart/${carId}`);
+      setCartLoading(false);
       toast.success("Removed from Cart.");
     } catch (err) {
+      setCartLoading(false);
       setCartItems(previousItems);
       toast.error(err.response?.data?.message || "Failed to remove from cart");
       throw err;

@@ -83,7 +83,7 @@ function Cart() {
 
                                     {/* Actions */}
                                     <div className="d-flex flex-column gap-2" style={{ flexShrink: 0 }}>
-                                        <button className="btn btn-sm btn-remove" onClick={() => removeFromCart(car._id)}>
+                                        <button className="btn btn-sm btn-remove" onClick={() => {removeFromCart(car._id)}}>
                                             Remove
                                         </button>
 
