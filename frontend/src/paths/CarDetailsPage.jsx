@@ -257,7 +257,7 @@ function CarDetailsPage() {
                                     </button>
                                     <button
                                         className={`cd-btn-wish ${isInWishList(car._id) ? "active" : ""}`}
-                                        onClick={() => isInWishList(car._id) ? removeFromWishList(car._id) : addToWishList(car._id)}
+                                        onClick={() => isInWishList(car._id) ? removeFromWishList(car._id) : addToWishList(car)}
                                     >
                                         {isInWishList(car._id) ? "❤️" : "🤍"}
                                     </button>

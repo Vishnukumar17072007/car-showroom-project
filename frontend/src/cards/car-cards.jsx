@@ -163,7 +163,7 @@ function Cards(props) {
                             className="bi bi-heart-fill wishListToggle"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                isInWishList(car._id) ? removeFromWishList(car._id) : addToWishList(car._id);
+                                isInWishList(car._id) ? removeFromWishList(car._id) : addToWishList(car);
                             }}
                             style={{ color: isInWishList(car._id) ? "red" : "var(--gold)" }}
                         />

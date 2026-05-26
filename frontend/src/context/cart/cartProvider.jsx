@@ -39,7 +39,6 @@ export function CartProvider({ children }) {
     try {
       setCartLoading(true);
 
-      // instant UI update
       setCartItems((prev) => [...prev, { carId: car }]);
 
       await API.post("/cart", {
