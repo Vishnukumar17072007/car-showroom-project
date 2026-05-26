@@ -32,43 +32,44 @@ export function CartProvider({ children }) {
 
   const addToCart = async (carIdOrCar) => {
     const car =
-      typeof carIdOrCar === "string"
-        ? { _id: carIdOrCar }
-        : carIdOrCar;
-  
+      typeof carIdOrCar === "string" ? { _id: carIdOrCar } : carIdOrCar;
+
+    const previousItems = cartItems;
+
     try {
       setCartLoading(true);
-      await API.post("/cart", { carId: car._id });
-      await fetchCart();
+      if (typeof carIdOrCar !== "string") {
+        setCartItems((prev) => [...prev, { carId: car }]);
+      }
+
+      await API.post("/cart", {
+        carId: car._id,
+      });
+
       toast.success("Added to Cart!");
-  
     } catch (err) {
-        toast.error(
-        err.response?.data?.message ||
-        "Failed to add to cart"
-      );
-  
+      setCartItems(previousItems);
+
+      toast.error(err.response?.data?.message || "Failed to add to cart");
+
       throw err;
-    }
-    finally {
+    } finally {
       setCartLoading(false);
     }
-  };    
+  };
 
   const removeFromCart = async (carIdOrCar) => {
     const carId = typeof carIdOrCar === "string" ? carIdOrCar : carIdOrCar?._id;
     const previousItems = cartItems;
     try {
       setCartLoading(true);
-      setCartItems(prev =>
-        prev.filter(item => {
+      setCartItems((prev) =>
+        prev.filter((item) => {
           const itemId =
-            typeof item.carId === "object"
-              ? item.carId._id
-              : item.carId;
-  
+            typeof item.carId === "object" ? item.carId._id : item.carId;
+
           return itemId?.toString() !== carId;
-        })
+        }),
       );
       await API.delete(`/cart/${carId}`);
       setCartLoading(false);
