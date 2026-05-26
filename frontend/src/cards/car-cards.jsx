@@ -412,16 +412,7 @@ function Cards(props) {
                   <button
                     type="button"
                     className="saveBtn btn"
-                    onClick={async () => {
-                        try {
-                          setLoading(true);
-        
-                          handleEditSubmit();
-                        } finally {
-                          setLoading(false);
-                        }
-                      }}
-                    disabled={loading}
+                    onClick={() => handleEditSubmit()}
                   >
                     Save
                   </button>
