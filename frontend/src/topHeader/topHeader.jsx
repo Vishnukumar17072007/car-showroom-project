@@ -30,7 +30,7 @@ function TopHeader() {
             )}
 
             {user ? null : (
-                <button className="loginBtn" onClick={() => {setShowLogin(true)}}>Login</button>
+                <button className="loginBtn" onClick={() => navigate('/login')}>SIGN IN / UP</button>
             )}
             {showLogin && <LoginTab onClose={()=>setShowLogin(false)} />}
         </div>

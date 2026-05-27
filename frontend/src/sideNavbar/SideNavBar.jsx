@@ -44,7 +44,6 @@ function SideNavbar() {
   const [upgradePlanActive, setUpgradePlanActive] = useState(false);
 
   const topNavItems = [
-    ["bi bi-house", "Home", "/"],
     ["bi bi-car-front", "Vehicles", "/vehicles"],
     ["bi bi-heart", "WishList", "/wishlist"],
     ["bi bi-cart", "Cart", "/cartList"],

@@ -24,6 +24,7 @@ const AdminOrders = lazy(() => import('./paths/AdminOrders.jsx'));
 const Profile = lazy(() => import('./paths/Profile.jsx'));
 const EditProfile = lazy(() => import('./paths/EditProfile.jsx'));
 const AdminDashboard = lazy(() => import('./paths/AdminDashboard.jsx'));
+const Login = lazy(() => import('./paths/Login.jsx'));
 
 function PageLoader() {
   return (
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
       { path: "/vehicles", element: <LazyPage><Vehicles /></LazyPage> },
       { path: "/vehicles/:id", element: <LazyPage><CarDetailsPage /></LazyPage> },
       { path: "/support", element: <LazyPage><Support /></LazyPage> },
+      { path: "/login", element: <LazyPage><Login /></LazyPage> },
       {
         element: <ProtectedRoutes />,
         children: [

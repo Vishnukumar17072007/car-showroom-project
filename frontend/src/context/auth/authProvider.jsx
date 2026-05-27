@@ -68,7 +68,6 @@ export function AuthProvider({children}){
 
     async function logout(){
         await API.post('/auth/logout');
-        toast.success("Bye👋.");
         setUser(null);
     }
 
