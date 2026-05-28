@@ -1,16 +1,19 @@
 // component/SideNavbar.jsx
 
 import { Link, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import { useAuth } from "../context/auth/useAuth";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SubscriptionModal from "../component/SubscriptionModal";
-import LoginTab from "../login/login";
+
 
 // ── Subscription Banner (local helper) ──────────────────────────────────────
 function SubscriptionBanner({ sub, onViewPlans, isActive, onActivate }) {
-  const { user } = useAuth();
-  const [showLoginTab, setShowLoginTab] = useState(false);
 
+  const navigate = useNavigate();
+
+  const { user } = useAuth();
   if (sub === "premium") return null;
 
   return (
@@ -23,14 +26,16 @@ function SubscriptionBanner({ sub, onViewPlans, isActive, onActivate }) {
                 onActivate();
                 onViewPlans();
               }
-            : () => setShowLoginTab(true)
+            : () => {
+              navigate('/login');
+            }
         }
       >
         <p className="bi bi-piggy-bank text-decoration-none text-white side_bar_menu_items d-block m-0 p-3 ps-3">
           Upgrade Plan
         </p>
       </li>
-      {showLoginTab && <LoginTab onClose={() => setShowLoginTab(false)} />}
+      
     </>
   );
 }
@@ -51,11 +56,6 @@ function SideNavbar() {
   ];
 
   const protectedRoutes = new Set(["/wishlist", "/cartList", "/orders"]);
-
-  // Clear upgrade-plan active highlight whenever user navigates anywhere
-  useEffect(() => {
-    setUpgradePlanActive(false);
-  }, [location.pathname]);
 
   return (
     <>

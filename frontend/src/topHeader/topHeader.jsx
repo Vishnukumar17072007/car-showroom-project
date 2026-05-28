@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import LoginTab from "../login/login";
+import { useEffect } from "react";
 import { useAuth } from "../context/auth/useAuth";
 import { useSearch } from "../context/search/useSearch";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -8,8 +7,6 @@ function TopHeader() {
 
     const navigate = useNavigate();
     const location = useLocation();
-
-    const [showLogin, setShowLogin] = useState(false);
 
     const {user} = useAuth();
     const {setSearch} = useSearch();
@@ -32,7 +29,6 @@ function TopHeader() {
             {user ? null : (
                 <button className="loginBtn" onClick={() => navigate('/login')}>SIGN IN / UP</button>
             )}
-            {showLogin && <LoginTab onClose={()=>setShowLogin(false)} />}
         </div>
     );
 }
