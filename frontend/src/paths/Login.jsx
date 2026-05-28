@@ -27,7 +27,7 @@ function GoogleButton() {
 }
 
 /* ─── Main Auth Page ─────────────────────────────────────────────── */
-export default function AuthPage() {
+export default function Login() {
   const navigate = useNavigate();
   const { login, register } = useAuth();
 
