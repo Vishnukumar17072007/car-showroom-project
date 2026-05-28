@@ -1,142 +1,46 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth/useAuth";
+import Particles from "../component/loginComponent/Particles";
+import Field from "../component/loginComponent/Field";
+import PasswordStrength from "../component/loginComponent/PasswordStrength";
 
-/* ─── Particle background component ─────────────────────────────── */
-function Particles() {
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    let animId;
-
-    const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const dots = Array.from({ length: 60 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
-      r: Math.random() * 1.5 + 0.5,
-      alpha: Math.random() * 0.5 + 0.1,
-    }));
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      dots.forEach((d) => {
-        d.x += d.vx;
-        d.y += d.vy;
-        if (d.x < 0 || d.x > canvas.width) d.vx *= -1;
-        if (d.y < 0 || d.y > canvas.height) d.vy *= -1;
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(201,168,76,${d.alpha})`;
-        ctx.fill();
-      });
-
-      for (let i = 0; i < dots.length; i++) {
-        for (let j = i + 1; j < dots.length; j++) {
-          const dx = dots[i].x - dots[j].x;
-          const dy = dots[i].y - dots[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
-            ctx.beginPath();
-            ctx.moveTo(dots[i].x, dots[i].y);
-            ctx.lineTo(dots[j].x, dots[j].y);
-            ctx.strokeStyle = `rgba(201,168,76,${0.06 * (1 - dist / 100)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      }
-      animId = requestAnimationFrame(draw);
-    };
-    draw();
-    return () => {
-      window.removeEventListener("resize", resize);
-      cancelAnimationFrame(animId);
-    };
-  }, []);
-
+/* ─── Google Button ──────────────────────────────────────────────── */
+function GoogleButton() {
   return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        position: "absolute",
-        inset: 0,
-        width: "100%",
-        height: "100%",
-        pointerEvents: "none",
+    <button
+      type="button"
+      className="auth-google-btn"
+      onClick={() => {
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
       }}
-    />
+    >
+      <svg className="auth-google-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05" />
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+      </svg>
+      Continue with Google
+    </button>
   );
 }
 
-/* ─── Input Field ──────────────────────────────────────────────── */
-function Field({ icon, label, type = "text", value, onChange, placeholder, autoComplete }) {
-  const [focused, setFocused] = useState(false);
-  const [showPwd, setShowPwd] = useState(false);
-  const isPassword = type === "password";
-  const inputType = isPassword ? (showPwd ? "text" : "password") : type;
-
-  return (
-    <div style={{ position: "relative", marginBottom: "18px" }}>
-      <label style={styles.fieldLabel}>{label}</label>
-      <div
-        style={{
-          ...styles.fieldWrap,
-          borderColor: focused ? "#c9a84c" : "rgba(255,255,255,0.08)",
-          boxShadow: focused ? "0 0 0 3px rgba(201,168,76,0.12)" : "none",
-        }}
-      >
-        <span style={styles.fieldIcon}>{icon}</span>
-        <input
-          type={inputType}
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-          autoComplete={autoComplete}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          style={styles.fieldInput}
-        />
-        {isPassword && (
-          <button
-            type="button"
-            onClick={() => setShowPwd((p) => !p)}
-            style={styles.eyeBtn}
-            tabIndex={-1}
-          >
-            {showPwd ? "🙈" : "👁"}
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* ─── Main Auth Page ───────────────────────────────────────────── */
+/* ─── Main Auth Page ─────────────────────────────────────────────── */
 export default function AuthPage() {
   const navigate = useNavigate();
   const { login, register } = useAuth();
 
-  const [tab, setTab] = useState("signin"); // "signin" | "signup"
+  const [tab, setTab] = useState("signin");
   const [animating, setAnimating] = useState(false);
 
-  /* ── sign-in state ── */
+  /* sign-in state */
   const [siEmail, setSiEmail] = useState("");
   const [siPassword, setSiPassword] = useState("");
   const [siError, setSiError] = useState("");
   const [siLoading, setSiLoading] = useState(false);
 
-  /* ── sign-up state ── */
+  /* sign-up state */
   const [suName, setSuName] = useState("");
   const [suEmail, setSuEmail] = useState("");
   const [suPhone, setSuPhone] = useState("");
@@ -144,6 +48,8 @@ export default function AuthPage() {
   const [suConfirm, setSuConfirm] = useState("");
   const [suError, setSuError] = useState("");
   const [suLoading, setSuLoading] = useState(false);
+
+  const isSignIn = tab === "signin";
 
   const switchTab = (t) => {
     if (t === tab || animating) return;
@@ -204,90 +110,78 @@ export default function AuthPage() {
     }
   };
 
-  const isSignIn = tab === "signin";
-
   return (
-    <div style={styles.page}>
-      {/* ── background layers ── */}
-      <div style={styles.bgLayer1} />
-      <div style={styles.bgLayer2} />
-      <div style={styles.bgGrid} />
+    <div className="auth-page">
+      {/* Background layers */}
+      <div className="auth-bg-layer1" />
+      <div className="auth-bg-layer2" />
+      <div className="auth-bg-grid" />
       <Particles />
 
-      {/* ── brand stamp top-left ── */}
-      <button
-        onClick={() => navigate("/")}
-        style={styles.brandBtn}
-      >
-        <span style={styles.brandText}>CARFIELD</span>
-        <span style={styles.brandSub}>PREMIUM SHOWROOM</span>
+      {/* Brand stamp */}
+      <button className="auth-brand-btn" onClick={() => navigate("/")}>
+        <span className="auth-brand-text">CARFIELD</span>
+        <span className="auth-brand-sub">PREMIUM SHOWROOM</span>
       </button>
 
-      {/* ── card ── */}
-      <div style={styles.card}>
-        {/* decorative corner accents */}
-        <div style={{ ...styles.corner, top: -1, left: -1, borderTopColor: "#c9a84c", borderLeftColor: "#c9a84c" }} />
-        <div style={{ ...styles.corner, top: -1, right: -1, borderTopColor: "#c9a84c", borderRightColor: "#c9a84c" }} />
-        <div style={{ ...styles.corner, bottom: -1, left: -1, borderBottomColor: "#c9a84c", borderLeftColor: "#c9a84c" }} />
-        <div style={{ ...styles.corner, bottom: -1, right: -1, borderBottomColor: "#c9a84c", borderRightColor: "#c9a84c" }} />
+      {/* Card */}
+      <div className="auth-card">
+        {/* Corner accents */}
+        <div className="auth-corner auth-corner--tl" />
+        <div className="auth-corner auth-corner--tr" />
+        <div className="auth-corner auth-corner--bl" />
+        <div className="auth-corner auth-corner--br" />
 
-        {/* header */}
-        <div style={styles.cardHeader}>
-          <div style={styles.iconBadge}>
+        {/* Header */}
+        <div className="auth-card-header">
+          <div className="auth-icon-badge">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-              <path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3" stroke="#c9a84c" strokeWidth="1.5" strokeLinecap="round" />
+              <path
+                d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3"
+                stroke="#c9a84c"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
               <rect x="9" y="11" width="14" height="10" rx="2" stroke="#c9a84c" strokeWidth="1.5" />
               <circle cx="16" cy="16" r="1" fill="#c9a84c" />
             </svg>
           </div>
-          <h1 style={styles.cardTitle}>
+          <h1 className="auth-card-title">
             {isSignIn ? "Welcome back" : "Create account"}
           </h1>
-          <p style={styles.cardSub}>
+          <p className="auth-card-sub">
             {isSignIn
               ? "Sign in to access your showroom dashboard"
               : "Join CarField and explore premium vehicles"}
           </p>
         </div>
 
-        {/* tab switcher */}
-        <div style={styles.tabBar}>
+        {/* Tab switcher */}
+        <div className="auth-tab-bar">
           <button
             onClick={() => switchTab("signin")}
-            style={{
-              ...styles.tabBtn,
-              ...(isSignIn ? styles.tabActive : styles.tabInactive),
-            }}
+            className={`auth-tab-btn ${isSignIn ? "auth-tab-btn--active" : "auth-tab-btn--inactive"}`}
           >
             Sign In
           </button>
           <button
             onClick={() => switchTab("signup")}
-            style={{
-              ...styles.tabBtn,
-              ...(!isSignIn ? styles.tabActive : styles.tabInactive),
-            }}
+            className={`auth-tab-btn ${!isSignIn ? "auth-tab-btn--active" : "auth-tab-btn--inactive"}`}
           >
             Sign Up
           </button>
-          {/* sliding indicator */}
           <div
-            style={{
-              ...styles.tabIndicator,
-              left: isSignIn ? "4px" : "calc(50% + 4px)",
-            }}
+            className={`auth-tab-indicator ${isSignIn ? "auth-tab-indicator--signin" : "auth-tab-indicator--signup"}`}
           />
         </div>
 
-        {/* form area */}
+        {/* Form area */}
         <div
-          style={{
-            ...styles.formArea,
-            opacity: animating ? 0 : 1,
-            transform: animating ? "translateY(8px)" : "translateY(0)",
-          }}
+          className={`auth-form-area ${
+            animating ? "auth-form-area--animating" : "auth-form-area--visible"
+          }`}
         >
-          {/* ─── SIGN IN ─── */}
+          {/* Sign In form */}
           {isSignIn && (
             <form onSubmit={handleSignIn} autoComplete="on">
               <Field
@@ -309,16 +203,17 @@ export default function AuthPage() {
                 autoComplete="current-password"
               />
 
-              {siError && <p style={styles.errorMsg}>{siError}</p>}
+              {siError && <p className="auth-error-msg">{siError}</p>}
 
               <button
                 type="submit"
                 disabled={siLoading}
-                style={{ ...styles.submitBtn, opacity: siLoading ? 0.65 : 1 }}
+                className="auth-submit-btn"
+                style={{ opacity: siLoading ? 0.65 : 1 }}
               >
                 {siLoading ? (
-                  <span style={styles.spinnerRow}>
-                    <span style={styles.spinner} />
+                  <span className="auth-spinner-row">
+                    <span className="auth-spinner" />
                     Signing in…
                   </span>
                 ) : (
@@ -326,16 +221,18 @@ export default function AuthPage() {
                 )}
               </button>
 
-              <p style={styles.switchHint}>
+              <GoogleButton />
+
+              <p className="auth-switch-hint">
                 New to CarField?{" "}
-                <span style={styles.switchLink} onClick={() => switchTab("signup")}>
+                <span className="auth-switch-link" onClick={() => switchTab("signup")}>
                   Create an account
                 </span>
               </p>
             </form>
           )}
 
-          {/* ─── SIGN UP ─── */}
+          {/* Sign Up form */}
           {!isSignIn && (
             <form onSubmit={handleSignUp} autoComplete="on">
               <Field
@@ -364,7 +261,8 @@ export default function AuthPage() {
                 placeholder="9876543210"
                 autoComplete="tel"
               />
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+
+              <div className="auth-password-grid">
                 <Field
                   icon="🔑"
                   label="Password"
@@ -373,6 +271,7 @@ export default function AuthPage() {
                   onChange={(e) => setSuPassword(e.target.value)}
                   placeholder="Min 8 chars"
                   autoComplete="new-password"
+                  className="password-field"
                 />
                 <Field
                   icon="🔒"
@@ -382,24 +281,23 @@ export default function AuthPage() {
                   onChange={(e) => setSuConfirm(e.target.value)}
                   placeholder="Repeat"
                   autoComplete="new-password"
+                  className="password-field"
                 />
               </div>
 
-              {/* password strength indicator */}
-              {suPassword.length > 0 && (
-                <PasswordStrength password={suPassword} />
-              )}
+              {suPassword.length > 0 && <PasswordStrength password={suPassword} />}
 
-              {suError && <p style={styles.errorMsg}>{suError}</p>}
+              {suError && <p className="auth-error-msg">{suError}</p>}
 
               <button
                 type="submit"
                 disabled={suLoading}
-                style={{ ...styles.submitBtn, opacity: suLoading ? 0.65 : 1 }}
+                className="auth-submit-btn"
+                style={{ opacity: suLoading ? 0.65 : 1 }}
               >
                 {suLoading ? (
-                  <span style={styles.spinnerRow}>
-                    <span style={styles.spinner} />
+                  <span className="auth-spinner-row">
+                    <span className="auth-spinner" />
                     Creating account…
                   </span>
                 ) : (
@@ -407,9 +305,11 @@ export default function AuthPage() {
                 )}
               </button>
 
-              <p style={styles.switchHint}>
+              <GoogleButton />
+
+              <p className="auth-switch-hint">
                 Already have an account?{" "}
-                <span style={styles.switchLink} onClick={() => switchTab("signin")}>
+                <span className="auth-switch-link" onClick={() => switchTab("signin")}>
                   Sign in here
                 </span>
               </p>
@@ -418,356 +318,10 @@ export default function AuthPage() {
         </div>
       </div>
 
-      {/* ── bottom tagline ── */}
-      <p style={styles.tagline}>
+      {/* Tagline */}
+      <p className="auth-tagline">
         Premium automobiles · Trusted experience · India&apos;s finest
       </p>
-
-      <style>{`
-        @keyframes authSpin {
-          to { transform: rotate(360deg); }
-        }
-        @keyframes authFadeIn {
-          from { opacity: 0; transform: translateY(28px) scale(0.97); }
-          to   { opacity: 1; transform: translateY(0)  scale(1);    }
-        }
-      `}</style>
     </div>
   );
 }
-
-/* ─── Password strength meter ─────────────────────────────────── */
-function PasswordStrength({ password }) {
-  const checks = [
-    password.length >= 8,
-    /[A-Z]/.test(password),
-    /[0-9]/.test(password),
-    /[^A-Za-z0-9]/.test(password),
-  ];
-  const score = checks.filter(Boolean).length;
-  const labels = ["Weak", "Fair", "Good", "Strong"];
-  const colors = ["#e05252", "#f39c12", "#3db87a", "#c9a84c"];
-
-  return (
-    <div style={{ marginBottom: "14px" }}>
-      <div style={{ display: "flex", gap: "4px", marginBottom: "4px" }}>
-        {checks.map((ok, i) => (
-          <div
-            key={i}
-            style={{
-              flex: 1,
-              height: "3px",
-              borderRadius: "2px",
-              background: i < score ? colors[score - 1] : "rgba(255,255,255,0.1)",
-              transition: "background 0.3s",
-            }}
-          />
-        ))}
-      </div>
-      <span style={{ fontSize: "11px", color: score > 0 ? colors[score - 1] : "#888" }}>
-        {score > 0 ? labels[score - 1] : ""}
-      </span>
-    </div>
-  );
-}
-
-/* ─── Styles object ───────────────────────────────────────────── */
-const styles = {
-  page: {
-    minHeight: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "40px 16px",
-    position: "relative",
-    overflow: "hidden",
-    background: "#080810",
-    fontFamily: "'DM Sans', Arial, sans-serif",
-  },
-
-  bgLayer1: {
-    position: "absolute",
-    inset: 0,
-    background:
-      "radial-gradient(ellipse 70% 55% at 20% 10%, rgba(201,168,76,0.07) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 90%, rgba(201,168,76,0.05) 0%, transparent 55%)",
-    pointerEvents: "none",
-  },
-
-  bgLayer2: {
-    position: "absolute",
-    inset: 0,
-    background:
-      "radial-gradient(ellipse 50% 40% at 50% 50%, rgba(255,255,255,0.015) 0%, transparent 70%)",
-    pointerEvents: "none",
-  },
-
-  bgGrid: {
-    position: "absolute",
-    inset: 0,
-    backgroundImage:
-      "linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px)",
-    backgroundSize: "40px 40px",
-    pointerEvents: "none",
-  },
-
-  brandBtn: {
-    position: "fixed",
-    top: "20px",
-    left: "24px",
-    background: "none",
-    border: "none",
-    cursor: "pointer",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    gap: "1px",
-    padding: 0,
-    zIndex: 10,
-  },
-
-  brandText: {
-    fontFamily: "'Syne', Arial, sans-serif",
-    fontSize: "15px",
-    fontWeight: 700,
-    letterSpacing: "3px",
-    color: "#c9a84c",
-  },
-
-  brandSub: {
-    fontSize: "8px",
-    letterSpacing: "2px",
-    color: "rgba(201,168,76,0.45)",
-    textTransform: "uppercase",
-  },
-
-  card: {
-    position: "relative",
-    width: "100%",
-    maxWidth: "480px",
-    background: "rgba(17,17,23,0.92)",
-    border: "1px solid rgba(255,255,255,0.06)",
-    borderRadius: "20px",
-    padding: "40px 36px 36px",
-    backdropFilter: "blur(20px)",
-    boxShadow:
-      "0 40px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,168,76,0.08) inset",
-    animation: "authFadeIn 0.55s cubic-bezier(.22,1,.36,1) both",
-    zIndex: 2,
-  },
-
-  corner: {
-    position: "absolute",
-    width: "18px",
-    height: "18px",
-    borderWidth: "1.5px",
-    borderStyle: "solid",
-    borderColor: "transparent",
-    borderRadius: "2px",
-    pointerEvents: "none",
-  },
-
-  cardHeader: {
-    textAlign: "center",
-    marginBottom: "28px",
-  },
-
-  iconBadge: {
-    width: "52px",
-    height: "52px",
-    borderRadius: "14px",
-    background: "rgba(201,168,76,0.08)",
-    border: "1px solid rgba(201,168,76,0.22)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    margin: "0 auto 16px",
-  },
-
-  cardTitle: {
-    fontFamily: "'Syne', Arial, sans-serif",
-    fontSize: "26px",
-    fontWeight: 700,
-    color: "#f0ede6",
-    margin: "0 0 6px",
-    letterSpacing: "0.3px",
-  },
-
-  cardSub: {
-    fontSize: "13px",
-    color: "#6a6778",
-    margin: 0,
-    lineHeight: 1.5,
-  },
-
-  tabBar: {
-    position: "relative",
-    display: "flex",
-    background: "rgba(255,255,255,0.04)",
-    borderRadius: "10px",
-    padding: "4px",
-    marginBottom: "28px",
-  },
-
-  tabBtn: {
-    flex: 1,
-    padding: "9px",
-    border: "none",
-    borderRadius: "7px",
-    cursor: "pointer",
-    fontSize: "13px",
-    fontWeight: 600,
-    fontFamily: "'DM Sans', Arial, sans-serif",
-    position: "relative",
-    zIndex: 1,
-    transition: "color 0.25s",
-    background: "transparent",
-  },
-
-  tabActive: {
-    color: "#c9a84c",
-  },
-
-  tabInactive: {
-    color: "#6a6778",
-  },
-
-  tabIndicator: {
-    position: "absolute",
-    top: "4px",
-    width: "calc(50% - 8px)",
-    height: "calc(100% - 8px)",
-    background: "rgba(201,168,76,0.1)",
-    border: "1px solid rgba(201,168,76,0.25)",
-    borderRadius: "7px",
-    transition: "left 0.25s cubic-bezier(.22,1,.36,1)",
-    pointerEvents: "none",
-  },
-
-  formArea: {
-    transition: "opacity 0.22s ease, transform 0.22s ease",
-  },
-
-  fieldLabel: {
-    display: "block",
-    fontSize: "11px",
-    fontWeight: 600,
-    letterSpacing: "0.8px",
-    textTransform: "uppercase",
-    color: "#6a6778",
-    marginBottom: "6px",
-  },
-
-  fieldWrap: {
-    display: "flex",
-    alignItems: "center",
-    background: "rgba(255,255,255,0.03)",
-    border: "1px solid",
-    borderRadius: "10px",
-    padding: "0 12px",
-    transition: "border-color 0.18s, box-shadow 0.18s",
-  },
-
-  fieldIcon: {
-    fontSize: "14px",
-    marginRight: "10px",
-    opacity: 0.5,
-    userSelect: "none",
-    lineHeight: 1,
-  },
-
-  fieldInput: {
-    flex: 1,
-    background: "transparent",
-    border: "none",
-    outline: "none",
-    color: "#f0ede6",
-    fontSize: "14px",
-    padding: "12px 0",
-    fontFamily: "'DM Sans', Arial, sans-serif",
-  },
-
-  eyeBtn: {
-    background: "none",
-    border: "none",
-    cursor: "pointer",
-    fontSize: "13px",
-    opacity: 0.4,
-    padding: "0 0 0 8px",
-    lineHeight: 1,
-    transition: "opacity 0.15s",
-  },
-
-  errorMsg: {
-    background: "rgba(224,82,82,0.1)",
-    border: "1px solid rgba(224,82,82,0.25)",
-    color: "#e05252",
-    borderRadius: "8px",
-    padding: "10px 14px",
-    fontSize: "13px",
-    marginBottom: "16px",
-    lineHeight: 1.4,
-  },
-
-  submitBtn: {
-    width: "100%",
-    padding: "14px",
-    background: "linear-gradient(135deg, #c9a84c 0%, #e8c97a 50%, #c9a84c 100%)",
-    backgroundSize: "200% 100%",
-    backgroundPosition: "0% 50%",
-    border: "none",
-    borderRadius: "10px",
-    color: "#080810",
-    fontFamily: "'Syne', Arial, sans-serif",
-    fontSize: "14px",
-    fontWeight: 700,
-    letterSpacing: "0.5px",
-    cursor: "pointer",
-    transition: "background-position 0.4s, transform 0.15s, opacity 0.2s",
-    marginBottom: "16px",
-  },
-
-  spinnerRow: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "8px",
-  },
-
-  spinner: {
-    display: "inline-block",
-    width: "14px",
-    height: "14px",
-    border: "2px solid rgba(8,8,16,0.3)",
-    borderTopColor: "#080810",
-    borderRadius: "50%",
-    animation: "authSpin 0.7s linear infinite",
-  },
-
-  switchHint: {
-    textAlign: "center",
-    fontSize: "13px",
-    color: "#6a6778",
-    margin: 0,
-  },
-
-  switchLink: {
-    color: "#c9a84c",
-    cursor: "pointer",
-    fontWeight: 500,
-    textDecoration: "underline",
-    textDecorationColor: "rgba(201,168,76,0.35)",
-    textUnderlineOffset: "3px",
-  },
-
-  tagline: {
-    marginTop: "28px",
-    fontSize: "11px",
-    letterSpacing: "1.5px",
-    textTransform: "uppercase",
-    color: "rgba(201,168,76,0.3)",
-    textAlign: "center",
-    zIndex: 2,
-    position: "relative",
-  },
-};

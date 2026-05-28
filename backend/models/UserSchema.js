@@ -14,12 +14,16 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        default: null,
+    },
+    googleId: {
+       type: String,
+       default: null,
     },
     phone: {
         type: String,
-        required: true,
-        unique: true
+        default: null,
+        unique: true,
     },
     image: {
         type: String,

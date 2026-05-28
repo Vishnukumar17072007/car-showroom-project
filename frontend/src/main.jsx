@@ -45,16 +45,16 @@ const router = createBrowserRouter([
     errorElement: <LazyPage><NotFound /></LazyPage>,
     children: [
       { index: true, element: <LazyPage><Home /></LazyPage> },
-      { path: "/vehicles", element: <LazyPage><Vehicles /></LazyPage> },
-      { path: "/vehicles/:id", element: <LazyPage><CarDetailsPage /></LazyPage> },
-      { path: "/support", element: <LazyPage><Support /></LazyPage> },
       { path: "/login", element: <LazyPage><Login /></LazyPage> },
       {
         element: <ProtectedRoutes />,
         children: [
+          { path: "/vehicles", element: <LazyPage><Vehicles /></LazyPage> },
+          { path: "/vehicles/:id", element: <LazyPage><CarDetailsPage /></LazyPage> },
           { path: "/wishlist", element: <LazyPage><WishList /></LazyPage> },
           { path: "/orders", element: <LazyPage><Orders /></LazyPage> },
           { path: "/cartList", element: <LazyPage><Cart /></LazyPage> },
+          { path: "/support", element: <LazyPage><Support /></LazyPage> },
           { path: "/profile", element: <LazyPage><Profile /></LazyPage> },
           { path: "/editProfile", element: <LazyPage><EditProfile /></LazyPage> },
         ]
