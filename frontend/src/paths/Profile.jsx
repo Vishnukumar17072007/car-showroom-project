@@ -96,7 +96,7 @@ function Profile() {
                         <div className="account-details">
                             <div className="detail-row divider">
                                 <p className="detail-label"><i className="bi bi-envelope"></i> Email</p>
-                                <p className="detail-value">{user.email}</p>
+                                <p className="detail-value">{user?.email || user?.googleId}</p>
                             </div>
                             <div className="detail-row divider">
                                 <p className="detail-label"><i className="bi bi-telephone"></i> Phone</p>

@@ -25,6 +25,8 @@ const Profile = lazy(() => import('./paths/Profile.jsx'));
 const EditProfile = lazy(() => import('./paths/EditProfile.jsx'));
 const AdminDashboard = lazy(() => import('./paths/AdminDashboard.jsx'));
 const Login = lazy(() => import('./paths/Login.jsx'));
+const UserDashboard = lazy(() => import('./paths/UserDashboard.jsx'));
+const Invoices = lazy(() => import('./paths/Invoices.jsx'));
 
 function PageLoader() {
   return (
@@ -57,6 +59,7 @@ const router = createBrowserRouter([
           { path: "/support", element: <LazyPage><Support /></LazyPage> },
           { path: "/profile", element: <LazyPage><Profile /></LazyPage> },
           { path: "/editProfile", element: <LazyPage><EditProfile /></LazyPage> },
+          { path: "/dashboard", element: <LazyPage><UserDashboard /></LazyPage> },
         ]
       },
       {
@@ -64,6 +67,7 @@ const router = createBrowserRouter([
         children: [
           { path: "/admin/orders", element: <LazyPage><AdminOrders /></LazyPage> },
           { path: "/admin/dashboard", element: <LazyPage><AdminDashboard /></LazyPage> },
+          { path: "/admin/invoices", element: <LazyPage><Invoices /></LazyPage> },
         ]
       }
     ]

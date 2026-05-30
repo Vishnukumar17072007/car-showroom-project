@@ -49,10 +49,11 @@ function SideNavbar() {
   const [upgradePlanActive, setUpgradePlanActive] = useState(false);
 
   const topNavItems = [
+    ["bi bi-speedometer2", "Dashboard", "/dashboard"],
     ["bi bi-car-front", "Vehicles", "/vehicles"],
     ["bi bi-heart", "WishList", "/wishlist"],
     ["bi bi-cart", "Cart", "/cartList"],
-    ["bi bi-bag-check", "Orders", "/orders"],
+    ["bi bi-bag-check", "My Orders", "/orders"],
   ];
 
   const protectedRoutes = new Set(["/wishlist", "/cartList", "/orders"]);
@@ -95,7 +96,7 @@ function SideNavbar() {
                 to="/admin/orders"
               >
                 {" "}
-                All Orders
+                Orders
               </Link>
             </li>
             <li
@@ -106,7 +107,20 @@ function SideNavbar() {
                 to="/admin/dashboard"
               >
                 {" "}
-                Dashboard
+                Admin Dashboard
+              </Link>
+            </li>
+            <li
+              className={`side_bar_menu_lists ps-2 ${
+                location.pathname === "/admin/invoices" ? "active" : ""
+              }`}
+            >
+              <Link
+                className="bi bi-file-earmark-text text-decoration-none text-white side_bar_menu_items d-block w-100"
+                to="/admin/invoices"
+              >
+                {" "}
+                Invoices
               </Link>
             </li>
           </>

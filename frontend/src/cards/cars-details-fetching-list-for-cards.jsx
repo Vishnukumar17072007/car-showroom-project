@@ -11,6 +11,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [updateCar, setUpdateCar] = useState({});
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
   const [refreshKey, setRefreshKey] = useState(0);
 
   const { user } = useAuth();
@@ -34,7 +35,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
     filters,
     search,
     page,
-    limit: CARS_PAGE_SIZE,
+    limit: pageSize,
     refreshKey,
   });
 
@@ -127,6 +128,15 @@ function CarDetailsFetchingListForCards({ filters, search }) {
   return (
     <div className="catalog-list-wrap">
       <div className="car_card_box d-flex flex-column">
+      
+          {user?.role === "admin" && (
+            <div
+              className="car-card-update"
+              onClick={() => setShowUpdateForm(true)}
+            >
+              <div className="car_card_body-update">Add CARS</div>
+            </div>
+          )}
         {/* Cards Grid */}
         <div className="d-flex flex-wrap gap-2">
           {carList.length > 0 ? (
@@ -169,22 +179,6 @@ function CarDetailsFetchingListForCards({ filters, search }) {
             </div>
           )}
 
-          {user?.role === "admin" && (
-            <div
-              className="car-card-update"
-              onClick={() => setShowUpdateForm(true)}
-            >
-              <div className="car_image-update">
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbyJMDaCMqaZj-SBNRrPi2whKdXndBx_oUHw&s"
-                  alt="Add car"
-                  loading="lazy"
-                />
-              </div>
-
-              <div className="car_card_body-update">Add CARS</div>
-            </div>
-          )}
         </div>
 
         {/* Pagination INSIDE cards area */}
@@ -193,6 +187,11 @@ function CarDetailsFetchingListForCards({ filters, search }) {
             page={currentPage}
             pages={pages}
             total={total}
+            pageSize={pageSize}
+            onPageSizeChange={(size) => {
+                setPageSize(size);
+                setPage(1);
+            }}
             onPageChange={setPage}
           />
         </div>

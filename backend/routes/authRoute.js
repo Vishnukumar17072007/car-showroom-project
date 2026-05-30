@@ -44,7 +44,12 @@ router.get("/google/callback",
         cookieOptions
       );
 
-      res.redirect(process.env.CLIENT_URL);
+      const redirectUrl =
+        process.env.NODE_ENV === "production"
+          ? process.env.CLIENT_URL
+          : "http://localhost:1200/dashboard";
+
+      res.redirect(redirectUrl);
     }
 );
 

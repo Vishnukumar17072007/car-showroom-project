@@ -4,7 +4,7 @@ const User = require("../models/UserSchema");
 const BCRYPT_ROUNDS = 12;
 
 const updateProfile = async (req, res) => {
-  const { userName, phone, address, city, state, pincode, currentPassword, newPassword } = req.body;
+  const { email, googleId, userName, phone, address, city, state, pincode, currentPassword, newPassword } = req.body;
 
   const user = await User.findById(req.user.userId);
 
@@ -21,15 +21,17 @@ const updateProfile = async (req, res) => {
   user.location.state = state.trim();
   user.location.pincode = Number(pincode);
 
-  if (currentPassword && newPassword) {
-    const isMatch = await bcrypt.compare(currentPassword, user.password);
-    if (!isMatch) {
-      const error = new Error("Current password incorrect");
-      error.status = 400;
-      throw error;
+  if(email && !googleId) {
+    if (newPassword) {
+      const isMatch = await bcrypt.compare(currentPassword, user.password);
+      if (!isMatch) {
+        const error = new Error("Current password incorrect");
+        error.status = 400;
+        throw error;
+      }
+  
+      user.password = await bcrypt.hash(newPassword, BCRYPT_ROUNDS);
     }
-
-    user.password = await bcrypt.hash(newPassword, BCRYPT_ROUNDS);
   }
 
   await user.save();

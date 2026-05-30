@@ -12,17 +12,15 @@ passport.use(
 
         async (accessToken, refreshToken, profile, done) => {
             try {
-                const email = profile.emails[0].value.toLowerCase();
+                const googleId = profile.emails[0].value.toLowerCase();
 
-                let user = await User.findOne({ email });
+                let user = await User.findOne({ googleId });
 
                 // create user if not exists
                 if (!user) {
                     user = await User.create({
                         userName: profile.displayName,
-                        email,
-                        password: null,
-                        phone: null,
+                        googleId,
                         image: profile.photos?.[0]?.value || "",
                         role: "user",
                     });
