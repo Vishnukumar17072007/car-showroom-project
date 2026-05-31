@@ -25,7 +25,20 @@ const updateOrderStatus = async (req, res) => {
   res.status(200).json({ message: "Order updated", order });
 };
 
+//delte
 const deleteOrder = async (req, res) => {
+  const order = await Order.findByIdAndDelete(req.params.id);
+
+  if(!order) {
+    const error = new Error("Order not found!");
+    error.status = 404;
+    throw error;
+  }
+
+  res.status(200).json({message: "Order was Successfully deleted from DB"});
+}
+
+const softDeleteOrder = async (req, res) => {
   const order = await Order.findById(req.params.id);
 
   if (!order) {
@@ -62,7 +75,21 @@ const deleteOrder = async (req, res) => {
   });
 };
 
+const getAllOrders = async (req, res) => {
+  const orders = await Order.find()
+  .populate("userId", "userName email")
+  .populate("items.carId")
+  .sort({
+    createdAt: -1,
+  });
+
+  res.status(200).json(orders);
+};
+
+
 module.exports = {
   updateOrderStatus,
   deleteOrder,
+  softDeleteOrder,
+  getAllOrders
 };

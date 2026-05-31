@@ -65,7 +65,7 @@ export const OrderProvider = ({ children }) => {
 
     const deleteOrder = async (orderId) => {
         try {
-            const res = await API.delete(`/order/delete/${orderId}`);
+            const res = await API.patch(`/order/soft-delete/${orderId}`);
             toast.success(res.data?.message || "Order deleted");
             await fetchOrders();
         } catch (err) {

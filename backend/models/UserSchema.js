@@ -8,42 +8,41 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
+        sparse: true,
         lowercase: true,
         trim: true,
     },
     password: {
         type: String,
-        default: null,
     },
     googleId: {
        type: String,
-       default: null,
     },
     phone: {
         type: String,
-        default: null,
         unique: true,
+        sparse: true,
     },
     image: {
         type: String,
-        default: ""
+        default: "",
     },
     location: {
         address: {
             type: String,
-            default: ""
+            default: "",
         },
         city: {
             type: String,
-            default: ""
+            default: "",
         },
         state: {
             type: String,
-            default: ""
+            default: "",
         },
         pincode: {
             type: Number,
-            default: null
+            default: "",
         }
     },
     role: {
@@ -57,7 +56,5 @@ const userSchema = new mongoose.Schema({
         default: "free"
     }
 }, { timestamps: true });
-
-userSchema.index({ email: 1 });
 
 module.exports = mongoose.model("User", userSchema, "UserDetails");

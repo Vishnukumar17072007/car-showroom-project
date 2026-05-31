@@ -21,7 +21,7 @@ const updateProfile = async (req, res) => {
   user.location.state = state.trim();
   user.location.pincode = Number(pincode);
 
-  if(email && !googleId) {
+  if(!googleId) {
     if (newPassword) {
       const isMatch = await bcrypt.compare(currentPassword, user.password);
       if (!isMatch) {

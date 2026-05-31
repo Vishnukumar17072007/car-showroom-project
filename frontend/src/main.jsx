@@ -51,15 +51,15 @@ const router = createBrowserRouter([
       {
         element: <ProtectedRoutes />,
         children: [
+          { path: "/dashboard", element: <LazyPage><UserDashboard /></LazyPage> },
           { path: "/vehicles", element: <LazyPage><Vehicles /></LazyPage> },
           { path: "/vehicles/:id", element: <LazyPage><CarDetailsPage /></LazyPage> },
           { path: "/wishlist", element: <LazyPage><WishList /></LazyPage> },
-          { path: "/orders", element: <LazyPage><Orders /></LazyPage> },
           { path: "/cartList", element: <LazyPage><Cart /></LazyPage> },
+          { path: "/orders", element: <LazyPage><Orders /></LazyPage> },
           { path: "/support", element: <LazyPage><Support /></LazyPage> },
           { path: "/profile", element: <LazyPage><Profile /></LazyPage> },
           { path: "/editProfile", element: <LazyPage><EditProfile /></LazyPage> },
-          { path: "/dashboard", element: <LazyPage><UserDashboard /></LazyPage> },
         ]
       },
       {

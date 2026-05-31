@@ -118,9 +118,6 @@ const Orders = () => {
                     onClick={async () => {
                       try {
                         await deleteOrder(order._id);
-
-                        toast.success("Order history removed");
-
                         setOpenOrderMenu(null);
                       } catch (err) {
                         toast.error(

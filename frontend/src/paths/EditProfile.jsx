@@ -46,7 +46,7 @@ function EditProfile() {
         if (!String(city).trim())    return { ok: false, msg: "city cannot be empty." };
         if (!String(state).trim())    return { ok: false, msg: "state cannot be empty." };
         if (!String(pincode).trim())    return { ok: false, msg: "pincode cannot be empty." };
-        if(user.email){
+        if(!user.googleId){
             if (showPasswordFields) {
                 if (!currentPassword)          return { ok: false, msg: "Please enter your current password." };
                 if (newPassword.length < 8)    return { ok: false, msg: "New password must be at least 8 characters." };
@@ -132,7 +132,7 @@ function EditProfile() {
                                 <input
                                     className="ep-input ep-input-disabled"
                                     type="email"
-                                    value={user?.email || user?.googleId || ""}
+                                    value={user?.email || ""}
                                     disabled
                                 />
                                 <i className="bi bi-lock ep-lock-icon"></i>
@@ -209,7 +209,7 @@ function EditProfile() {
                         </div>
                     </div>
                     {/* ── Security ── */}
-                    {user.email && (
+                    {!user.googleId && (
                         <div className={user.email ? "ep-card" : ""}>
                             <p className="ep-section-label">Security</p>
 

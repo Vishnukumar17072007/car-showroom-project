@@ -706,7 +706,7 @@ input[type="checkbox"]:checked {
   flex: 1;
   height: calc(100vh - 54px);
   max-height: calc(100vh - 54px);
-  padding: 16px;
+  padding: 12px;
   overflow-y: auto;
   position: relative;
   display: grid;
@@ -926,6 +926,7 @@ input[type="checkbox"]:checked {
   background-color: var(--bg-card);
   border: 1.5px dashed var(--gold-border);
   width: 200px;
+  margin-right: 25px;
   border-radius: var(--radius-md);
   position: absolute;
   right: 0px;
