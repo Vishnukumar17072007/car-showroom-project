@@ -25,7 +25,8 @@ const Profile = lazy(() => import('./paths/Profile.jsx'));
 const EditProfile = lazy(() => import('./paths/EditProfile.jsx'));
 const AdminDashboard = lazy(() => import('./paths/AdminDashboard.jsx'));
 const Login = lazy(() => import('./paths/Login.jsx'));
-const UserDashboard = lazy(() => import('./paths/UserDashboard.jsx'));
+const UserDashboard = lazy(() => import('./paths/Dashboard.jsx'));
+const Dashboard = lazy(() => import('./paths/Dashboard.jsx'));
 const Invoices = lazy(() => import('./paths/Invoices.jsx'));
 
 function PageLoader() {
@@ -51,7 +52,7 @@ const router = createBrowserRouter([
       {
         element: <ProtectedRoutes />,
         children: [
-          { path: "/dashboard", element: <LazyPage><UserDashboard /></LazyPage> },
+          { path: "/dashboard", element: <LazyPage><Dashboard /></LazyPage> },
           { path: "/vehicles", element: <LazyPage><Vehicles /></LazyPage> },
           { path: "/vehicles/:id", element: <LazyPage><CarDetailsPage /></LazyPage> },
           { path: "/wishlist", element: <LazyPage><WishList /></LazyPage> },
@@ -66,7 +67,6 @@ const router = createBrowserRouter([
         element: <AdminRoute />,
         children: [
           { path: "/admin/orders", element: <LazyPage><AdminOrders /></LazyPage> },
-          { path: "/admin/dashboard", element: <LazyPage><AdminDashboard /></LazyPage> },
           { path: "/admin/invoices", element: <LazyPage><Invoices /></LazyPage> },
         ]
       }

@@ -3286,16 +3286,58 @@ input[type="checkbox"]:checked {
   display: none;
 }
 
+.dashboardPage {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 65px);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.dashboardPage::-webkit-scrollbar { display: none; }
+
+
+.dashboardAccessTab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.db-tab-btn {
+  padding: 8px 28px;
+  border-radius: 8px;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  background: transparent;
+  color: #a09da8;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.db-tab-btn:hover {
+  border-color: #c9a84c;
+  color: #c9a84c;
+}
+
+.db-tab-btn.active {
+  background: rgba(201, 168, 76, 0.15);
+  border-color: #c9a84c;
+  color: #c9a84c;
+  font-weight: 600;
+}
+
 .db-page {
   width: 100%;
   height: calc(100vh - 54px);
-  overflow-y: auto;
   background: #0d0d12;
   padding: 28px 28px 40px;
   box-sizing: border-box;
-  scrollbar-width: none;
 }
-.db-page::-webkit-scrollbar { display: none; }
 
 /* header */
 .db-header {
@@ -3406,6 +3448,8 @@ input[type="checkbox"]:checked {
 .db-order-table-wrap {
   background: #111116;
   border: 1px solid rgba(255,255,255,0.07);
+  height: 300px;
+  overflow-y: auto;
   border-radius: 12px;
   padding: 20px 22px;
 }

@@ -100,17 +100,6 @@ function SideNavbar() {
               </Link>
             </li>
             <li
-              className={`side_bar_menu_lists ps-2 ${location.pathname === "/admin/dashboard" ? "active" : ""}`}
-            >
-              <Link
-                className="bi bi-speedometer2 text-decoration-none text-white side_bar_menu_items d-block w-100"
-                to="/admin/dashboard"
-              >
-                {" "}
-                Admin Dashboard
-              </Link>
-            </li>
-            <li
               className={`side_bar_menu_lists ps-2 ${
                 location.pathname === "/admin/invoices" ? "active" : ""
               }`}

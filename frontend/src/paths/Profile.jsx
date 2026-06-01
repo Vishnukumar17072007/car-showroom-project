@@ -34,7 +34,7 @@ function Profile() {
                 <div className="profile">
                     <div className="profile-details-card">
                         {user.image
-                            ? <img className="img-round" src={user.image} alt="Profile" />
+                            ? <img className="img-round" src={user.image} />
                             : <i className="bi bi-person-circle profile-avatar-icon"></i>
                         }
 
