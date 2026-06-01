@@ -360,8 +360,6 @@ function AdminDashboard() {
                                     <p style={{ color: "#6a6778", fontSize: 13, textAlign: "center", marginTop: 40 }}>No orders yet.</p>
                                 ) : recentOrders.map((order, i) => {
                                     const user = order.userId;
-                                    const firstItem = order.items?.[0];
-                                    const car = firstItem?.carId;
                                     const av = avatarStyle(i);
                                     return (
                                         <div key={order._id} style={{
@@ -381,9 +379,16 @@ function AdminDashboard() {
                                                 <p style={{ margin: 0, fontSize: 12, fontWeight: 500, color: "#f0ede6", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                                                     {user?.userName || "Unknown"}
                                                 </p>
-                                                <p style={{ margin: 0, fontSize: 11, color: "#6a6778" }}>
-                                                    {car ? `${car.brand} ${car.model}` : `${order.items?.length || 0} car(s)`}
-                                                </p>
+                                                <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                                                    {order.items?.map((item, idx) => {
+                                                        const c = item?.carId;
+                                                        return (
+                                                            <p key={idx} style={{ margin: 0, fontSize: 11, color: "#6a6778", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                                                {c ? `${c.brand} ${c.model}` : "Unknown Car"}
+                                                            </p>
+                                                        );
+                                                    })}
+                                                </div>
                                             </div>
                                             <div style={{ textAlign: "right", flexShrink: 0 }}>
                                                 <p style={{ margin: "0 0 3px", fontSize: 12, fontWeight: 600, color: "#f0ede6" }}>

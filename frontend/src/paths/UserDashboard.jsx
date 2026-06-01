@@ -300,8 +300,6 @@ export default function UserDashboard() {
             </thead>
             <tbody>
               {orderHistory.map((order) => {
-                const firstItem = order.items?.[0];
-                const car = firstItem?.carId;
                 const color = STATUS_COLORS[order.status] ?? "#c9a84c";
                 const deliveryDate =
                   order.status === "delivered" && order.updatedAt
@@ -315,11 +313,18 @@ export default function UserDashboard() {
                       {shortId(order._id)}
                     </td>
                     <td>
-                      <div className="db-car-cell">
-                        {car?.image && <img className="db-car-img" src={car.image} alt={car.model} />}
-                        <span className="db-car-name">
-                          {car ? `${car.brand} ${car.model}` : `${order.items?.length ?? 1} car(s)`}
-                        </span>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                        {order.items?.map((item, i) => {
+                          const c = item?.carId;
+                          return (
+                            <div key={i} className="db-car-cell">
+                              {c?.image && <img className="db-car-img" src={c.image} alt={c.model} />}
+                              <span className="db-car-name">
+                                {c ? `${c.brand} ${c.model}` : "Unknown Car"}
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
                     </td>
                     <td>

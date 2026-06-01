@@ -2262,6 +2262,59 @@ input[type="checkbox"]:checked {
   padding: 0;   /* remove padding specifically for support page */
 }
 
+.OrderPage {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 65px);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.OrderPage::-webkit-scrollbar { display: none; }
+
+
+.OrderAccessTab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.order-tab-btn {
+  padding: 8px 28px;
+  border-radius: 8px;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  background: transparent;
+  color: #a09da8;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.order-tab-btn:hover {
+  border-color: #c9a84c;
+  color: #c9a84c;
+}
+
+.order-tab-btn.active {
+  background: rgba(201, 168, 76, 0.15);
+  border-color: #c9a84c;
+  color: #c9a84c;
+  font-weight: 600;
+}
+
+.order-page {
+  width: 100%;
+  height: calc(100vh - 54px);
+  background: #0d0d12;
+  padding: 28px 28px 40px;
+  box-sizing: border-box;
+}
+
 .orderMenubox {
   background-color: var(--card);
   border: 1px solid var(--border);
