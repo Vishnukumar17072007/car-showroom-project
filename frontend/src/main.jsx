@@ -18,7 +18,7 @@ const CarDetailsPage = lazy(() => import('./paths/CarDetailsPage.jsx'));
 const WishList = lazy(() => import('./paths/wishList.jsx'));
 const Support = lazy(() => import('./paths/support.jsx'));
 const NotFound = lazy(() => import('./paths/NotFound.jsx'));
-const Orders = lazy(() => import('./paths/Orders.jsx'));
+const Orders = lazy(() => import('./paths/orders.jsx'));
 const Cart = lazy(() => import('./paths/cart.jsx'));
 const Profile = lazy(() => import('./paths/Profile.jsx'));
 const EditProfile = lazy(() => import('./paths/EditProfile.jsx'));
