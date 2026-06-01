@@ -18,10 +18,11 @@ const CarDetailsPage = lazy(() => import('./paths/CarDetailsPage.jsx'));
 const WishList = lazy(() => import('./paths/wishList.jsx'));
 const Support = lazy(() => import('./paths/support.jsx'));
 const NotFound = lazy(() => import('./paths/NotFound.jsx'));
-const Orders = lazy(() => import('./paths/orders.jsx'));
 const Cart = lazy(() => import('./paths/cart.jsx'));
+const AdminOrders = lazy(() => import('./paths/AdminOrders.jsx'));
 const Profile = lazy(() => import('./paths/Profile.jsx'));
 const EditProfile = lazy(() => import('./paths/EditProfile.jsx'));
+const UserOrders = lazy(() => import('./paths/UserOrders.jsx'));
 const Login = lazy(() => import('./paths/Login.jsx'));
 const Dashboard = lazy(() => import('./paths/Dashboard.jsx'));
 const Invoices = lazy(() => import('./paths/Invoices.jsx'));
@@ -54,7 +55,7 @@ const router = createBrowserRouter([
           { path: "/vehicles/:id", element: <LazyPage><CarDetailsPage /></LazyPage> },
           { path: "/wishlist", element: <LazyPage><WishList /></LazyPage> },
           { path: "/cartList", element: <LazyPage><Cart /></LazyPage> },
-          { path: "/orders", element: <LazyPage><Orders /></LazyPage> },
+          { path: "/orders", element: <LazyPage><UserOrders /></LazyPage> },
           { path: "/support", element: <LazyPage><Support /></LazyPage> },
           { path: "/profile", element: <LazyPage><Profile /></LazyPage> },
           { path: "/editProfile", element: <LazyPage><EditProfile /></LazyPage> },
@@ -63,6 +64,7 @@ const router = createBrowserRouter([
       {
         element: <AdminRoute />,
         children: [
+          { path: "/admin/orders", element: <LazyPage><AdminOrders /></LazyPage> },
           { path: "/admin/invoices", element: <LazyPage><Invoices /></LazyPage> },
         ]
       }
