@@ -6,8 +6,10 @@ import { useAuth } from '../context/auth/useAuth';
 
 const statusColor = (status) => {
     switch (status) {
-        case 'confirmed': return '#2ecc71';
+        case 'in_progress': return '#ffea00';
+        case 'approved': return '#2ecc71';
         case 'delivered': return '#3498db';
+        case 'rejected': return '#e74c3c';
         case 'cancelled': return '#e74c3c';
         default:          return '#f39c12';
     }
@@ -43,7 +45,7 @@ function AdminOrders() {
         try {
             await API.put(`/order/admin/${orderId}/status`, { status: newStatus });
             toast.success(`Order marked as ${newStatus}`);
-            fetchAllOrders(); // re-sync
+            fetchAllOrders();
         } catch {
             toast.error("Failed to update status.");
         }
@@ -94,7 +96,22 @@ function AdminOrders() {
                                             })}
                                         </span>
                                         {/* ✅ status dropdown for admin */}
-                                        <select
+
+                                        {order.status === "cancelled" && <div style={{
+                                                fontSize: '12px',
+                                                fontWeight: 600,
+                                                padding: '4px 10px',
+                                                borderRadius: '20px',
+                                                border: `1px solid ${statusColor(order.status)}`,
+                                                backgroundColor: statusColor(order.status) + '22',
+                                                color: statusColor(order.status),
+                                                cursor: 'pointer'
+                                            }}>
+                                                Cancelled
+                                            </div>
+                                        }
+
+                                        {order.status !== "cancelled" && <select
                                             value={order.status}
                                             onChange={e => handleStatusChange(order._id, e.target.value)}
                                             style={{
@@ -109,10 +126,11 @@ function AdminOrders() {
                                             }}
                                         >
                                             <option value="pending">Pending</option>
-                                            <option value="confirmed">Confirmed</option>
+                                            <option value="in_progress">In Progress</option>
+                                            <option value="approved">Approved</option>
                                             <option value="delivered">Delivered</option>
-                                            <option value="cancelled">Cancelled</option>
-                                        </select>
+                                            <option value="rejected">Rejected</option>
+                                        </select>}
                                     </div>
                                 </div>
 
@@ -139,9 +157,10 @@ function AdminOrders() {
                                 <div style={{
                                     display: 'flex',
                                     justifyContent: 'space-between',
-                                    borderTop: '1px solid var(--border)',
-                                    paddingTop: '10px',
-                                    marginTop: '4px'
+                                    borderBottom: '1px solid var(--border)',
+                                    marginTop: '4px',
+                                    paddingBottom: '10px',
+                                    marginBottom: '4px'
                                 }}>
                                     <span style={{ color: 'var(--subtext)', fontSize: '13px' }}>
                                         Deliver to: {order.shippingDetails?.name}

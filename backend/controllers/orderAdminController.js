@@ -25,7 +25,7 @@ const updateOrderStatus = async (req, res) => {
   res.status(200).json({ message: "Order updated", order });
 };
 
-//delte
+//delete from DB
 const deleteOrder = async (req, res) => {
   const order = await Order.findByIdAndDelete(req.params.id);
 

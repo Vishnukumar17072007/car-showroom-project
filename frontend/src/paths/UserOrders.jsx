@@ -13,23 +13,21 @@ const UserOrders = () => {
   const [openOrderMenu, setOpenOrderMenu] = useState(null);
 
   const activeOrders = orders
-    .filter((i) => i.status === "pending" || i.status === "confirmed")
+    .filter((i) => i.status === "pending" || i.status === "approved" || i.status === "in_progress")
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   const historyOrders = orders
-    .filter((i) => i.status === "cancelled" || i.status === "delivered")
+    .filter((i) => i.status === "cancelled" || i.status === "delivered" || i.status === "rejected")
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   const statusColor = (status) => {
     switch (status) {
-      case "confirmed":
-        return "#2ecc71";
-      case "delivered":
-        return "#3498db";
-      case "cancelled":
-        return "#e74c3c";
-      default:
-        return "#f39c12";
+      case 'in_progress': return '#ffea00';
+      case 'approved': return '#2ecc71';
+      case 'delivered': return '#3498db';
+      case 'cancelled': return '#e74c3c';
+      case 'rejected': return '#e74c3c';
+      default: return "#f39c12";
     }
   };
 
@@ -112,19 +110,13 @@ const UserOrders = () => {
                 </li>
 
                 {/* Three-dots — only for history orders */}
-                {order.status === "cancelled" && !order.deletedByUser && (
+                {(order.status === "cancelled" || order.status === "rejected") && !order.deletedByUser && (
                   <li
                     className="orderMenu"
-                    onClick={async () => {
-                      try {
-                        await deleteOrder(order._id);
-                        setOpenOrderMenu(null);
-                      } catch (err) {
-                        toast.error(
-                          err.response?.data?.message ||
-                            "Failed to remove order",
-                        );
-                      }
+                    onClick={async (e) => {
+                      e.stopPropagation();
+                      await deleteOrder(order._id);
+                      setOpenOrderMenu(null);
                     }}
                   >
                     Delete history
@@ -220,7 +212,7 @@ const UserOrders = () => {
             </div>
           ) : (
             <>
-              {/* ── Active orders (pending / confirmed) at TOP ── */}
+              {/* ── Active orders (pending / confirmed / in_progress) at TOP ── */}
               {activeOrders.map((order) => (
                 <OrderCard key={order._id} order={order} />
               ))}

@@ -23,17 +23,21 @@ const PURPLE     = "#7F77DD";
 const TEAL       = "#5DCAA5";
 
 const STATUS_COLORS = {
+  in_progress: '#ffea00',
   delivered: "#3db87a",
   pending:   "#f39c12",
-  confirmed: "#3b82f6",
+  approved: "#3b82f6",
   cancelled: "#e05252",
+  rejected: "#e05252",
 };
 
 const STATUS_LABEL = {
+  in_progress: "In Progress",
   delivered: "Delivered",
   pending:   "Processing",
-  confirmed: "Shipped",
+  approved: "Shipped",
   cancelled: "Cancelled",
+  rejected: "Rejected",
 };
 
 const BODY_COLORS = [BLUE, GREEN, PURPLE, AMBER, TEAL, "#888780", RED, GOLD];

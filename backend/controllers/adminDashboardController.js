@@ -18,7 +18,7 @@ const getDashboardStats = async (req, res) => {
     const totalRevenue = orders.reduce((sum, o) => sum + Number(o.totalPrice || 0), 0);
 
     // Status breakdown for pie chart
-    const statusCounts = { pending: 0, confirmed: 0, delivered: 0, cancelled: 0 };
+    const statusCounts = { pending: 0, approved: 0, delivered: 0, cancelled: 0, in_progress: 0, rejected: 0 };
     orders.forEach(o => {
         if (statusCounts[o.status] !== undefined) statusCounts[o.status]++;
     });

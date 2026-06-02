@@ -95,7 +95,7 @@ const softDeleteOrder = async (req, res) => {
   }
 
   // Allow deleting only cancelled orders
-  if (order.status !== "cancelled") {
+  if ((order.status !== "cancelled") && (order.status !== "rejected")) {
     const error = new Error(
       "Only cancelled orders can be removed from history",
     );
