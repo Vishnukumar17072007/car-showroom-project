@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { OrderContext } from "../context/order/orderContext";
@@ -7,7 +7,7 @@ import { OrderListSkeleton } from "../component/PageSkeletons";
 const UserOrders = () => {
   const navigate = useNavigate();
 
-  const { orders, cancelOrder, deleteOrder, ordersLoading } =
+  const { orders, cancelOrder, deleteOrder, ordersLoading, fetchOrders } =
     useContext(OrderContext);
 
   const [openOrderMenu, setOpenOrderMenu] = useState(null);
@@ -30,6 +30,10 @@ const UserOrders = () => {
       default: return "#f39c12";
     }
   };
+
+  useEffect(() => {
+    fetchOrders();
+  },[]);
 
   const handleCancel = async (orderId) => {
     try {
@@ -168,9 +172,8 @@ const UserOrders = () => {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          borderTop: "1px solid var(--border)",
-          paddingTop: "10px",
-          marginTop: "4px",
+          borderBottom: "1px solid var(--border)",
+          paddingBottom: "10px",
           marginBottom: "10px",
         }}
       >
@@ -195,7 +198,7 @@ const UserOrders = () => {
               backgroundColor: "white",
             }}
           >
-            My Orders
+            Orders
           </h2>
 
           {ordersLoading ? (

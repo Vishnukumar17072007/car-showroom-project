@@ -1,11 +1,10 @@
-import { useState, useContext, useCallback, useEffect } from "react";
+import { useState } from "react";
 import WishListContext from "./wishListContext";
 import { AuthContext } from "../auth/authContext";
 import toast from "react-hot-toast";
 import API from "../../api/axios";
 
 export function WishListProvider({ children }) {
-  const { user } = useContext(AuthContext);
   const [wishListItems, setWishListItems] = useState([]);
   const [wishListLoading, setWishListLoading] = useState(false);
 
@@ -14,30 +13,19 @@ export function WishListProvider({ children }) {
     return items.map((x) => x?.carId).filter(Boolean);
   };
 
-  const refreshWishList = useCallback(async () => {
-    setWishListLoading(true);
-    if (!user) {
-      setWishListItems([]);
-      setWishListLoading(false);
-      return;
-    }
+  const getWishList = async () => {
     try {
-      const res = await API.get("/wishlist");
-      setWishListItems(normalizeWishList(res.data));
-    } catch {
-      setWishListItems([]);
-    } finally {
-      setWishListLoading(false);
+        setWishListLoading(true);
+        const res = await API.get("/wishlist");
+        setWishListItems(normalizeWishList(res.data));
     }
-  }, [user]);
-
-  useEffect(() => {
-    if (!user) {
-      setWishListItems([]);
-      return;
+    catch {
+        setWishListItems([]);
     }
-    refreshWishList();
-  }, [user, refreshWishList]);
+    finally {
+        setWishListLoading(false);
+    }
+};
 
   const addToWishList = async (carOrCarId) => {
     const car =
@@ -90,6 +78,7 @@ export function WishListProvider({ children }) {
   return (
     <WishListContext.Provider
       value={{
+        getWishList,
         wishListItems,
         addToWishList,
         removeFromWishList,

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth/useAuth";
 import { useWishList } from "../context/wish/useWishList";
@@ -11,14 +11,21 @@ function Profile() {
     const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
     const navigate = useNavigate();
 
-    const { user, logout } = useAuth();
-    const { wishListItems } = useWishList();
-    const { cartItems } = useCart();
-    const { orders } = useOrder();
+    const { user, logout, checkAuth } = useAuth();
+    const { wishListItems, getWishList } = useWishList();
+    const { cartItems,getCart } = useCart();
+    const { orders, getOrders } = useOrder();
 
     const wishListCount = wishListItems.length;
     const cartListCount = cartItems.length;
     const orderCount = orders.length;
+
+    useEffect(() => {
+        checkAuth();
+        getWishList();
+        getOrders();
+        getCart();
+    },[]);
 
     const joinedDate = user.createdAt
         ? new Date(user.createdAt).toLocaleDateString("en-IN", {
@@ -102,7 +109,7 @@ function Profile() {
                                 <p className="detail-label"><i className="bi bi-telephone"></i> Phone</p>
                                 <p className="detail-value">{user.phone}</p>
                             </div>
-                            <div className="detail-row bi bi-geo-alt">Address</div>
+                            <div className="detail-row detail-label"><i className="bi bi-geo-alt"></i>Address</div>
                             <div className="detail-modal divider">
                                 <div className="detail-row divider">
                                     <p className="detail-label">Address</p>

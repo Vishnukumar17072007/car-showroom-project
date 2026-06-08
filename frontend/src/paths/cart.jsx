@@ -1,5 +1,5 @@
 import { useCart } from '../context/cart/useCart';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CheckoutModal from '../component/CheckoutModal';
 import { useNavigate } from 'react-router-dom';
 import { CartListSkeleton } from '../component/PageSkeletons';
@@ -8,7 +8,7 @@ function Cart() {
     const [showCheckout, setShowCheckout] = useState(false);
     const [selectedCarIds, setSelectedCarIds] = useState(null);
 
-    const { cartItems: cart, removeFromCart, cartLoading } = useCart();
+    const { cartItems: cart, removeFromCart, cartLoading, getCart } = useCart();
     const navigate = useNavigate();
 
     const totalPrice = cart.reduce((sum, item) => sum + Number(item.carId?.price || 0), 0);
@@ -22,6 +22,10 @@ function Cart() {
         setShowCheckout(false);
         setSelectedCarIds(null);
     };
+
+    useEffect(() => {
+        getCart();
+    },[])
 
     const hasUnavailable = cart.some(item => item.carId && (item.carId.available ?? 0) <= 0);
     return (

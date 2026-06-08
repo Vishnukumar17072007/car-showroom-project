@@ -3,18 +3,15 @@ const router = express.Router();
 const verifyToken = require("../middleware/verifyToken");
 const verifyRole = require("../middleware/verifyRole");
 const asyncHandler = require("../utils/asyncHandler");
-const { createOrder, getUserOrders, softDeleteOrder } = require("../controllers/orderController");
-const { updateOrderStatus, deleteOrder, getAllOrders } = require("../controllers/orderAdminController");
+const { createOrder, getOrders, softDeleteOrder, updateOrderStatus, deleteOrder, } = require("../controllers/orderController");
 
 //user routes
+router.get("/", verifyToken, asyncHandler(getOrders));
 router.post("/", verifyToken, asyncHandler(createOrder));
-router.get("/", verifyToken, asyncHandler(getUserOrders));
 router.patch("/soft-delete/:id", verifyToken, asyncHandler(softDeleteOrder));
-//user route by but controller on orderAdminController
 router.patch("/cancel/:id", verifyToken, asyncHandler(updateOrderStatus));
 //admin routes
-router.get("/admin/all", verifyToken, verifyRole("admin"), asyncHandler(getAllOrders));
-router.put("/admin/:id/status", verifyToken, verifyRole("admin"), asyncHandler(updateOrderStatus));
-router.delete("/admin/:id", verifyToken, verifyRole("admin"), asyncHandler(deleteOrder));
+router.put("/:id/status", verifyToken, verifyRole("admin"), asyncHandler(updateOrderStatus));
+router.delete("/:id", verifyToken, verifyRole("admin"), asyncHandler(deleteOrder));
 
 module.exports = router;

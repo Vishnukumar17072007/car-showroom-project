@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/auth/useAuth";
 
-function AdminRoute() {
+function UserRoute() {
     const { user, authLoading } = useAuth();
 
     if (authLoading) {
@@ -12,11 +12,11 @@ function AdminRoute() {
         );
     }
 
-    if (!user || user.role !== "admin") {
+    if ( user ) {
         return <Navigate to="/dashboard" replace />;
     }
 
     return <Outlet />;
 }
 
-export default AdminRoute;
+export default UserRoute;

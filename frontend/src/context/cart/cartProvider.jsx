@@ -1,21 +1,14 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { CartContext } from "./cartContext";
-import { useAuth } from "../auth/useAuth";
 import toast from "react-hot-toast";
 import API from "../../api/axios";
 
 export function CartProvider({ children }) {
-  const { user } = useAuth();
   const [cartItems, setCartItems] = useState([]);
   const [cartLoading, setCartLoading] = useState(false);
 
-  const fetchCart = useCallback(async () => {
+  const getCart = async () => {
     setCartLoading(true);
-    if (!user) {
-      setCartItems([]);
-      setCartLoading(false);
-      return;
-    }
     try {
       const data = await API.get("/cart");
       setCartItems(data.data?.items || []);
@@ -24,11 +17,7 @@ export function CartProvider({ children }) {
     } finally {
       setCartLoading(false);
     }
-  }, [user]);
-
-  useEffect(() => {
-    fetchCart();
-  }, [fetchCart]);
+  }
 
   const addToCart = async (carIdOrCar) => {
     const car =
@@ -100,10 +89,10 @@ export function CartProvider({ children }) {
       value={{
         cartItems,
         setCartItems,
+        getCart,
         addToCart,
         removeFromCart,
         isInCart,
-        fetchCart,
         cartLoading,
       }}
     >

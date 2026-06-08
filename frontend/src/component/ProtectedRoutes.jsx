@@ -12,7 +12,7 @@ function ProtectedRoutes(){
     }
 
     if(!user){
-        return <Navigate to="/" replace />
+        return <Navigate to="/login" replace />
     }
 
     return <Outlet />;

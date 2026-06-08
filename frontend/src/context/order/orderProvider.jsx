@@ -1,10 +1,14 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
+import toast from "react-hot-toast";
+
+import API from "../../api/axios";
 import { OrderContext } from "./orderContext";
 import { useAuth } from "../auth/useAuth";
-import toast from "react-hot-toast";
-import API from "../../api/axios";
+import { useNotification } from '../notification/useNotification'
 
 export const OrderProvider = ({ children }) => {
+    const { fetchNotifications } = useNotification();
+
     const [orders, setOrders] = useState([]);
     const [ordersLoading, setOrdersLoading] = useState(false);
     const { user } = useAuth();
@@ -26,9 +30,17 @@ export const OrderProvider = ({ children }) => {
         }
     }, [user]);
 
-    useEffect(() => {
-        fetchOrders();
-    }, [fetchOrders]);
+    const getOrders = async () => {
+        setOrdersLoading(true);
+        try {
+            const res = await API.get('/order');
+            setOrders(Array.isArray(res.data) ? res.data : []);
+        } catch {
+            setOrders([]);
+        } finally {
+            setOrdersLoading(false);
+        }
+    };
 
     const placeOrder = async (form, carIds) => {
         const shippingDetails = {
@@ -42,6 +54,7 @@ export const OrderProvider = ({ children }) => {
         try {
             const res = await API.post('/order', { shippingDetails, carIds });
             toast.success("Order placed successfully!");
+            await fetchNotifications();
             await fetchOrders();
             return res.data;
         } catch (err) {
@@ -76,7 +89,7 @@ export const OrderProvider = ({ children }) => {
     };
 
     return (
-        <OrderContext.Provider value={{ orders, placeOrder, fetchOrders, deleteOrder, cancelOrder, ordersLoading }}>
+        <OrderContext.Provider value={{ orders, getOrders, placeOrder, fetchOrders, deleteOrder, cancelOrder, ordersLoading }}>
             {children}
         </OrderContext.Provider>
     );

@@ -7,20 +7,22 @@ const notificationSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    title: {
-      type: String,
-    },
-    message: {
-      type: String,
-    },
-    read: {
-      type: Boolean,
-      default: false,
-    },
+    notifications: [{
+      title: {
+        type: String,
+      },
+      message: {
+        type: String,
+      },
+      read: {
+        type: Boolean,
+        default: false,
+      },
+    }],
   },
   {
     timestamps: true,
   },
 );
 
-module.exports = mongoose.model('Notification', notificationSchema);
+module.exports = mongoose.model('Notification', notificationSchema, "Notifications");

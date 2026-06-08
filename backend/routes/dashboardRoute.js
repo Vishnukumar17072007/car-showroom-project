@@ -3,9 +3,8 @@ const router = express.Router();
 const verifyToken = require("../middleware/verifyToken");
 const verifyRole = require("../middleware/verifyRole");
 const asyncHandler = require("../utils/asyncHandler");
-const { getWishlistCount, getCartCount, getOrderStats, 
+const { getDashboardStats, getRecentOrders, getWishlistCount, getCartCount, getOrderStats, 
     getSpendingOverTime, getOrderStatus, getOrderHistory } = require("../controllers/dashboardController");
-const { getDashboardStats, getRecentOrders } = require("../controllers/adminDashboardController");
 
 //user dashboard
 router.get("/wishlist-count", verifyToken, asyncHandler(getWishlistCount));

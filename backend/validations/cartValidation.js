@@ -5,4 +5,4 @@ const cartValidation=[
   validate('quantity').optional().isInt({min:1}).withMessage("Invalid quantity")
 ];
 
-module.exports = {cartValidation};
+module.exports = { cartValidation };

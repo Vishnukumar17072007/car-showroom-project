@@ -1,4 +1,4 @@
-import { StrictMode, lazy, Suspense } from 'react'
+import { lazy, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import './style/index.css'
 import App from './App.jsx'
@@ -9,8 +9,10 @@ import { OrderProvider } from './context/order/orderProvider.jsx'
 import { CartProvider } from './context/cart/cartProvider.jsx'
 import ProtectedRoutes from './component/ProtectedRoutes.jsx'
 import AdminRoute from './component/AdminRoute.jsx'
+import UserRoute from './component/UserRoute.jsx'
 import { SearchProvider } from './context/search/searchProvider.jsx'
 import ProfileProvider from './context/profile/profileProvider.jsx';
+import { NotificationProvider } from './context/notification/notificationProvider.jsx';
 
 const Home = lazy(() => import('./paths/home.jsx'));
 const Vehicles = lazy(() => import('./paths/vehicles.jsx'));
@@ -19,13 +21,12 @@ const WishList = lazy(() => import('./paths/wishList.jsx'));
 const Support = lazy(() => import('./paths/support.jsx'));
 const NotFound = lazy(() => import('./paths/NotFound.jsx'));
 const Cart = lazy(() => import('./paths/cart.jsx'));
-const AdminOrders = lazy(() => import('./paths/AdminOrders.jsx'));
+const Orders = lazy(() => import('./paths/Orders.jsx'));
 const Profile = lazy(() => import('./paths/Profile.jsx'));
 const EditProfile = lazy(() => import('./paths/EditProfile.jsx'));
-const UserOrders = lazy(() => import('./paths/UserOrders.jsx'));
 const Login = lazy(() => import('./paths/Login.jsx'));
 const Dashboard = lazy(() => import('./paths/Dashboard.jsx'));
-const Invoices = lazy(() => import('./paths/Invoices.jsx'));
+const Notifications = lazy(() => import('./paths/Notification.jsx'));
 
 function PageLoader() {
   return (
@@ -45,8 +46,13 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <LazyPage><NotFound /></LazyPage>,
     children: [
-      { index: true, element: <LazyPage><Home /></LazyPage> },
-      { path: "/login", element: <LazyPage><Login /></LazyPage> },
+      {
+        element: <UserRoute />,
+        children: [
+          { path: "/", element: <LazyPage><Home /></LazyPage> },
+          { path: "/login", element: <LazyPage><Login /></LazyPage> }
+        ]
+      },
       {
         element: <ProtectedRoutes />,
         children: [
@@ -55,17 +61,17 @@ const router = createBrowserRouter([
           { path: "/vehicles/:id", element: <LazyPage><CarDetailsPage /></LazyPage> },
           { path: "/wishlist", element: <LazyPage><WishList /></LazyPage> },
           { path: "/cartList", element: <LazyPage><Cart /></LazyPage> },
-          { path: "/orders", element: <LazyPage><UserOrders /></LazyPage> },
+          { path: "/orders", element: <LazyPage><Orders /></LazyPage> },
           { path: "/support", element: <LazyPage><Support /></LazyPage> },
           { path: "/profile", element: <LazyPage><Profile /></LazyPage> },
           { path: "/editProfile", element: <LazyPage><EditProfile /></LazyPage> },
+          { path: "/notifications", element: <LazyPage><Notifications /></LazyPage> },
         ]
       },
       {
         element: <AdminRoute />,
         children: [
-          { path: "/admin/orders", element: <LazyPage><AdminOrders /></LazyPage> },
-          { path: "/admin/invoices", element: <LazyPage><Invoices /></LazyPage> },
+          // { path: "/admin/orders", element: <LazyPage><AdminOrders /></LazyPage> },
         ]
       }
     ]
@@ -73,19 +79,19 @@ const router = createBrowserRouter([
 ])
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
     <AuthProvider>
-      <WishListProvider>
-        <OrderProvider>
-          <CartProvider>
-            <SearchProvider>
-              <ProfileProvider>
-                <RouterProvider router={router} />
-              </ProfileProvider>
-            </SearchProvider>
-          </CartProvider>
-        </OrderProvider>
-      </WishListProvider>
+      <NotificationProvider>
+        <WishListProvider>
+          <OrderProvider>
+            <CartProvider>
+              <SearchProvider>
+                <ProfileProvider>
+                    <RouterProvider router={router} />
+                </ProfileProvider>
+              </SearchProvider>
+            </CartProvider>
+          </OrderProvider>
+        </WishListProvider>
+      </NotificationProvider>
     </AuthProvider>
-  </StrictMode>,
 )

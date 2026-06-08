@@ -58,46 +58,21 @@ const getCars = async (req, res) => {
   }
 
   const page = Math.max(1, parseInt(req.query.page) || 1);
-
   const limit = Math.min(50, Math.max(1, parseInt(req.query.limit) || 12));
-
   const skip = (page - 1) * limit;
 
   const [cars, total] = await Promise.all([
     Car.find(query).skip(skip).limit(limit).lean(),
-
     Car.countDocuments(query),
   ]);
 
-  res.json({
-    cars,
-    total,
-    page,
-    pages: Math.ceil(total / limit),
-  });
+  res.json({ cars, total, page, pages: Math.ceil(total / limit) });
 };
 
-const addCar = async (req, res) => {
-  const car = new Car({
-    ...req.body,
-
-    carName: `${req.body.brand}
-${req.body.model}`,
-
-    available: req.body.available ?? 1,
-  });
-
-  await car.save();
-
-  res.status(201).json(car);
-};
-
-const getCar = async (req, res) => {
+const getCarById = async (req, res) => {
   if (!isValidObjectId(req.params.id)) {
     const error = new Error("Invalid car id");
-
     error.status = 400;
-
     throw error;
   }
 
@@ -108,17 +83,63 @@ const getCar = async (req, res) => {
 
   if (!car) {
     const error = new Error("Car not found");
-
     error.status = 404;
-
     throw error;
   }
 
   res.json(car);
 };
 
-module.exports = {
-  getCars,
-  addCar,
-  getCar,
+const addCar = async (req, res) => {
+  const car = new Car({
+    ...req.body,
+    carName: `${req.body.brand} ${req.body.model}`,
+    available: req.body.available ?? 1,
+  });
+  await car.save();
+
+  res.status(201).json(car);
 };
+
+
+const updateCar = async (req, res) => {
+  await Car.findOneAndUpdate(
+    {
+      _id: req.params.id,
+      isDeleted: false,
+    },
+    {
+      $set: {
+        ...req.body,
+        carName: `${req.body.brand} ${req.body.model}`,
+      },
+    },
+    { new: true }
+  );
+
+  if (!updateCar) {
+    const error = new Error("Car not found");
+    error.status = 404;
+    throw error;
+  }
+
+  res.status(200).json(updateCar);
+};
+
+const deleteCar = async (req, res) => {
+  if (!isValidObjectId(req.params.id)) {
+    const error = new Error("Invalid car id");
+    error.status = 400;
+    throw error;
+  }
+
+  const car = await Car.findOneAndUpdate(
+    {
+      _id: req.params.id,
+      isDeleted: false,
+    },
+    {$set: { isDeleted: true }},
+    { new: true })
+};
+
+module.exports = { getCars, getCarById, addCar, updateCar, deleteCar };

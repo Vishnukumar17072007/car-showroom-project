@@ -2,12 +2,15 @@ import { useWishList } from '../context/wish/useWishList';
 import { useCart } from '../context/cart/useCart';
 import { useNavigate } from 'react-router-dom';
 import { CarGridSkeleton } from '../component/PageSkeletons';
+import { useEffect } from 'react';
 
 function WishList(){
-    const wishListCtx = useWishList();
-    const wishListItems = wishListCtx?.wishListItems ?? [];
-    const wishListLoading = wishListCtx?.wishListLoading;
     const {addToCart, removeFromCart, isInCart} = useCart();
+    const {
+        getWishList,
+        wishListItems,
+        wishListLoading
+    } = useWishList();
     const wishList = wishListItems ?? [];
     const navigate = useNavigate();
 
@@ -20,6 +23,10 @@ function WishList(){
             addToCart(car);
         }
     }
+
+    useEffect(() => {
+        getWishList();
+    },[])
 
     return(
         <>

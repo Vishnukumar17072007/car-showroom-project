@@ -2,9 +2,9 @@
 
 import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 import { useAuth } from "../context/auth/useAuth";
-import { useState } from "react";
 import SubscriptionModal from "../component/SubscriptionModal";
 
 
@@ -53,7 +53,7 @@ function SideNavbar() {
     ["bi bi-car-front", "Vehicles", "/vehicles"],
     ["bi bi-heart", "WishList", "/wishlist"],
     ["bi bi-cart", "Cart", "/cartList"],
-    ["bi bi-bag-check", "My Orders", "/orders"],
+    ["bi bi-receipt", "Orders", "/orders"],
   ];
 
   const protectedRoutes = new Set(["/wishlist", "/cartList", "/orders"]);
@@ -85,33 +85,9 @@ function SideNavbar() {
           );
         })}
 
-        {/* ── Admin Orders ── */}
+        {/* ── Admin Features ── */}
         {user?.role === "admin" && (
           <>
-            <li
-              className={`side_bar_menu_lists ps-2 ${location.pathname === "/admin/orders" ? "active" : ""}`}
-            >
-              <Link
-                className="bi bi-receipt text-decoration-none text-white side_bar_menu_items d-block w-100"
-                to="/admin/orders"
-              >
-                {" "}
-                Orders
-              </Link>
-            </li>
-            <li
-              className={`side_bar_menu_lists ps-2 ${
-                location.pathname === "/admin/invoices" ? "active" : ""
-              }`}
-            >
-              <Link
-                className="bi bi-file-earmark-text text-decoration-none text-white side_bar_menu_items d-block w-100"
-                to="/admin/invoices"
-              >
-                {" "}
-                Invoices
-              </Link>
-            </li>
           </>
         )}
       </div>

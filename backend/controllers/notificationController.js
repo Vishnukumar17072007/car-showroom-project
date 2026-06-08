@@ -1,31 +1,50 @@
 const Notification = require("../models/NotificationSchema");
 
+// Used by other controllers internally
+const saveNotification = async ({ user, title, message }) => {
+  await Notification.findOneAndUpdate(
+    { user },
+    { $push: { notifications: { title, message, read: false } } },
+    { upsert: true, new: true } // create document if it doesn't exist yet
+  );
+};
+
 const getNotifications = async (req, res) => {
-  const notifications = await Notification.find({ user: req.user.userId })
-    .sort({ createdAt: -1 });
+  const doc = await Notification.findOne({ user: req.user.userId });
+  const notifications = doc ? doc.notifications : [];
   res.status(200).json(notifications);
 };
 
 const createNotification = async (req, res) => {
-  const notification = new Notification({
+  await saveNotification({
     user: req.body.user,
     title: req.body.title,
     message: req.body.message,
   });
-  await notification.save();
-  res.status(201).json({ message: "Notification created", notification });
+  res.status(201).json({ message: "Notification created" });
 };
 
 const markAsRead = async (req, res) => {
-  const notification = await Notification.findById(req.params.id);
-  if (!notification) {
+  const result = await Notification.updateOne(
+    { user: req.user.userId, "notifications._id": req.params.id },
+    { $set: { "notifications.$.read": true } }
+  );
+
+  if (result.matchedCount === 0) {
     const error = new Error("Notification not found");
     error.status = 404;
     throw error;
   }
-  notification.read = true;
-  await notification.save();
-  res.status(200).json({ message: "Notification updated" });
+
+  res.status(200).json({ message: "Notification marked as read" });
 };
 
-module.exports = { getNotifications, createNotification, markAsRead};
+const clearNotifications = async (req, res) => {
+  await Notification.updateOne(
+    { user: req.user.userId },
+    { $set: { notifications: [] } } // empties the array, document stays in DB
+  );
+  res.status(200).json({ message: "Notifications cleared" });
+};
+
+module.exports = { saveNotification, getNotifications, createNotification, markAsRead, clearNotifications };
