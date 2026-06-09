@@ -43,8 +43,8 @@ router.get("/google/callback",
     const clientUrl = (process.env.CLIENT_URL || "").replace(/\/$/, "");
     const redirectUrl =
       process.env.NODE_ENV === "production"
-        ? `${clientUrl}/auth/callback?token=${token}`
-        : `http://localhost:1200/auth/callback?token=${token}`;
+        ? `${clientUrl}/?token=${token}`       // ← redirect to root with token
+        : `http://localhost:1200/?token=${token}`;
 
     res.redirect(redirectUrl);
   }
