@@ -69,6 +69,7 @@ export function AuthProvider({children}){
     async function logout(){
         await API.post('/auth/logout');
         setUser(null);
+        localStorage.removeItem("token");
     }
 
     async function checkAuth() {

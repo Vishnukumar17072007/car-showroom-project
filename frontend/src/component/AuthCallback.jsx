@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { useAuth } from "../context/auth/useAuth";
 
 export default function AuthCallback() {
@@ -13,14 +12,10 @@ export default function AuthCallback() {
       const token = params.get("token");
 
       if (token) {
-        Cookies.set("token", token, {
-          expires: 7,
-          secure: true,
-          sameSite: "None",
-        });
+        localStorage.setItem("token", token);  // ← store in localStorage
 
         try {
-          await checkAuth();         // ← re-fetch /auth/me so user state is set
+          await checkAuth();
           navigate("/dashboard", { replace: true });
         } catch {
           navigate("/login", { replace: true });
