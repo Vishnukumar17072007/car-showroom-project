@@ -34,23 +34,20 @@ router.put("/update", verifyToken, updateProfileValidation, validateRequest, asy
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 router.get("/google/callback",
-  passport.authenticate("google",{session: false,failureRedirect:`${process.env.CLIENT_URL}`}),
-    async (req, res) => {
-      const token = generateToken(req.user);
+  passport.authenticate("google", {
+    session: false,
+    failureRedirect: `${(process.env.CLIENT_URL || "").replace(/\/$/, "")}/login`,
+  }),
+  async (req, res) => {
+    const token = generateToken(req.user);
+    const clientUrl = (process.env.CLIENT_URL || "").replace(/\/$/, "");
+    const redirectUrl =
+      process.env.NODE_ENV === "production"
+        ? `${clientUrl}/auth/callback?token=${token}`
+        : `http://localhost:1200/auth/callback?token=${token}`;
 
-      res.cookie(
-        "token",
-        token,
-        cookieOptions
-      );
-
-      const redirectUrl =
-        process.env.NODE_ENV === "production"
-          ? process.env.CLIENT_URL
-          : "http://localhost:1200/dashboard";
-
-      res.redirect(redirectUrl);
-    }
+    res.redirect(redirectUrl);
+  }
 );
 
 module.exports = router;

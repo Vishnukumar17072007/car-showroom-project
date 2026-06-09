@@ -27,6 +27,7 @@ const EditProfile = lazy(() => import('./paths/EditProfile.jsx'));
 const Login = lazy(() => import('./paths/Login.jsx'));
 const Dashboard = lazy(() => import('./paths/Dashboard.jsx'));
 const Notifications = lazy(() => import('./paths/Notification.jsx'));
+const AuthCallback = lazy(() => import('./component/AuthCallback.jsx'))
 
 function PageLoader() {
   return (
@@ -46,11 +47,12 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <LazyPage><NotFound /></LazyPage>,
     children: [
+      { path: "/auth/callback", element: <LazyPage><AuthCallback /></LazyPage> },
       {
         element: <UserRoute />,
         children: [
           { path: "/", element: <LazyPage><Home /></LazyPage> },
-          { path: "/login", element: <LazyPage><Login /></LazyPage> }
+          { path: "/login", element: <LazyPage><Login /></LazyPage> },
         ]
       },
       {

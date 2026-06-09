@@ -12,7 +12,7 @@ function TopHeader() {
 
       const { unreadCount } = useNotification();
     
-    const {user} = useAuth();
+    const {user, logout} = useAuth();
     const {setSearch} = useSearch();
 
     useEffect(() => {
@@ -34,21 +34,27 @@ function TopHeader() {
                 {user ? null : (
                     <button className="loginBtn" onClick={() => navigate('/login')}>SIGN IN / UP</button>
                 )}
-                {user ? 
-                    (<div style={{ position: "relative", cursor: "pointer", margin: "12px" }} onClick={() => navigate("/notifications")}>
-                        <i className="bi bi-bell" style={{ fontSize: "20px", color: "var(--text)" }} />
-                        {unreadCount > 0 && (
-                            <span style={{
-                            position: "absolute", top: "-6px", right: "-6px",
-                            backgroundColor: "red", color: "white",
-                            fontSize: "10px", fontWeight: 700,
-                            borderRadius: "50%", width: "16px", height: "16px",
-                            display: "flex", alignItems: "center", justifyContent: "center",
-                            }}>
-                            {unreadCount}
-                            </span>
-                        )}
-                    </div>) : null
+                {user ? (
+                    <div>
+                        <div style={{ position: "relative", cursor: "pointer", margin: "12px" }} onClick={() => navigate("/notifications")}>
+                            <i className="bi bi-bell" style={{ fontSize: "20px", color: "var(--text)" }} />
+                            {unreadCount > 0 && (
+                                <span style={{
+                                position: "absolute", top: "-6px", right: "-6px",
+                                backgroundColor: "red", color: "white",
+                                fontSize: "10px", fontWeight: 700,
+                                borderRadius: "50%", width: "16px", height: "16px",
+                                display: "flex", alignItems: "center", justifyContent: "center",
+                                }}>
+                                {unreadCount}
+                                </span>
+                            )}
+                        </div>
+                        <div onClick={() => logout()}>
+                        <i className="bi bi-power">Logout</i>
+                        </div>
+                    </div>
+                    ) : null
                 }
             </div>
         </div>

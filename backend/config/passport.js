@@ -9,7 +9,7 @@ passport.use(
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
             callbackURL: process.env.NODE_ENV === "production"
                 ? `${process.env.SERVER_URL}/api/auth/google/callback`   // ← absolute URL
-                : "http://localhost:1200/api/auth/google/callback",
+                : "http://localhost:5000/api/auth/google/callback",
         },
 
         async (accessToken, refreshToken, profile, done) => {
