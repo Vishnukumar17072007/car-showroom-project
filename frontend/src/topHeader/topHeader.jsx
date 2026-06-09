@@ -35,9 +35,9 @@ function TopHeader() {
                     <button className="loginBtn" onClick={() => navigate('/login')}>SIGN IN / UP</button>
                 )}
                 {user ? (
-                    <div>
-                        <div style={{ position: "relative", cursor: "pointer", margin: "12px" }} onClick={() => navigate("/notifications")}>
-                            <i className="bi bi-bell" style={{ fontSize: "20px", color: "var(--text)" }} />
+                    <div style={{display: "flex", flexDirection: "row", gap: "12px"}}>
+                        <div style={{ position: "relative", cursor: "pointer", marginTop: "18px" }} onClick={() => navigate("/notifications")}>
+                            <i className="bi bi-bell" style={{ fontSize: "20px", color: "var(--text)", top: "0px" }} />
                             {unreadCount > 0 && (
                                 <span style={{
                                 position: "absolute", top: "-6px", right: "-6px",
@@ -50,9 +50,17 @@ function TopHeader() {
                                 </span>
                             )}
                         </div>
-                        <div onClick={() => logout()}>
-                        <i className="bi bi-power">Logout</i>
-                        </div>
+                        <button onClick={() => logout()}
+                            style={{
+                                position: "relative", margin: "15px",
+                                display: "flex", alignItems: "center", gap: 6,
+                                padding: "10px", border: "none",
+                                width: "37px", height: "35px", backgroundColor: "#00000000",
+                                color: "#c9a84c", fontSize: 23, cursor: "pointer", fontWeight: 500,
+                            }}
+                        >
+                        <i className="bi bi-power" />
+                        </button>
                     </div>
                     ) : null
                 }
