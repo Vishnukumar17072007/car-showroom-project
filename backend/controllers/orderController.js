@@ -6,12 +6,10 @@ const { saveNotification } = require('./notificationController')
 const { default: mongoose } = require("mongoose");
 
 const createOrder = async (req, res) => {
-  const { carIds, shippingDetails } = req.body;
+  const { carId, shippingDetails } = req.body;
 
   const cars = await Car.find({
-    _id: {
-      $in: carIds
-    },
+    _id: carId,
     available: {
       $gt: 0
     }
@@ -39,7 +37,7 @@ const createOrder = async (req, res) => {
   });
 
   await order.save();
-  await Car.updateMany({_id: { $in: carIds }},{$inc: {available: -1}});
+  await Car.updateMany({_id: carId },{$inc: {available: -1}});
   await Cart.updateOne(
     {
       userId: req.user.userId,
@@ -47,9 +45,7 @@ const createOrder = async (req, res) => {
     {
       $pull: {
         items: {
-          carId: {
-            $in: carIds,
-          },
+          carId: carId,
         },
       },
     },
@@ -57,7 +53,7 @@ const createOrder = async (req, res) => {
 
   // ✅ Create notification for user
   await saveNotification({
-    user: req.user.userId,
+    user: order.userId,
     title: "Order Placed",
     message: `Your order #${order._id} has been placed successfully.`,
   });
@@ -136,9 +132,9 @@ const updateOrderStatus = async (req, res) => {
   await order.save();
 
   await saveNotification({
-    user: req.user.userId,
+    user: order.userId,
     title: "Order Improvement",
-    message: `Your order status for order #${order._id} havae been changed to "${order.status}".`,
+    message: `Your order status for order "${order.items[0].carName}" have been changed to "${order.status}".`,
   });
 
   res.status(200).json({ message: "Order updated", order });

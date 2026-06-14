@@ -530,6 +530,18 @@ export default function Dashboard() {
           <h1>Dashboard</h1>
           <p>Overview of your activity on CarField</p>
         </div>
+        <button
+              onClick={fetchDashboard}
+              style={{
+                display: "flex", alignItems: "center", gap: 6,
+                padding: "7px 14px", borderRadius: 8,
+                border: "1px solid rgba(201,168,76,0.35)", background: GOLD_FAINT,
+                color: GOLD, fontSize: 12, cursor: "pointer", fontWeight: 500,
+              }}
+            >
+              <i className="bi bi-arrow-clockwise" />
+              Refresh
+            </button>
       </div>
 
       {/* Stat Cards */}

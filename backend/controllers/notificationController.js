@@ -10,7 +10,7 @@ const saveNotification = async ({ user, title, message }) => {
 };
 
 const getNotifications = async (req, res) => {
-  const doc = await Notification.findOne({ user: req.user.userId });
+  const doc = await Notification.findOne({ user: req.user.userId }).sort({createdAt: -1});
   const notifications = doc ? doc.notifications : [];
   res.status(200).json(notifications);
 };

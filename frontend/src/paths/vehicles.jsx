@@ -42,7 +42,7 @@ function Vehicles() {
       {/* Filter panel — gets "open" class when showFilter is true */}
       <div className={`filter_column ${showFilter ? "open" : ""}`}>
         <FilterTitle onReset={handleReset} />
-        <AvailableFilter checked={filters.available} onChange={() => setFilters(prev => ({...prev, available: !prev.available}))}/>
+        <AvailableFilter checked={filters.available} onChange={()=> setFilters(prev => ({...prev, available: !prev.available}))}/>
         <PriceFilter selected={filters.maxPrice} onChange={(val) => handleFilterChange("maxPrice", val)} />
         <BodyTypeFilter selected={filters.bodyType} onChange={(val) => handleFilterChange("bodyType", val)} />
         <TransmissionFilter selected={filters.transmission} onChange={(val) => handleFilterChange("transmission", val)} />

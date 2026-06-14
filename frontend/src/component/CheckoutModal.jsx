@@ -4,7 +4,7 @@ import { useOrder } from "../context/order/useOrder";
 import { useCart } from "../context/cart/useCart";
 import { useAuth } from "../context/auth/useAuth";
 
-const CheckoutModal = ({ onClose, carIds }) => {
+const CheckoutModal = ({ onClose, carId }) => {
     const { user } = useAuth();
     const { placeOrder } = useOrder();
     const { getCart } = useCart();
@@ -51,7 +51,7 @@ const CheckoutModal = ({ onClose, carIds }) => {
 
         setLoading(true);
         try {
-            await placeOrder(form, carIds);
+            await placeOrder(form, carId);
             onClose();
             navigate('/orders');
         } catch (err) {

@@ -6,20 +6,20 @@ import { CartListSkeleton } from '../component/PageSkeletons';
 
 function Cart() {
     const [showCheckout, setShowCheckout] = useState(false);
-    const [selectedCarIds, setSelectedCarIds] = useState(null);
+    const [selectedCarId, setSelectedCarId] = useState(null);
 
     const { cartItems: cart, removeFromCart, cartLoading, getCart } = useCart();
     const navigate = useNavigate();
 
 
-    const openCheckout = (carIds) => {   // ← NEW helper
-        setSelectedCarIds(carIds);
+    const openCheckout = (carId) => {   // ← NEW helper
+        setSelectedCarId(carId);
         setShowCheckout(true);
     };
 
     const closeCheckout = () => {        // ← NEW helper
         setShowCheckout(false);
-        setSelectedCarIds(null);
+        setSelectedCarId(null);
     };
 
     useEffect(() => {
@@ -84,7 +84,7 @@ function Cart() {
                                         {car.available > 0
                                             ? <button
                                                 className="btn btn-sm cart_buy_btn btn-add"
-                                                onClick={() => openCheckout([car._id])}>
+                                                onClick={() => openCheckout(car._id)}>
                                                 Buy
                                             </button>
                                             : <button className="btn btn-sm" disabled
@@ -103,7 +103,7 @@ function Cart() {
             {showCheckout && (
                 <CheckoutModal
                     onClose={closeCheckout}
-                    carIds={selectedCarIds}   // ← FIXED: pass selected IDs
+                    carId={selectedCarId}
                 />
             )}
         </div>

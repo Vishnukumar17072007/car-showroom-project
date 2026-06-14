@@ -4,10 +4,8 @@ import toast from "react-hot-toast";
 import API from "../../api/axios";
 import { OrderContext } from "./orderContext";
 import { useAuth } from "../auth/useAuth";
-import { useNotification } from '../notification/useNotification'
 
 export const OrderProvider = ({ children }) => {
-    const { fetchNotifications } = useNotification();
 
     const [orders, setOrders] = useState([]);
     const [ordersLoading, setOrdersLoading] = useState(false);
@@ -42,7 +40,7 @@ export const OrderProvider = ({ children }) => {
         }
     };
 
-    const placeOrder = async (form, carIds) => {
+    const placeOrder = async (form, carId) => {
         const shippingDetails = {
             name: form.name,
             mobile: Number(form.phone),
@@ -52,9 +50,8 @@ export const OrderProvider = ({ children }) => {
         };
 
         try {
-            const res = await API.post('/order', { shippingDetails, carIds });
+            const res = await API.post('/order', { shippingDetails, carId });
             toast.success("Order placed successfully!");
-            await fetchNotifications();
             await fetchOrders();
             return res.data;
         } catch (err) {
@@ -88,8 +85,20 @@ export const OrderProvider = ({ children }) => {
         }
     };
 
+    const changeStatus = async (orderId, newStatus) => {
+        try {
+            const res = await API.put(`/order/${orderId}/status`, { status: newStatus });
+            toast.success(res.data?.message || `Order marked as ${newStatus}`);
+            await fetchOrders();
+        }
+        catch (err) {
+            const message = err.response?.data?.message || "failed to change the status.";
+            toast.error(message);
+        }
+    }
+
     return (
-        <OrderContext.Provider value={{ orders, getOrders, placeOrder, fetchOrders, deleteOrder, cancelOrder, ordersLoading }}>
+        <OrderContext.Provider value={{ orders, getOrders, placeOrder, fetchOrders, deleteOrder, cancelOrder, changeStatus, ordersLoading }}>
             {children}
         </OrderContext.Provider>
     );

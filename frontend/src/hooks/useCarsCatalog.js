@@ -4,7 +4,7 @@ import { normalizeCarsResponse } from "../utils/carsApi";
 
 const DEFAULT_LIMIT = 12;
 
-function buildCarsQuery({ filters, search, page, limit, refreshKey }) {
+function buildCarsQuery({ filters, search, page, limit, refreshKey, priceSort}) {
     const params = new URLSearchParams();
     if (filters?.available) params.append("available", "true");
     if (filters?.bodyType) params.append("bodyType", filters.bodyType);
@@ -12,20 +12,21 @@ function buildCarsQuery({ filters, search, page, limit, refreshKey }) {
     if (filters?.fuelType) params.append("fuelType", filters.fuelType);
     if (filters?.maxPrice) params.append("maxPrice", filters.maxPrice);
     if (search) params.append("search", search);
+    params.append("priceSort", priceSort);
     params.append("page", String(page));
     params.append("limit", String(limit));
     if (refreshKey) params.append("_refresh", String(refreshKey));
     return params.toString();
 }
 
-export function useCarsCatalog({ filters, search, page, limit = DEFAULT_LIMIT, refreshKey = 0 }) {
+export function useCarsCatalog({ filters, search, page, limit = DEFAULT_LIMIT, refreshKey = 0, priceSort = 1 }) {
     const [raw, setRaw] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const queryString = useMemo(
-        () => buildCarsQuery({ filters, search, page, limit, refreshKey }),
-        [filters, search, page, limit, refreshKey]
+        () => buildCarsQuery({ filters, search, page, limit, refreshKey, priceSort }),
+        [filters, search, page, limit, refreshKey, priceSort]
     );
 
     useEffect(() => {

@@ -12,6 +12,7 @@ const getCars = async (req, res) => {
     fuelType,
     maxPrice,
     search,
+    priceSort
   } = req.query;
 
   const query = {
@@ -60,9 +61,10 @@ const getCars = async (req, res) => {
   const page = Math.max(1, parseInt(req.query.page) || 1);
   const limit = Math.min(50, Math.max(1, parseInt(req.query.limit) || 12));
   const skip = (page - 1) * limit;
+  const sortDirection = priceSort === "-1" ? -1 : 1;
 
   const [cars, total] = await Promise.all([
-    Car.find(query).skip(skip).limit(limit).lean(),
+    Car.find(query).sort({price: sortDirection}).skip(skip).limit(limit).lean(),
     Car.countDocuments(query),
   ]);
 

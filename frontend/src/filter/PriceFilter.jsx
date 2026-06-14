@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 const priceRange = [
-    {label: "under 10 Lakhs", value: "1000000"},
-    {label: "under 20 Lakhs", value: "2000000"},
-    {label: "under 30 Lakhs", value: "3000000"},
-    {label: "under 40 Lakhs", value: "4000000"},
-    {label: "under 50 Lakhs", value: "5000000"},
-    {label: "under 1 crore", value: "9999999"},
+    {label: "10 Lakhs", value: "1000000"},
+    {label: "20 Lakhs", value: "2000000"},
+    {label: "30 Lakhs", value: "3000000"},
+    {label: "40 Lakhs", value: "4000000"},
+    {label: "50 Lakhs", value: "5000000"},
+    {label: "1 crore", value: "9999999"},
     {label: "above 1 crore", value: "10000000"}
 ];
 
@@ -25,9 +25,9 @@ function PriceFilter({ selected, onChange}){
                 <span className="bi bi-chevron-down arrow"></span>
             </div>
 
-            <div className={`price-filter-content col-6 ${openContent ? "show" : ""}`}>
+            <div className={`price-filter-content ${openContent ? "show" : ""}`}>
                 {priceRange.map((p) => (
-                    <button key={p.value} className={selected === p.value ? "active-filter-btn" : ""} onClick={() => onChange(p.value)}>{p.label}</button>
+                    <button key={p.value} className={selected === p.value ? "active-filter-btn" : ""} style={{}} onClick={() => onChange(p.value)}>{p.label}</button>
                 ))}
             </div>
         </div>

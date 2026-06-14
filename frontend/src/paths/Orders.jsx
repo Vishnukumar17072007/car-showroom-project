@@ -1,11 +1,10 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import API from '../api/axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { OrderContext } from '../context/order/orderContext';
 import { OrderListSkeleton } from '../component/PageSkeletons';
 import { useAuth } from '../context/auth/useAuth';
-import { useNotification } from '../context/notification/useNotification'
+import { useOrder } from '../context/order/useOrder';
 
 // ─────────────────────────────────────────────
 // Shared helper
@@ -25,40 +24,20 @@ const statusColor = (status) => {
 // Admin View
 // ─────────────────────────────────────────────
 function AdminOrders() {
-  const { fetchNotifications } = useNotification();
+  const {orders, ordersLoading, fetchOrders, changeStatus} = useOrder();
 
-  const [orders, setOrders]   = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { user } = useAuth();
+  useEffect(() => { fetchOrders(); }, []);
 
-  async function fetchOrders() {
-    try {
-      const res = await API.get('/order/');
-      setOrders(res.data);
-    } catch {
-      toast.error('Failed to load orders.');
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    if (user?.role === 'admin') fetchOrders();
-    else setLoading(false);
-  }, [user]);
 
   async function handleStatusChange(orderId, newStatus) {
     try {
-      await API.put(`/order/${orderId}/status`, { status: newStatus });
-      toast.success(`Order marked as ${newStatus}`);
-      await fetchNotifications();
-      await fetchOrders();
+      await changeStatus(orderId, newStatus);
     } catch {
       toast.error('Failed to update status.');
     }
   }
 
-  if (loading) {
+  if (ordersLoading) {
     return (
       <div className="cart_page">
         <h2 style={{ padding: '5px', color: 'var(--text)', backgroundColor: 'white' }}>
@@ -178,7 +157,7 @@ function AdminOrders() {
 // ─────────────────────────────────────────────
 function UserOrders() {
   const navigate = useNavigate();
-  const { orders, cancelOrder, deleteOrder, ordersLoading, fetchOrders } = useContext(OrderContext);
+  const { orders, cancelOrder, deleteOrder, ordersLoading, fetchOrders } = useOrder();
   const [openOrderMenu, setOpenOrderMenu] = useState(null);
 
   const activeOrders = orders
