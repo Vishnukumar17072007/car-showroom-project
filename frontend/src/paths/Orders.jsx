@@ -62,7 +62,7 @@ function AdminOrders() {
     return (
       <div className="cart_page">
         <h2 style={{ padding: '5px', color: 'var(--text)', backgroundColor: 'white' }}>
-          Orders (Admin)
+          Orders
         </h2>
         <OrderListSkeleton count={5} />
       </div>
@@ -71,19 +71,18 @@ function AdminOrders() {
 
   return (
     <div className="cart_page">
+      <h2 style={{ padding: '5px', color: 'var(--text)', backgroundColor: 'white' }}>
+            Orders
+          </h2>
       <div className="cart_layout">
         <div className="cart_items_scroll">
-          <h2 style={{ padding: '5px', color: 'var(--text)', backgroundColor: 'white' }}>
-            All Orders (Admin)
-          </h2>
-
           {orders.length === 0 ? (
             <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '200px' }}>
               <p style={{ fontSize: '1.2rem', color: 'gray' }}>No orders placed yet.</p>
             </div>
           ) : (
             orders.map((order) => (
-              <div key={order._id} className="cart_item_card" style={{ width: '100%' }}>
+              <div key={order._id} className="cart_item_card" style={{ width: '100%', padding: "0px 20px 0px 20px" }}>
 
                 {/* Order header */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
@@ -293,9 +292,9 @@ function UserOrders() {
 
   return (
     <div className="cart_page">
+      <h2 style={{ padding: '5px', color: 'var(--text)', backgroundColor: 'white' }}>Orders</h2>
       <div className="cart_layout">
         <div className="cart_items_scroll">
-          <h2 style={{ padding: '5px', color: 'var(--text)', backgroundColor: 'white' }}>Orders</h2>
 
           {ordersLoading ? (
             <OrderListSkeleton count={4} />
@@ -309,7 +308,7 @@ function UserOrders() {
 
               {historyOrders.length > 0 && (
                 <>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '16px 0 8px 0' }}>
+                  <div style={{display: 'flex', alignItems: 'center', gap: '10px', margin: '16px 0 8px 0', gridColumn: '1 / -1'}}>
                     <hr style={{ flex: 1, borderColor: 'var(--border)' }} />
                     <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--subtext)', whiteSpace: 'nowrap' }}>
                       Order History

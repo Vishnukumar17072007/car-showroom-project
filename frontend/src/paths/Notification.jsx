@@ -6,15 +6,12 @@ const GOLD_FAINT = "rgba(201,168,76,0.12)";
 
 const Notifications = () => {
   const { notifications, notifLoading, clearNotifications, markAsRead } = useNotification();
-  const {user} = useAuth();
 
   if (notifLoading) return <p>Loading...</p>;
 
   return (
     <div className="cart_page">
-      <div className="cart_layout">
-        <div className="cart_items_scroll">
-          <h2 style={{ padding: "5px", color: "var(--text)", backgroundColor: "white", display: "flex", justifyContent: "space-between" }}>
+      <h2 style={{ padding: "5px", color: "var(--text)", backgroundColor: "white", display: "flex", justifyContent: "space-between" }}>
             Notifications
             <div>
               <button onClick={() => clearNotifications()} style={{
@@ -25,9 +22,11 @@ const Notifications = () => {
               }}>clear</button>
             </div>
           </h2>
-
+      <div className="cart_layout">
+        <div className="cart_items_scroll">
+          
           {notifications.length === 0 ? (
-            <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "200px" }}>
+            <div className="d-flex justify-content-center align-items-center" style={{minHeight: "200px", gridColumn: '1 / -1'}}>
               <p style={{ fontSize: "1.2rem", color: "gray" }}>No notifications yet.</p>
             </div>
           ) : (

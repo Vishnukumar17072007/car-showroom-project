@@ -73,20 +73,23 @@ const shortId = (id) => `#CF${id?.slice(-4).toUpperCase() ?? "----"}`;
 ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Stat Card ── */
-function StatCard({ icon, iconBg, iconColor, label, value, sub, delta, deltaPositive, onClick }) {
+function StatCard({ icon, iconBg, iconColor, label, value, delta, deltaPositive, onClick }) {
   return (
     <div
       className="db-stat-card"
       onClick={onClick}
       style={{ cursor: onClick ? "pointer" : "default" }}
     >
-      <div className="db-stat-icon" style={{ background: iconBg, color: iconColor }}>
-        <i className={icon} />
+      <div style={{display: "flex", flexDirection: "row",}}>
+        <div className="db-stat-icon" style={{ background: iconBg, color: iconColor }}>
+          <i className={icon} />
+        </div>
+        <h2 className="db-stat-value" style={{flex: 1, alignContent: "center", textAlign: "center", fontSize: "30px"}}>
+          {value}
+        </h2>
       </div>
       <div className="db-stat-body">
         <p className="db-stat-label">{label}</p>
-        <h2 className="db-stat-value">{value}</h2>
-        {sub && <p className="db-stat-sub">{sub}</p>}
         {delta && (
           <p style={{ fontSize: 11, color: deltaPositive ? GREEN : RED, margin: 0, display: "flex", alignItems: "center", gap: 4 }}>
             <i className={deltaPositive ? "bi bi-arrow-up-short" : "bi bi-arrow-down-short"} />
@@ -339,7 +342,7 @@ export default function Dashboard() {
           </div>
 
           {/* Stat Cards */}
-          <div style={{ display: "flex", gap: 12, marginBottom: 20 }}>
+          <div style={{ marginBottom: 20 }}>
             {loading ? (
               Array.from({ length: 4 }).map((_, i) => (
                 <div key={i} style={{ flex: 1, background: "#111116", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: 20 }}>
@@ -350,17 +353,17 @@ export default function Dashboard() {
                 </div>
               ))
             ) : (
-              <>
+              <div className="db-stats-row">
                 <StatCard icon="bi bi-people-fill"     label="Total Users"    value={stats?.totalUsers?.toLocaleString() || "0"}  delta="+users registered" deltaPositive iconBg="rgba(55,138,221,0.18)"  iconColor={BLUE}  />
                 <StatCard icon="bi bi-car-front-fill"  label="Active Cars"    value={stats?.totalCars?.toLocaleString() || "0"}   iconBg="rgba(201,168,76,0.18)"  iconColor={GOLD}  />
                 <StatCard icon="bi bi-box-seam-fill"   label="Total Orders"   value={stats?.totalOrders?.toLocaleString() || "0"} delta="+orders placed" deltaPositive iconBg="rgba(29,158,117,0.18)"  iconColor={GREEN} />
                 <StatCard icon="bi bi-currency-rupee" label="Total Revenue"  value={fmtRupees(stats?.totalRevenue || 0)}          delta="lifetime revenue" deltaPositive={stats?.totalRevenue > 0} iconBg="rgba(239,159,39,0.18)"  iconColor={AMBER} />
-              </>
+              </div>
             )}
           </div>
 
           {/* Row 1: Line Chart + Pie */}
-          <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: 12, marginBottom: 12 }}>
+          <div className="admin-db-mid-row">
 
             <SectionCard title="Monthly Revenue & Orders" badge="Last 7 months">
               {loading ? <Skeleton h={220} /> : (
@@ -422,7 +425,7 @@ export default function Dashboard() {
           </div>
 
           {/* Row 2: Bar Chart + Recent Orders */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+          <div className="admin-db-last-row">
 
             <SectionCard title="Cars by Body Type" badge="Inventory">
               {loading ? <Skeleton h={220} /> : (
@@ -534,25 +537,25 @@ export default function Dashboard() {
         <StatCard
           icon="bi bi-heart-fill"
           iconBg="rgba(224,82,82,0.15)" iconColor="#e05252"
-          label="Wishlist" value={wishlistCount} sub="Cars in wishlist"
+          label="Wishlist" value={wishlistCount}
           onClick={() => navigate("/wishlist")}
         />
         <StatCard
           icon="bi bi-cart-fill"
           iconBg="rgba(55,138,221,0.15)" iconColor="#378ADD"
-          label="Cart List" value={cartCount} sub="Cars in cart"
+          label="Cart List" value={cartCount}
           onClick={() => navigate("/cartList")}
         />
         <StatCard
           icon="bi bi-bag-check-fill"
           iconBg="rgba(29,158,117,0.15)" iconColor="#1D9E75"
-          label="Total Orders" value={totalOrders} sub="Orders placed"
+          label="Total Orders" value={totalOrders}
           onClick={() => navigate("/orders")}
         />
         <StatCard
           icon="bi bi-currency-rupee"
           iconBg="rgba(127,119,221,0.15)" iconColor="#7F77DD"
-          label="Total Spent" value={fmtRupees(totalSpent)} sub="Total amount spent"
+          label="Total Spent" value={fmtRupees(totalSpent)}
         />
       </div>
 
@@ -595,7 +598,7 @@ export default function Dashboard() {
           {totalOrders === 0 ? (
             <div className="db-empty">No orders yet</div>
           ) : (
-            <div style={{ display: "flex", alignItems: "center", gap: 20, flex: 1 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flex: 1 }}>
               <div style={{ position: "relative", width: 180, height: 180, flexShrink: 0 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -621,7 +624,7 @@ export default function Dashboard() {
                   <span style={{ fontSize: 10, color: "#6a6778", letterSpacing: 0.5, marginTop: 3 }}>Total Orders</span>
                 </div>
               </div>
-              <div style={{ flex: 1 }}>
+              <div>
                 <CustomLegend data={statusData} />
               </div>
             </div>

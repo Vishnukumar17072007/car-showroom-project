@@ -44,9 +44,9 @@ function WishList(){
                 }
                 <div className="car_card_box d-flex flex-wrap gap-2" style={{justifyContent: "start"}}>
                     {wishList.map((car, index) => (
-                        <div key={index} className="car-card" style={{width: "243px"}}>
+                        <div key={index} className="car-card">
                             <div className="car_image" style={{ cursor: "pointer" }} onClick={() => navigate(`/vehicles/${car._id}`)}>
-                                <img src={car.image} alt="car-image" style={{width: "100%",height:"100%", backgroundColor: "white", borderRadius:"5px"}}></img>
+                                <img src={car.image} alt="car-image"></img>
                             </div>
                             <div className="car_card_body">
                                 <div className="car_title">

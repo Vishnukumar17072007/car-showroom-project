@@ -11,7 +11,6 @@ function Cart() {
     const { cartItems: cart, removeFromCart, cartLoading, getCart } = useCart();
     const navigate = useNavigate();
 
-    const totalPrice = cart.reduce((sum, item) => sum + Number(item.carId?.price || 0), 0);
 
     const openCheckout = (carIds) => {   // ← NEW helper
         setSelectedCarIds(carIds);
@@ -27,7 +26,6 @@ function Cart() {
         getCart();
     },[])
 
-    const hasUnavailable = cart.some(item => item.carId && (item.carId.available ?? 0) <= 0);
     return (
         <div className="cart_page">
             <h2 style={{ padding: '5px', color: 'var(--text)', backgroundColor: "white" }}>
@@ -43,23 +41,15 @@ function Cart() {
             )}
 
             {!cartLoading && cart.length > 0 && (
-                <div className="cart_layout d-flex gap-3 align-items-start">
+                <div className="cart_layout">
 
-                    {/* LEFT — cart items list (scrollable) */}
-                    <div className="cart_items_scroll d-flex flex-column gap-3">
+                    <div className="cart_items_scroll">
                         {cart.map((item, index) => {
-                            const car = item.carId;   //takes one car details at a time
+                            const car = item.carId;
                             if (!car) return null;
 
                             return (
-                                <div key={index} className="d-flex gap-3 p-3" style={{
-                                    width: "100%",
-                                    boxSizing: "border-box",
-                                    background: "var(--card-bg, #141414)",
-                                    borderRadius: "10px",
-                                    boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-                                    alignItems: "center"
-                                }}>
+                                <div key={index} className="cart-item">
                                     {/* Image */}
                                     <div style={{
                                         width: "140px", height: "90px", flexShrink: 0,
@@ -107,42 +97,6 @@ function Cart() {
                             );
                         })}
                     </div>
-
-                    {/* RIGHT — order summary */}
-                    <div style={{
-                        width: "280px",
-                        flexShrink: 0,
-                        background: "var(--card-bg, #141414)",
-                        borderRadius: "10px",
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-                        padding: "20px"
-                    }}>
-                        <h6 className="mb-3" style={{color: "white"}}>Order Summary</h6>
-                        <hr />
-                        <div className="d-flex justify-content-between mb-2">
-                            <span style={{ color: "gray" }}>Total Items</span>
-                            <span style={{color: "white"}}>{cart.length}</span>
-                        </div>
-                        <div className="d-flex justify-content-between mb-3">
-                            <span style={{ color: "gray" }}>Total Price</span>
-                            <b style={{color: "white"}}>₹{totalPrice.toLocaleString('en-IN')}</b>
-                        </div>
-                        <hr />
-                        <button
-                            className="btn btn-success w-100"
-                            onClick={() => openCheckout( cart.map( item => item?.carId?._id || item?.carId ))}
-                            disabled={hasUnavailable}
-                            title={hasUnavailable ? "Remove unavailable cars from cart to proceed" : ""}
-                        >
-                            Buy All
-                        </button>
-                        {hasUnavailable && (
-                            <p style={{ fontSize: "0.75rem", color: "#e74c3c", marginTop: "6px", textAlign: "center" }}>
-                                Remove unavailable cars from cart to enable Buy All.
-                            </p>
-                        )}
-                    </div>
-
                 </div>
             )}
 

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useOrder } from "../context/order/useOrder";
-import { useCart } from "../context/cart/useCart";   // ← NEW
+import { useCart } from "../context/cart/useCart";
 import { useAuth } from "../context/auth/useAuth";
 
 const CheckoutModal = ({ onClose, carIds }) => {
     const { user } = useAuth();
     const { placeOrder } = useOrder();
-    const { fetchCart } = useCart();                 // ← NEW
+    const { getCart } = useCart();
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
@@ -52,12 +52,12 @@ const CheckoutModal = ({ onClose, carIds }) => {
         setLoading(true);
         try {
             await placeOrder(form, carIds);
-            onClose(); // close modal first
-            await fetchCart();    // ← NEW: re-sync cart after order placed
+            onClose();
             navigate('/orders');
         } catch (err) {
             setError(err.message || 'Something went wrong. Please try again.');
         } finally {
+            getCart();
             setLoading(false);
         }
     };

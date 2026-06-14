@@ -82,18 +82,18 @@ function Profile() {
                     )}
 
                     <div className="profile-bottom-grid">
-                        <div className="activity-overview row">
-                            <div className="col-4 activity-block divider" onClick={() => navigate("/wishlist")}>
+                        <div className="activity-overview">
+                            <div className="activity-block divider" onClick={() => navigate("/wishlist")}>
                                 <i className="bi bi-heart"></i>
                                 <strong className="count">{wishListCount}</strong>
                                 <p>WISHLIST</p>
                             </div>
-                            <div className="col-4 activity-block divider" onClick={() => navigate("/cartList")}>
+                            <div className="activity-block divider" onClick={() => navigate("/cartList")}>
                                 <i className="bi bi-cart3"></i>
                                 <strong className="count">{cartListCount}</strong>
                                 <p>CART</p>
                             </div>
-                            <div className="col-4 activity-block divider" onClick={() => navigate("/orders")}>
+                            <div className="activity-block divider" onClick={() => navigate("/orders")}>
                                 <i className="bi bi-box-seam"></i>
                                 <strong className="count">{orderCount}</strong>
                                 <p>ORDERS</p>

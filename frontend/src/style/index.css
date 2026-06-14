@@ -748,7 +748,7 @@ input[type="checkbox"]:checked {
 .car-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border);
-  width: 250px;
+  width: 247px;
   border-radius: var(--radius-md);
   height: auto;
   display: flex;
@@ -820,7 +820,7 @@ input[type="checkbox"]:checked {
 .car_title {
   font-weight: bold;
   font-size: medium;
-  min-height: 70px;
+  max-height: 70px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -943,8 +943,8 @@ input[type="checkbox"]:checked {
 .car-card-update {
   background-color: var(--bg-card);
   border: 1.5px dashed var(--gold-border);
-  width: 200px;
-  margin-right: 25px;
+  width: 110px;
+  margin-right: 36px;
   border-radius: var(--radius-md);
   position: absolute;
   right: 0px;
@@ -1144,22 +1144,39 @@ input[type="checkbox"]:checked {
   flex: 1;
   min-height: 0;
   display: flex;
+  flex-direction: column;
   gap: 16px;
   width: 100%;
   box-sizing: border-box;
 }
 
 .cart_items_scroll {
-  flex: 1;
-  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  max-height: 1000px;
   overflow-y: auto;
-  max-height: 100%;
-  overflow-x: hidden;
   box-sizing: border-box;
 }
 
 .cart_items_scroll::-webkit-scrollbar {
   display: none;
+}
+
+.cart_item_card {
+  padding: 10px;
+}
+
+.cart-item{
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  background: #141414;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  align-items: center;
 }
 
 /* ============================================================
@@ -2916,7 +2933,7 @@ input[type="checkbox"]:checked {
 
 .db-stats-row {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 14px;
   margin-bottom: 24px;
 }
@@ -3058,24 +3075,11 @@ input[type="checkbox"]:checked {
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 12px;
   padding: 20px 22px;
-  min-height: 320px;
+  max-height: 420px;
   overflow-y: auto;
   overflow-x: auto;
-  scrollbar-width: thin;
+  scrollbar-width: none;
   box-sizing: border-box;
-}
-
-.db-order-table-wrap::-webkit-scrollbar {
-  height: 6px;
-}
-
-.db-order-table-wrap::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.db-order-table-wrap::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
 }
 
 .db-order-table {
@@ -3176,6 +3180,19 @@ input[type="checkbox"]:checked {
   font-size: 14px;
 }
 
+.admin-db-mid-row {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.admin-db-last-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
 /* Tablet: 1024px and below */
 @media (max-width: 1024px) {
   .db-page {
@@ -3187,7 +3204,7 @@ input[type="checkbox"]:checked {
   }
 
   .db-stats-row {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     margin-bottom: 20px;
   }
@@ -3305,6 +3322,15 @@ input[type="checkbox"]:checked {
     width: 48px;
     height: 32px;
   }
+
+.admin-db-mid-row {
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.admin-db-last-row {
+  grid-template-columns: 1fr;
+}
 }
 
 /* Small Mobile: 480px and below */
@@ -3324,8 +3350,6 @@ input[type="checkbox"]:checked {
 
   .db-stat-card {
     padding: 12px 10px;
-    flex-direction: row;
-    align-items: center;
   }
 
   .db-stat-body {
@@ -3390,9 +3414,11 @@ input[type="checkbox"]:checked {
     flex-direction: column;
     gap: 16px;
   }
+}
 
+@media (max-width: 480px) {
   .cart_items_scroll {
-    max-height: 50vh;
+    grid-template-columns: 1fr;
   }
 }
 
@@ -3584,6 +3610,7 @@ input[type="checkbox"]:checked {
   border: 1px solid #2a3f5f;
   border-radius: 14px;
   padding: 1.25rem 0.75rem;
+  max-width: 100%;
   margin-bottom: 1rem;
   display: flex;
 }
@@ -3695,7 +3722,7 @@ input[type="checkbox"]:checked {
 .edit-profile-btn {
   width: 100%;
   padding: 13px;
-  margin: 10px;
+  margin-top: 10px;
   background: transparent;
   border: 1px solid #c9a84c;
   border-radius: 10px;
@@ -3742,8 +3769,7 @@ input[type="checkbox"]:checked {
   }
 
   .logout-btn {
-    position: static;
-    width: 100%;
+    width: 11%;
     margin-top: 1rem;
     font-size: 12px;
     padding: 8px 12px;
@@ -3786,6 +3812,8 @@ input[type="checkbox"]:checked {
   }
 
   .logout-btn {
+    position: static;
+    width: 100%;
     margin-top: 0.75rem;
   }
 }
@@ -4079,7 +4107,7 @@ input[type="checkbox"]:checked {
 }
 
 .ep-form-grid {
-  display: flex;
+  display: grid;
   gap: 1rem;
   align-items: start;
 }
@@ -4551,7 +4579,7 @@ input[type="checkbox"]:checked {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    position: fixed;
+    position:fixed;
     left: 10px;
     top: 9px;
     z-index: 95;
@@ -4587,16 +4615,20 @@ input[type="checkbox"]:checked {
     gap: 12px;
   }
 
-  .car-card,
-  .car-card-update {
+  .car-card {
     width: 100%;
     min-height: 320px;
+  }
+  .car-card-update{
+    width: 110px;
+    height: auto;
+    margin-right: 10px;
   }
 
   .car_image,
   .car_image-update {
     height: 130px;
-    min-height: 130px;
+    min-height: 250px;
   }
 
   .search-input-field {
@@ -4607,6 +4639,15 @@ input[type="checkbox"]:checked {
     font-size: 13px;
     padding: 11px 12px;
     justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .car_image{
+    min-height: 130px;
+  }
+  .car-card{
+    min-height: 282px;
   }
 }
 
@@ -4659,8 +4700,7 @@ input[type="checkbox"]:checked {
     max-height: calc(100vh - 54px);
   }
 
-  .car-card,
-  .car-card-update {
+  .car-card {
     width: 100%;
   }
 
