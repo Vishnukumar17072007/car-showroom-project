@@ -40,10 +40,12 @@ function Profile() {
             <div className="profile-scroll-area">
                 <div className="profile">
                     <div className="profile-details-card">
-                        {user.image
-                            ? <img className="img-round" src={user.image} />
-                            : <i className="bi bi-person-circle profile-avatar-icon"></i>
-                        }
+                        <div className="profile-photo-wrapper">
+                            {user.image
+                                ? <img className="img-round" src={user.image} />
+                                : <i className="bi bi-person-circle profile-avatar-icon"></i>
+                            }
+                        </div>
 
                         <div className="name-subscription">
                             <div className="name">

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth/useAuth";
 import { useProfile } from "../context/profile/useProfile";
@@ -8,6 +8,7 @@ function EditProfile() {
     const navigate = useNavigate();
     const { user } = useAuth();
     const { loading, error, success, clearMessages, updateProfile } = useProfile();
+    const { uploadPhoto } = useProfile();
 
     // Local form state only — no API logic here
     const email = String(user?.email);
@@ -19,11 +20,12 @@ function EditProfile() {
     const [state,    setState]    = useState(String(user?.location?.state   || ""));
     const [pincode,  setPincode]  = useState(String(user?.location?.pincode || ""));
 
-
+    const fileInputRef = useRef(null);
     const [showPasswordFields, setShowPasswordFields] = useState(false);
     const [currentPassword,    setCurrentPassword]    = useState("");
     const [newPassword,        setNewPassword]        = useState("");
     const [confirmPassword,    setConfirmPassword]    = useState("");
+    const [preview, setPreview] = useState(null);
 
     // Clear any leftover messages when this page first loads
     useEffect(() => {
@@ -74,6 +76,13 @@ function EditProfile() {
         await updateProfile(data);
     }
 
+    async function handlePhotoChange(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        setPreview(URL.createObjectURL(file));
+        await uploadPhoto(file);
+    }
+
     return (
         <div className="edit-profile-scroll-area">
             <div className="edit-profile">
@@ -91,12 +100,26 @@ function EditProfile() {
                 {/* ── Avatar ── */}
                 <div className="ep-avatar-section">
                     <div className="ep-avatar-circle">
-                        {user?.image
-                            ? <img src={user.image} alt="Profile" className="ep-avatar-img" />
-                            : <span>{user?.userName?.charAt(0).toUpperCase()}</span>
-                        }
-                        <div className="ep-avatar-overlay">
-                            <i className="bi bi-camera"></i>
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            style={{ display: "none" }}
+                            accept="image/jpeg,image/png,image/webp"
+                            onChange={handlePhotoChange}
+                        />
+
+                        <div
+                            className="profile-photo-wrapper"
+                            onClick={() => fileInputRef.current.click()}
+                            title="Click to change photo"
+                        >
+                            {preview || user.image
+                                ? <img className="img-round" src={preview || user.image} alt="Profile" />
+                                : <i className="bi bi-person-circle profile-avatar-icon"></i>
+                            }
+                            <div className="photo-overlay">
+                                <i className="bi bi-camera"></i>
+                            </div>
                         </div>
                     </div>
                     <p className="ep-avatar-hint">Tap to change photo</p>

@@ -11,6 +11,8 @@ const { getProfile } = require("../controllers/profileController");
 const { updateProfile } = require("../controllers/profileUpdateController");
 const passport = require("passport");
 const generateToken = require("../utils/generateToken");
+const upload = require("../middleware/upload");
+const { uploadPhoto } = require("../controllers/photoController");
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -49,5 +51,7 @@ router.get("/google/callback",
     res.redirect(redirectUrl);
   }
 );
+
+router.post("/upload-photo", verifyToken, upload.single("photo"), asyncHandler(uploadPhoto));
 
 module.exports = router;

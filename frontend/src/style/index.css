@@ -3809,6 +3809,35 @@ input[type="checkbox"]:checked {
   background: rgba(201, 168, 76, 0.08);
 }
 
+.profile-photo-wrapper {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-photo-wrapper .photo-overlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.profile-photo-wrapper:hover .photo-overlay {
+  opacity: 1;
+}
+
 @media (max-width: 768px) {
   .profile {
     padding: 0 0.75rem 2rem;
@@ -4645,7 +4674,7 @@ input[type="checkbox"]:checked {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    position:fixed;
+    position:absolute;
     left: 10px;
     top: 9px;
     z-index: 95;

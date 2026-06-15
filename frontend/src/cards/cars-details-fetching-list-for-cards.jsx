@@ -183,7 +183,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
             </div>
           )}
         {/* Cards Grid */}
-        <div className={`d-flex flex-wrap gap-2 ${user.role === "admin" ? "mt-5 pt-2" : ""}`}>
+        <div className={`d-flex flex-wrap gap-2 ${user.role === "admin" ? "pt-2" : ""}`}>
           {carList.length > 0 ? (
             carList.map((detail) => (
               <Cards

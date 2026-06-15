@@ -1,4 +1,6 @@
 const User = require("../models/UserSchema");
+const cloudinary = require("../config/cloudinary");
+const streamifier = require("streamifier");
 
 const logout = async (req, res) => {
   const isProd = process.env.NODE_ENV === "production";

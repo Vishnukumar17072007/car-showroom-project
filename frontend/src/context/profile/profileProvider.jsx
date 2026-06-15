@@ -38,8 +38,33 @@ function ProfileProvider({ children }) {
         }
     }
 
+    async function uploadPhoto(file) {
+        setError("");
+        setSuccess("");
+        setLoading(true);
+    
+        try {
+            const formData = new FormData();
+            formData.append("photo", file);
+    
+            const res = await API.post("/auth/upload-photo", formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+    
+            await checkAuth();
+    
+            setSuccess(res.data?.message || "Photo updated successfully!");
+            return true;
+        } catch (err) {
+            setError(err.response?.data?.message || "Photo upload failed.");
+            return false;
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return (
-        <ProfileContext.Provider value={{ loading, error, success, clearMessages, updateProfile }}>
+        <ProfileContext.Provider value={{ loading, error, success, clearMessages, updateProfile, uploadPhoto }}>
             {children}
         </ProfileContext.Provider>
     );
