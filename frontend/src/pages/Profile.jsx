@@ -111,7 +111,9 @@ function Profile() {
                                 <p className="detail-label"><i className="bi bi-telephone"></i> Phone</p>
                                 <p className="detail-value">{user.phone}</p>
                             </div>
-                            <div className="detail-row detail-label"><i className="bi bi-geo-alt"></i>Address</div>
+                            <div className="detail-row">
+                                <p className="detail-label"><i className="bi bi-geo-alt"></i> Location</p>
+                            </div>
                             <div className="detail-modal divider">
                                 <div className="detail-row divider">
                                     <p className="detail-label">Address</p>

@@ -130,7 +130,7 @@ function EditProfile() {
                 {success && <p className="ep-msg ep-success"> <i className="bi bi-check-circle"></i>       {success} </p>}
 
                 {/* ── Personal Info ── */}
-                <div className="ep-form-grid">
+                <div className="ep-form-grid" style={{gridTemplateColumns: (user.role === "admin") ? "1fr" : ""}}>
                     <div className="ep-card">
                         <p className="ep-section-label">Personal information</p>
 
@@ -177,7 +177,7 @@ function EditProfile() {
                         </div>
                         <div className="ep-field">
                             <label className="ep-label">
-                                <i className="bi bi-geo-alt"></i> Address
+                                <i className="bi bi-geo-alt"></i> Location
                             </label>
                             <div className="ep-modalContainer">
                                 <div className="ep-field">

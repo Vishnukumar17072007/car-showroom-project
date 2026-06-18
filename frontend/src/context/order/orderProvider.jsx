@@ -4,12 +4,15 @@ import toast from "react-hot-toast";
 import API from "../../api/axios";
 import { OrderContext } from "./orderContext";
 import { useAuth } from "../auth/useAuth";
+import { useNotification } from '../notification/useNotification';
 
 export const OrderProvider = ({ children }) => {
 
+    const { user } = useAuth();
+    const { fetchNotifications } = useNotification();
+
     const [orders, setOrders] = useState([]);
     const [ordersLoading, setOrdersLoading] = useState(false);
-    const { user } = useAuth();
 
     const fetchOrders = useCallback(async () => {
         setOrdersLoading(true);
@@ -21,6 +24,7 @@ export const OrderProvider = ({ children }) => {
         try {
             const res = await API.get('/order');
             setOrders(Array.isArray(res.data) ? res.data : []);
+            await fetchNotifications();
         } catch {
             setOrders([]);
         } finally {

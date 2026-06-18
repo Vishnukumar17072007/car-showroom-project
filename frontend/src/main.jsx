@@ -14,19 +14,19 @@ import { SearchProvider } from './context/search/searchProvider.jsx'
 import ProfileProvider from './context/profile/profileProvider.jsx';
 import { NotificationProvider } from './context/notification/notificationProvider.jsx';
 
-const Home = lazy(() => import('./paths/home.jsx'));
-const Vehicles = lazy(() => import('./paths/vehicles.jsx'));
-const CarDetailsPage = lazy(() => import('./paths/CarDetailsPage.jsx'));
-const WishList = lazy(() => import('./paths/wishList.jsx'));
-const Support = lazy(() => import('./paths/support.jsx'));
-const NotFound = lazy(() => import('./paths/NotFound.jsx'));
-const Cart = lazy(() => import('./paths/cart.jsx'));
-const Orders = lazy(() => import('./paths/Orders.jsx'));
-const Profile = lazy(() => import('./paths/Profile.jsx'));
-const EditProfile = lazy(() => import('./paths/EditProfile.jsx'));
-const Login = lazy(() => import('./paths/Login.jsx'));
-const Dashboard = lazy(() => import('./paths/Dashboard.jsx'));
-const Notifications = lazy(() => import('./paths/Notification.jsx'));
+const Home = lazy(() => import('./pages/home.jsx'));
+const Vehicles = lazy(() => import('./pages/vehicles.jsx'));
+const CarDetailsPage = lazy(() => import('./pages/CarDetailsPage.jsx'));
+const WishList = lazy(() => import('./pages/wishList.jsx'));
+const Support = lazy(() => import('./pages/support.jsx'));
+const NotFound = lazy(() => import('./pages/NotFound.jsx'));
+const Cart = lazy(() => import('./pages/cart.jsx'));
+const Orders = lazy(() => import('./pages/Orders.jsx'));
+const Profile = lazy(() => import('./pages/Profile.jsx'));
+const EditProfile = lazy(() => import('./pages/EditProfile.jsx'));
+const Login = lazy(() => import('./pages/Login.jsx'));
+const Dashboard = lazy(() => import('./pages/Dashboard.jsx'));
+const Notifications = lazy(() => import('./pages/Notification.jsx'));
 const AuthCallback = lazy(() => import('./component/AuthCallback.jsx'))
 
 function PageLoader() {
