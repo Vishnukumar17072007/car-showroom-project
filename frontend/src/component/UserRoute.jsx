@@ -1,15 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/auth/useAuth";
+import { RoutePageSkeleton } from "./PageSkeletons";
 
 function UserRoute() {
     const { user, authLoading } = useAuth();
 
     if (authLoading) {
-        return (
-            <div className="d-flex justify-content-center mt-5">
-                <div className="spinner-border" role="status" />
-            </div>
-        );
+        return <RoutePageSkeleton />;
     }
 
     if ( user ) {

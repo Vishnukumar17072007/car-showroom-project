@@ -5,15 +5,17 @@ import { useWishList } from "../context/wish/useWishList";
 import { useCart } from "../context/cart/useCart";
 import { useOrder } from "../context/order/useOrder";
 import SubscriptionModal from "../component/SubscriptionModal";
+import { ProfileSkeleton } from "../component/PageSkeletons";
 
 function Profile() {
 
     const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
+    const [pageLoading, setPageLoading] = useState(true);
     const navigate = useNavigate();
 
     const { user, logout, checkAuth } = useAuth();
     const { wishListItems, getWishList } = useWishList();
-    const { cartItems,getCart } = useCart();
+    const { cartItems, getCart } = useCart();
     const { orders, getOrders } = useOrder();
 
     const wishListCount = wishListItems.length;
@@ -21,19 +23,29 @@ function Profile() {
     const orderCount = orders.length;
 
     useEffect(() => {
-        checkAuth();
-        getWishList();
-        getOrders();
-        getCart();
+        async function loadProfile() {
+            await Promise.all([
+                checkAuth(),
+                getWishList(),
+                getOrders(),
+                getCart(),
+            ]);
+            setPageLoading(false);
+        }
+        loadProfile();
     },[]);
 
-    const joinedDate = user.createdAt
+    const joinedDate = user?.createdAt
         ? new Date(user.createdAt).toLocaleDateString("en-IN", {
               year: "numeric",
               month: "long",
               day: "numeric",
           })
         : "N/A";
+
+    if (pageLoading || !user) {
+        return <ProfileSkeleton />;
+    }
 
     return (
         <>

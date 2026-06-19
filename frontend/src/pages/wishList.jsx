@@ -1,7 +1,7 @@
 import { useWishList } from '../context/wish/useWishList';
 import { useCart } from '../context/cart/useCart';
 import { useNavigate } from 'react-router-dom';
-import { CarGridSkeleton } from '../component/PageSkeletons';
+import { CarGridSkeleton, PageTitleSkeleton } from '../component/PageSkeletons';
 import { useEffect } from 'react';
 
 function WishList(){
@@ -31,9 +31,10 @@ function WishList(){
     return(
         <>
             <div className="cart_page">
-                <h2 style={{ padding: '5px', color: 'var(--text)', backgroundColor: "white" }}>
-                    WishList 
-                </h2>
+                {wishListLoading
+                    ? <PageTitleSkeleton width="100px" />
+                    : <h2 style={{ padding: '5px', color: 'var(--text)', backgroundColor: "white" }}>WishList</h2>
+                }
                 {wishListLoading && <CarGridSkeleton count={10} />}
                 {!wishListLoading && (
                 <>

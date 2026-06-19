@@ -4,7 +4,7 @@ import { useCart } from "../context/cart/useCart";
 import { useWishList } from "../context/wish/useWishList";
 import { useAuth } from "../context/auth/useAuth";
 import { useState, useEffect } from "react";
-import { CarGridSkeleton } from "../component/PageSkeletons";
+import { CarDetailsSkeleton } from "../component/PageSkeletons";
 
 function CarDetailsPage() {
     const { id } = useParams();
@@ -47,12 +47,7 @@ function CarDetailsPage() {
     );
 
     if (loading || !car) {
-        return (
-            <div className="cart_page">
-                <h2 style={{ padding: "5px", color: "var(--text)", backgroundColor: "white" }}>Car Details</h2>
-                <CarGridSkeleton count={5} />
-            </div>
-        );
+        return <CarDetailsSkeleton />;
     }
 
     const downPayment = car.price * 0.2;

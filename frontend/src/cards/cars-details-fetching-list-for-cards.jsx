@@ -3,7 +3,7 @@ import { useAuth } from "../context/auth/useAuth";
 import API from "../api/axios";
 import { useState, useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
-import { CarGridSkeleton } from "../component/PageSkeletons";
+import { CarGridSkeleton, SkeletonBlock } from "../component/PageSkeletons";
 import CatalogPagination from "../component/CatalogPagination";
 import { useCarsCatalog, CARS_PAGE_SIZE } from "../hooks/useCarsCatalog";
 
@@ -133,6 +133,10 @@ function CarDetailsFetchingListForCards({ filters, search }) {
   if (loading) {
     return (
       <>
+        <div className="vehicles-skeleton-toolbar">
+          <SkeletonBlock style={{ width: 90, height: 34, borderRadius: 8 }} />
+          <SkeletonBlock style={{ width: 140, height: 34, borderRadius: 8 }} />
+        </div>
         {!error && <CarGridSkeleton count={CARS_PAGE_SIZE} />}
         {error && <p className="catalog-error">{error}</p>}
       </>

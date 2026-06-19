@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import API from '../api/axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { OrderListSkeleton } from '../component/PageSkeletons';
+import { OrderListSkeleton, PageTitleSkeleton } from '../component/PageSkeletons';
 import { useAuth } from '../context/auth/useAuth';
 import { useOrder } from '../context/order/useOrder';
 
@@ -40,9 +40,7 @@ function AdminOrders() {
   if (ordersLoading) {
     return (
       <div className="cart_page">
-        <h2 style={{ padding: '5px', color: 'var(--text)', backgroundColor: 'white' }}>
-          Orders
-        </h2>
+        <PageTitleSkeleton width="80px" />
         <OrderListSkeleton count={5} />
       </div>
     );
@@ -271,7 +269,10 @@ function UserOrders() {
 
   return (
     <div className="cart_page">
-      <h2 style={{ padding: '5px', color: 'var(--text)', backgroundColor: 'white' }}>Orders</h2>
+      {ordersLoading
+        ? <PageTitleSkeleton width="80px" />
+        : <h2 style={{ padding: '5px', color: 'var(--text)', backgroundColor: 'white' }}>Orders</h2>
+      }
       <div className="cart_layout">
         <div className="cart_items_scroll">
 

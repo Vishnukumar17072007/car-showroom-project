@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth/useAuth";
+import { AuthCallbackSkeleton } from "./PageSkeletons";
 
 export default function AuthCallback() {
   const navigate = useNavigate();
@@ -28,5 +29,5 @@ export default function AuthCallback() {
     handleCallback();
   }, []);
 
-  return <p>Signing you in...</p>;
+  return <AuthCallbackSkeleton />;
 }

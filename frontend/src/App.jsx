@@ -5,6 +5,7 @@ import { useAuth } from "./context/auth/useAuth";
 import { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import SideNavbar from "./sideNavbar/SideNavBar";
+import { AppBootstrapSkeleton } from "./component/PageSkeletons";
 
 function App() {
   const { authLoading } = useAuth();
@@ -21,19 +22,7 @@ function App() {
   }, [location.pathname]);
 
   if (authLoading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          color: "white",
-        }}
-      >
-        Loading...
-      </div>
-    );
+    return <AppBootstrapSkeleton pathname={location.pathname} />;
   }
 
   return (

@@ -2,7 +2,7 @@ import { useCart } from '../context/cart/useCart';
 import { useEffect, useState } from 'react';
 import CheckoutModal from '../component/CheckoutModal';
 import { useNavigate } from 'react-router-dom';
-import { CartListSkeleton } from '../component/PageSkeletons';
+import { CartListSkeleton, PageTitleSkeleton } from '../component/PageSkeletons';
 
 function Cart() {
     const [showCheckout, setShowCheckout] = useState(false);
@@ -28,9 +28,10 @@ function Cart() {
 
     return (
         <div className="cart_page">
-            <h2 style={{ padding: '5px', color: 'var(--text)', backgroundColor: "white" }}>
-                Cart 
-            </h2>
+            {cartLoading
+                ? <PageTitleSkeleton width="60px" />
+                : <h2 style={{ padding: '5px', color: 'var(--text)', backgroundColor: "white" }}>Cart</h2>
+            }
 
             {cartLoading && <CartListSkeleton count={4} />}
 

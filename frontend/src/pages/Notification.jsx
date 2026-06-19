@@ -1,5 +1,5 @@
 import { useNotification } from "../context/notification/useNotification";
-import { useAuth } from "../context/auth/useAuth";
+import { NotificationListSkeleton } from "../component/PageSkeletons";
 
 const GOLD       = "#c9a84c";
 const GOLD_FAINT = "rgba(201,168,76,0.12)";
@@ -7,7 +7,7 @@ const GOLD_FAINT = "rgba(201,168,76,0.12)";
 const Notifications = () => {
   const { notifications, notifLoading, clearNotifications, markAsRead } = useNotification();
 
-  if (notifLoading) return <p>Loading...</p>;
+  if (notifLoading) return <NotificationListSkeleton />;
 
   return (
     <div className="cart_page">

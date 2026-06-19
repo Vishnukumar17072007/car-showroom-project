@@ -3,6 +3,18 @@ import { AuthContext } from "./authContext";
 import API from "../../api/axios";
 import toast from "react-hot-toast";
 
+function persistUserRole(user) {
+    try {
+        if (user?.role) {
+            localStorage.setItem("userRole", user.role);
+        } else {
+            localStorage.removeItem("userRole");
+        }
+    } catch {
+        // ignore storage errors
+    }
+}
+
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [authLoading, setAuthLoading] = useState(true);
@@ -23,8 +35,10 @@ export function AuthProvider({ children }) {
             try {
                 const res = await API.get('/auth/me');
                 setUser(res.data);
+                persistUserRole(res.data);
             } catch (err) {
                 setUser(null);
+                persistUserRole(null);
             } finally {
                 setAuthLoading(false);
             }
@@ -38,6 +52,7 @@ export function AuthProvider({ children }) {
         await API.post('/auth/login', { email, password });
         const profile = await API.get('/auth/me');
         setUser(profile.data);
+        persistUserRole(profile.data);
         toast.success("Welcome! How can we help you?");
         return profile.data;
     }
@@ -46,6 +61,7 @@ export function AuthProvider({ children }) {
         await API.post('/auth/login', { email, password });
         const profile = await API.get('/auth/me');
         setUser(profile.data);
+        persistUserRole(profile.data);
         toast.success("Welcome back! How can we help you?");
         return profile.data;
     }
@@ -53,12 +69,14 @@ export function AuthProvider({ children }) {
     async function logout() {
         await API.post('/auth/logout');
         setUser(null);
-        localStorage.removeItem("token");  // ← clear token on logout
+        localStorage.removeItem("token");
+        persistUserRole(null);
     }
 
     async function checkAuth() {
         const res = await API.get('/auth/me');
         setUser(res.data);
+        persistUserRole(res.data);
     }
 
     return (

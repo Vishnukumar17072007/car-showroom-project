@@ -13,6 +13,7 @@ import UserRoute from './component/UserRoute.jsx'
 import { SearchProvider } from './context/search/searchProvider.jsx'
 import ProfileProvider from './context/profile/profileProvider.jsx';
 import { NotificationProvider } from './context/notification/notificationProvider.jsx';
+import { RoutePageSkeleton } from './component/PageSkeletons.jsx';
 
 const Home = lazy(() => import('./pages/home.jsx'));
 const Vehicles = lazy(() => import('./pages/vehicles.jsx'));
@@ -30,11 +31,7 @@ const Notifications = lazy(() => import('./pages/Notification.jsx'));
 const AuthCallback = lazy(() => import('./component/AuthCallback.jsx'))
 
 function PageLoader() {
-  return (
-    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '200px' }}>
-      <div className="spinner-border" role="status" />
-    </div>
-  );
+  return <RoutePageSkeleton />;
 }
 
 function LazyPage({ children }) {
