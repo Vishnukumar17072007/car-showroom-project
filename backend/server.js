@@ -2,6 +2,7 @@ require("dotenv").config();
 const { validateEnv } = require("./config/env");
 validateEnv();
 
+const http = require("http");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -15,8 +16,8 @@ const wishListRoute = require("./routes/wishListRoute");
 const orderRoute = require("./routes/orderRoute");
 const authRoutes = require("./routes/authRoute");
 const chatRoute = require("./routes/chatRoute");
-const notificationRoute = require("./routes/notificationRoute");
 const dashboardRoute = require("./routes/dashboardRoute");
+const { initSocket } = require("./socket");
 
 const errorHandler = require("./middleware/errorHandler");
 const passport = require("./config/passport");
@@ -114,7 +115,6 @@ app.use("/api/cart", cartRoute);
 app.use("/api/wishlist", wishListRoute);
 app.use("/api/order", orderRoute);
 app.use("/api/chat", chatRoute);
-app.use("/api/notifications", notificationRoute);
 app.use("/api/dashboard", dashboardRoute);
 
 app.use(errorHandler);
@@ -126,7 +126,10 @@ mongoose
   .then(() => {
     console.log("MongoDB Connected");
 
-    app.listen(PORT, () => {
+    const httpServer = http.createServer(app);
+    initSocket(httpServer);
+
+    httpServer.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
   })

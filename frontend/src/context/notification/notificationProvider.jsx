@@ -1,58 +1,103 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
 
-import API from "../../api/axios";
 import { NotificationContext } from "./notificationContext";
-import { useEffect } from "react";
+import { useAuth } from "../auth/useAuth";
+import {
+  connectNotificationSocket,
+  disconnectNotificationSocket,
+  getNotificationSocket,
+} from "../../api/socket";
 
 export const NotificationProvider = ({ children }) => {
-    const [notifications, setNotifications] = useState([]);
-    const [notifLoading, setNotifLoading] = useState(true);
-  
-    const fetchNotifications = useCallback(async () => {
-      try {
-        const res = await API.get("/notifications");
-        setNotifications(res.data);
-      }
-      catch {
-        setNotifications([]);
-      }
-      finally {
-        setNotifLoading(false);
-      }
-    }, []);
-  
-    const markAsRead = async (id) => {
-      try {
-        await API.put(`/notifications/${id}`);
-        setNotifications((prev) =>
-          prev.map((n) => (n._id === id ? { ...n, read: true } : n))
-        );
-      } catch {
-        toast.error("Failed to mark as read.");
-      }
-    };
+  const { user, authLoading } = useAuth();
+  const [notifications, setNotifications] = useState([]);
+  const [notifLoading, setNotifLoading] = useState(true);
 
-    const clearNotifications = async () => {
-      try {
-        await API.put(`/notifications/clear`);
-        setNotifications([]);
-      }catch {
-        toast.error('failed to clear notifications');
-      }
+  useEffect(() => {
+    if (authLoading) return;
+
+    if (!user) {
+      setNotifications([]);
+      setNotifLoading(false);
+      disconnectNotificationSocket();
+      return;
     }
 
-    useEffect(() => {
-      fetchNotifications();
-    }, [fetchNotifications]);
-  
-    const unreadCount = notifications.filter((n) => !n.read).length;
-  
-    return (
-      <NotificationContext.Provider
-        value={{ notifications, notifLoading, fetchNotifications, markAsRead, clearNotifications, unreadCount }}
-      >
-        {children}
-      </NotificationContext.Provider>
-    );
+    const socket = connectNotificationSocket();
+
+    const handleList = (list) => {
+      setNotifications(list);
+      setNotifLoading(false);
+    };
+
+    const handleConnectError = () => {
+      setNotifications([]);
+      setNotifLoading(false);
+    };
+
+    socket.on("notifications:list", handleList);
+    socket.on("connect_error", handleConnectError);
+
+    if (socket.connected) {
+      socket.emit("notifications:get");
+    } else {
+      socket.once("connect", () => {
+        socket.emit("notifications:get");
+      });
+    }
+
+    return () => {
+      socket.off("notifications:list", handleList);
+      socket.off("connect_error", handleConnectError);
+      disconnectNotificationSocket();
+    };
+  }, [user, authLoading]);
+
+  const fetchNotifications = useCallback(() => {
+    const socket = getNotificationSocket();
+    if (!socket.connected) {
+      connectNotificationSocket();
+      return;
+    }
+    setNotifLoading(true);
+    socket.emit("notifications:get", () => {
+      setNotifLoading(false);
+    });
+  }, []);
+
+  const markAsRead = (id) => {
+    const socket = getNotificationSocket();
+    socket.emit("notifications:mark-read", { id }, (response) => {
+      if (response?.error) {
+        toast.error("Failed to mark as read.");
+      }
+    });
+  };
+
+  const clearNotifications = () => {
+    const socket = getNotificationSocket();
+    socket.emit("notifications:clear", (response) => {
+      if (response?.error) {
+        toast.error("Failed to clear notifications");
+      }
+    });
+  };
+
+  const unreadCount = notifications.filter((n) => !n.read).length;
+
+  return (
+    <NotificationContext.Provider
+      value={{
+        notifications,
+        notifLoading,
+        fetchNotifications,
+        markAsRead,
+        clearNotifications,
+        unreadCount,
+      }}
+    >
+      {children}
+    </NotificationContext.Provider>
+  );
 };
