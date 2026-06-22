@@ -4,8 +4,12 @@ const socketAuth = require("./socketAuth");
 const NAMESPACE = "/notifications";
 
 async function getNotificationsForUser(userId) {
-  const doc = await Notification.findOne({ user: userId }).sort({ createdAt: -1 });
-  return doc ? doc.notifications : [];
+  const doc = await Notification.findOne({ user: userId });
+  return (
+    doc ? doc.notifications.sort(
+      (a,b) => new Date(b.createdAt) - new Date(a.createdAt)
+    ) : []
+  );
 }
 
 async function emitNotificationsToUser(io, userId) {

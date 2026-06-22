@@ -1,5 +1,21 @@
 const mongoose = require("mongoose");
 
+const notificationItemSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+    },
+    message: {
+      type: String,
+    },
+    read: {
+      type: Boolean,
+      default: false,
+    }
+  },
+  { timestamps: true }
+);
+
 const notificationSchema = new mongoose.Schema(
   {
     user: {
@@ -7,18 +23,7 @@ const notificationSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    notifications: [{
-      title: {
-        type: String,
-      },
-      message: {
-        type: String,
-      },
-      read: {
-        type: Boolean,
-        default: false,
-      },
-    }],
+    notifications: [notificationItemSchema],
   },
   {
     timestamps: true,
