@@ -9,23 +9,22 @@ const getCart = async (req, res) => {
 const addToCart = async (req, res) => {
   const { carId } = req.body;
 
+  const existingCart = await Cart.findOne({
+    userId: req.user.userId,
+    "items.carId": carId,
+  });
+
+  if (existingCart) {
+    return res.status(200).json({ message: "Already in cart" });
+  }
+
   const cart = await Cart.findOneAndUpdate(
     { userId: req.user.userId },
-    {
-      $addToSet: {
-        items: { carId },
-      },
-    },
-    {
-      upsert: true,
-      new: true,
-    },
+    { $push: { items: { carId } } },
+    { upsert: true, new: true }
   );
 
-  res.status(200).json({
-    message: "Added to cart",
-    cart,
-  });
+  res.status(200).json({ message: "Added to cart", cart });
 };
 
 const removeFromCart = async (req, res) => {

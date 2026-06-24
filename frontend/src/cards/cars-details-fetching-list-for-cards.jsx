@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { CarGridSkeleton, SkeletonBlock } from "../component/PageSkeletons";
 import CatalogPagination from "../component/CatalogPagination";
 import { useCarsCatalog, CARS_PAGE_SIZE } from "../hooks/useCarsCatalog";
+import { addCar } from "../context/car/carProvider";
 
 function CarDetailsFetchingListForCards({ filters, search }) {
   const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -57,7 +58,7 @@ function CarDetailsFetchingListForCards({ filters, search }) {
     priceSort
   });
 
-  async function handleUpdateSubmit() {
+  function handleUpdateSubmit() {
     const {
       brand,
       model,
@@ -114,20 +115,13 @@ function CarDetailsFetchingListForCards({ filters, search }) {
       toast.error("Enter a valid Stock count.");
       return;
     }
+    addCar(updateCar);
+    
+    setShowUpdateForm(false);
+    setUpdateCar({});
+    setPage(1);
 
-    try {
-      await API.post("/cars/", updateCar);
-
-      setShowUpdateForm(false);
-      setUpdateCar({});
-      setPage(1);
-
-      handleRefresh();
-
-      toast.success("Car added successfully!");
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to add car!");
-    }
+    handleRefresh();
   }
 
   if (loading) {

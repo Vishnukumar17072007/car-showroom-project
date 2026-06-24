@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CartContext } from "./cartContext";
 import toast from "react-hot-toast";
 import API from "../../api/axios";
@@ -6,6 +6,10 @@ import API from "../../api/axios";
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [cartLoading, setCartLoading] = useState(false);
+
+  useEffect(() => {
+    getCart();
+  }, []);
 
   const getCart = async () => {
     setCartLoading(true);
@@ -27,12 +31,9 @@ export function CartProvider({ children }) {
 
     try {
       setCartLoading(true);
+      setCartItems((prev) => [...prev, { carId: {_id: car._id} }]);
 
-      setCartItems((prev) => [...prev, { carId: car }]);
-
-      await API.post("/cart", {
-        carId: car._id,
-      });
+      await API.post("/cart", {carId: car._id});
 
       toast.success("Added to Cart!");
     } catch (err) {

@@ -1,0 +1,460 @@
+[{
+  "_id": {
+    "$oid": "6a14674e5eb14fb01fb145df"
+  },
+  "userId": {
+    "$oid": "6a06c7a8d06e919c8e6331ea"
+  },
+  "items": [],
+  "__v": 12
+},
+{
+  "_id": {
+    "$oid": "6a15745f4243fb19656274b4"
+  },
+  "userId": {
+    "$oid": "6a1077ab3871793686a9a210"
+  },
+  "__v": 0,
+  "items": [
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8d9"
+      },
+      "_id": {
+        "$oid": "6a15a4fc737b984f4312505b"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8da"
+      },
+      "_id": {
+        "$oid": "6a15a4fd737b984f43125064"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8b7"
+      },
+      "_id": {
+        "$oid": "6a15a4ff737b984f4312506e"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8e3"
+      },
+      "_id": {
+        "$oid": "6a15a500737b984f43125079"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8e0"
+      },
+      "_id": {
+        "$oid": "6a15a501737b984f43125085"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8b8"
+      },
+      "_id": {
+        "$oid": "6a15a532737b984f431250f2"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8dc"
+      },
+      "_id": {
+        "$oid": "6a15a539737b984f43125106"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8d4"
+      },
+      "_id": {
+        "$oid": "6a15a6e9737b984f4312514e"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6a16e4b44243fb1965627f45"
+  },
+  "userId": {
+    "$oid": "6a16e42e0861775f3b47e4c8"
+  },
+  "__v": 0,
+  "items": []
+},
+{
+  "_id": {
+    "$oid": "6a171b264243fb1965629015"
+  },
+  "userId": {
+    "$oid": "6a17130a2250b4537a7a96b8"
+  },
+  "__v": 0,
+  "items": [
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8b9"
+      },
+      "_id": {
+        "$oid": "6a171b262250b4537a7a970c"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8db"
+      },
+      "_id": {
+        "$oid": "6a171b282250b4537a7a970f"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8e0"
+      },
+      "_id": {
+        "$oid": "6a171b292250b4537a7a9713"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8b8"
+      },
+      "_id": {
+        "$oid": "6a17f927c42bacf1e65bfa41"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6a186e7c4243fb1965629a03"
+  },
+  "userId": {
+    "$oid": "6a1840ac6d1b1e2f04bb7328"
+  },
+  "__v": 0,
+  "items": [
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8d9"
+      },
+      "_id": {
+        "$oid": "6a1c3296db81c06b6cc88e26"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8df"
+      },
+      "_id": {
+        "$oid": "6a1c3297db81c06b6cc88e29"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6a1ae8844243fb196562a4f2"
+  },
+  "userId": {
+    "$oid": "6a1ae85187c8b9024fbb2992"
+  },
+  "__v": 0,
+  "items": []
+},
+{
+  "_id": {
+    "$oid": "6a1af65c4243fb196562a4f9"
+  },
+  "userId": {
+    "$oid": "6a1af3ad05463816b3348b99"
+  },
+  "__v": 0,
+  "items": [
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8b8"
+      },
+      "_id": {
+        "$oid": "6a1af659e1b638ddd0f1459e"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8db"
+      },
+      "_id": {
+        "$oid": "6a1af667e1b638ddd0f145a5"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8b9"
+      },
+      "_id": {
+        "$oid": "6a1afd4ff62016c1ca6b1373"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6a1c45e74243fb196562ac1c"
+  },
+  "userId": {
+    "$oid": "6a1c43491335ea0e1b77e806"
+  },
+  "__v": 0,
+  "items": [
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8e0"
+      },
+      "_id": {
+        "$oid": "6a1c45f08a35645dc51ebadb"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8dd"
+      },
+      "_id": {
+        "$oid": "6a1c45f28a35645dc51ebadf"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8b7"
+      },
+      "_id": {
+        "$oid": "6a1c45f38a35645dc51ebae4"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6a1d26974243fb196562b140"
+  },
+  "userId": {
+    "$oid": "6a1c53aabd149ef922c609e2"
+  },
+  "__v": 1,
+  "items": [
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8dc"
+      },
+      "_id": {
+        "$oid": "6a2bb5f1d22ec766512ec7aa"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8bc"
+      },
+      "_id": {
+        "$oid": "6a2bb61cd22ec766512ec816"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8b9"
+      },
+      "_id": {
+        "$oid": "6a36b06cd8ec4cb49bf4c06f"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6a1d75ad4243fb196562c196"
+  },
+  "userId": {
+    "$oid": "6a1d29428565b849b0d6fa8b"
+  },
+  "__v": 0,
+  "items": [
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8c4"
+      },
+      "_id": {
+        "$oid": "6a310c439a750cd2d261fc7d"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8c4"
+      },
+      "_id": {
+        "$oid": "6a3265d4148f1910c834273e"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8b7"
+      },
+      "_id": {
+        "$oid": "6a3265d5148f1910c8342747"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8dd"
+      },
+      "_id": {
+        "$oid": "6a3265d7148f1910c834274d"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6a1d95634243fb196562cc27"
+  },
+  "userId": {
+    "$oid": "6a1d94ba5a75eadb08208db3"
+  },
+  "__v": 0,
+  "items": [
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8b9"
+      },
+      "_id": {
+        "$oid": "6a1d95635a75eadb08208dd2"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6a1ebfe24243fb196562d3ec"
+  },
+  "userId": {
+    "$oid": "6a1ebf8d0f393582d117cea9"
+  },
+  "__v": 0,
+  "items": [
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8b9"
+      },
+      "_id": {
+        "$oid": "6a1ec09b0f393582d117cf10"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8dd"
+      },
+      "_id": {
+        "$oid": "6a1ec0bc0f393582d117cf17"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6a28149f5b14de3e2b606b77"
+  },
+  "userId": {
+    "$oid": "6a257e9afaf0be4aebc4f5c3"
+  },
+  "__v": 0,
+  "items": [
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8db"
+      },
+      "_id": {
+        "$oid": "6a2ae319965088de9c9fc0a6"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8dc"
+      },
+      "_id": {
+        "$oid": "6a2ae31b965088de9c9fc0ad"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8dd"
+      },
+      "_id": {
+        "$oid": "6a2ae31f965088de9c9fc0b5"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8e2"
+      },
+      "_id": {
+        "$oid": "6a2ae321965088de9c9fc0be"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8d9"
+      },
+      "_id": {
+        "$oid": "6a2ae322965088de9c9fc0c8"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8e3"
+      },
+      "_id": {
+        "$oid": "6a2aeb2d965088de9c9fc129"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8b9"
+      },
+      "_id": {
+        "$oid": "6a2aeb2e965088de9c9fc133"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8e1"
+      },
+      "_id": {
+        "$oid": "6a2aeb31965088de9c9fc13e"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8b7"
+      },
+      "_id": {
+        "$oid": "6a2aeb32965088de9c9fc14a"
+      }
+    },
+    {
+      "carId": {
+        "$oid": "6a0483cc724d76b70bb6a8b8"
+      },
+      "_id": {
+        "$oid": "6a2aeb34965088de9c9fc157"
+      }
+    }
+  ]
+}]

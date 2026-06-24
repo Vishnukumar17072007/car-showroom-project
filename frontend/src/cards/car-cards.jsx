@@ -7,6 +7,7 @@ import { useAuth } from "../context/auth/useAuth";
 import API from "../api/axios";
 import { createPortal } from "react-dom";
 import toast from "react-hot-toast";
+import { deleteCar, editCar } from "../context/car/carProvider";
 
 function Cards(props) {
   const navigate = useNavigate();
@@ -57,13 +58,12 @@ function Cards(props) {
   };
 
   async function handleDelete() {
+    setLoading(true);
     try {
-      await API.patch(`/cars/soft-delete/${props._id}`);
-      setLoading(false);
+      await deleteCar(props._id);
       props.onUpdate?.();
-      toast.success("Car deleted successfully.");
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Delete failed");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -128,15 +128,14 @@ function Cards(props) {
       toast.error("Available count cannot be negative");
       return;
     }
-
-    try {
-      await API.put(`/cars/${props._id}`, editData);
+    setLoading(true);
+    try{
+      await editCar(props._id, editData)
+      props.onUpdate?.();
+    }
+    finally {
       setLoading(false);
       setShowEditModal(false);
-      props.onUpdate?.();
-      toast.success("Car updated successfully!");
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Update failed");
     }
   }
 
@@ -223,7 +222,6 @@ function Cards(props) {
                 className="btn-edit"
                 onClick={() => {
                   setShowEditModal(true);
-                  setLoading(true);
                 }}
                 disabled={loading}
               >
@@ -234,7 +232,6 @@ function Cards(props) {
                 className="btn-delete"
                 onClick={() => {
                   handleDelete();
-                  setLoading(true);
                 }}
                 disabled={loading}
               >

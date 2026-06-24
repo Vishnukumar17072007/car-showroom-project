@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WishListContext from "./wishListContext";
 import { AuthContext } from "../auth/authContext";
 import toast from "react-hot-toast";
@@ -12,6 +12,10 @@ export function WishListProvider({ children }) {
     const items = data?.items || [];
     return items.map((x) => x?.carId).filter(Boolean);
   };
+
+  useEffect(()=>{
+    getWishList();
+  },[]);
 
   const getWishList = async () => {
     try {
@@ -34,11 +38,9 @@ export function WishListProvider({ children }) {
     const previousItems = wishListItems;
 
     try {
-      setWishListItems((prev) => [...prev, car]);
+      setWishListItems((prev) => [...prev, {_id: car._id}]);
 
-      await API.post("/wishlist", {
-        carId: car._id,
-      });
+      await API.post("/wishlist", {carId: car._id});
 
       toast.success("Added to Wish List!");
     } catch (err) {

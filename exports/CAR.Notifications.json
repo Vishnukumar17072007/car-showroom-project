@@ -1,0 +1,133 @@
+[{
+  "_id": {
+    "$oid": "6a2e9cdf38fafb85bcf450f0"
+  },
+  "user": {
+    "$oid": "6a1d29428565b849b0d6fa8b"
+  },
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T12:21:48.302Z"
+  },
+  "notifications": [
+    {
+      "title": "Order Improvement",
+      "message": "Your order status for order \"Toyota Fortuner\" have been changed to \"in_progress\".",
+      "read": false,
+      "_id": {
+        "$oid": "6a3186cabb8b860191b89893"
+      }
+    },
+    {
+      "title": "Order Improvement",
+      "message": "Your order status for order \"Audi\nA4\" have been changed to \"delivered\".",
+      "read": false,
+      "_id": {
+        "$oid": "6a3186dbbb8b860191b898c7"
+      }
+    },
+    {
+      "title": "Order Improvement",
+      "message": "Your order status for order \"Tata Sierra\" have been changed to \"rejected\".",
+      "read": false,
+      "_id": {
+        "$oid": "6a3186debb8b860191b898d9"
+      }
+    },
+    {
+      "title": "Order Placed",
+      "message": "Your order #6a3265e1148f1910c8342757 has been placed successfully.",
+      "read": false,
+      "_id": {
+        "$oid": "6a3265e1148f1910c834275c"
+      }
+    }
+  ],
+  "updatedAt": {
+    "$date": "2026-06-17T09:16:17.887Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a37e872a850058101d3db97"
+  },
+  "user": {
+    "$oid": "6a1c53aabd149ef922c609e2"
+  },
+  "__v": 0,
+  "notifications": [
+    {
+      "title": "Order Improvement",
+      "message": "Your order status for order \"Audi Q3\" have been changed to \"pending\".",
+      "read": false,
+      "_id": {
+        "$oid": "6a37ec07e716dbb48f8106ba"
+      },
+      "createdAt": {
+        "$date": "2026-06-21T13:49:59.126Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-21T13:49:59.126Z"
+      }
+    },
+    {
+      "title": "Order Improvement",
+      "message": "Your order status for order \"Audi Q3\" have been changed to \"in_progress\".",
+      "read": true,
+      "_id": {
+        "$oid": "6a37ec0ae716dbb48f8106d9"
+      },
+      "createdAt": {
+        "$date": "2026-06-21T13:50:02.759Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-21T14:15:08.751Z"
+      }
+    },
+    {
+      "title": "Order Improvement",
+      "message": "Your order status for order \"Audi Q3\" have been changed to \"approved\".",
+      "read": false,
+      "_id": {
+        "$oid": "6a37ec0de716dbb48f8106fb"
+      },
+      "createdAt": {
+        "$date": "2026-06-21T13:50:05.729Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-21T13:50:05.729Z"
+      }
+    },
+    {
+      "title": "Order Improvement",
+      "message": "Your order status for order \"Audi Q3\" have been changed to \"delivered\".",
+      "read": true,
+      "_id": {
+        "$oid": "6a37ec10e716dbb48f810720"
+      },
+      "createdAt": {
+        "$date": "2026-06-21T13:50:08.597Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-21T14:15:06.959Z"
+      }
+    },
+    {
+      "title": "Order Improvement",
+      "message": "Your order status for order \"Audi Q3\" have been changed to \"rejected\".",
+      "read": false,
+      "_id": {
+        "$oid": "6a37ec17e716dbb48f810748"
+      },
+      "createdAt": {
+        "$date": "2026-06-21T13:50:15.559Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-21T13:50:15.559Z"
+      }
+    }
+  ],
+  "updatedAt": {
+    "$date": "2026-06-21T14:15:08.751Z"
+  }
+}]

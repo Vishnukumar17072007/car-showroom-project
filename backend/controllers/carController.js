@@ -140,8 +140,17 @@ const deleteCar = async (req, res) => {
       _id: req.params.id,
       isDeleted: false,
     },
-    {$set: { isDeleted: true }},
-    { new: true })
+    { $set: { isDeleted: true } },
+    { new: true }
+  );
+
+  if (!car) {
+    const error = new Error("Car not found");
+    error.status = 404;
+    throw error;
+  }
+
+  res.status(200).json({ message: "Car deleted successfully" });
 };
 
 module.exports = { getCars, getCarById, addCar, updateCar, deleteCar };
