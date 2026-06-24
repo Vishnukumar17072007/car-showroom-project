@@ -31,7 +31,7 @@ function SubscriptionBanner({ sub, onViewPlans, isActive, onActivate }) {
             }
         }
       >
-        <p className="bi bi-piggy-bank text-decoration-none text-white side_bar_menu_items d-block m-0 p-3 ps-3">
+        <p className="bi bi-piggy-bank text-decoration-none side_bar_menu_items d-block m-0 p-3 ps-3">
           Upgrade Plan
         </p>
       </li>
@@ -75,7 +75,7 @@ function SideNavbar() {
               <Link
                 className={
                   item[0] +
-                  " text-decoration-none text-white side_bar_menu_items d-block w-100"
+                  " text-decoration-none side_bar_menu_items d-block w-100"
                 }
                 to={item[2]}
               >
@@ -107,7 +107,7 @@ function SideNavbar() {
           className={`side_bar_menu_lists ps-2 w-100 ${location.pathname === "/support" ? "active" : ""}`}
         >
           <Link
-            className="bi bi-person-bounding-box text-decoration-none text-white side_bar_menu_items d-block w-100"
+            className="bi bi-person-bounding-box text-decoration-none side_bar_menu_items d-block w-100"
             to="/support"
           >
             {" "}
@@ -121,7 +121,7 @@ function SideNavbar() {
             className={`side_bar_menu_lists ps-2 w-100 ${location.pathname === "/profile" ? "active" : ""}`}
           >
             <Link
-              className="bi bi-person text-decoration-none text-white side_bar_menu_items d-block w-100"
+              className="bi bi-person text-decoration-none side_bar_menu_items d-block w-100"
               to="/profile"
             >
               {" "}

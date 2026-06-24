@@ -85,7 +85,7 @@ function StatCard({ icon, iconBg, iconColor, label, value, delta, deltaPositive,
         <div className="db-stat-icon" style={{ background: iconBg, color: iconColor }}>
           <i className={icon} />
         </div>
-        <h2 className="db-stat-value" style={{flex: 1, alignContent: "center", textAlign: "center", fontSize: "30px"}}>
+        <h2 className="db-stat-value" style={{}}>
           {value}
         </h2>
       </div>
@@ -166,10 +166,7 @@ function renderActiveShape(props) {
 /* ── Section Card wrapper (admin) ── */
 function SectionCard({ title, badge, children }) {
   return (
-    <div style={{
-      background: "#111116", border: "1px solid rgba(255,255,255,0.07)",
-      borderRadius: 12, padding: "18px 20px", height: "100%", boxSizing: "border-box",
-    }}>
+    <div className="section-card">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
         <p style={{ fontSize: 13, fontWeight: 500, color: "#a09da8", margin: 0, textTransform: "uppercase", letterSpacing: 1 }}>
           {title}
@@ -310,9 +307,7 @@ export default function Dashboard() {
           {/* Header */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
             <div>
-              <h1 style={{ fontFamily: "'Syne',sans-serif", fontSize: 22, fontWeight: 700, color: "#f0ede6", margin: 0, letterSpacing: 1 }}>
-                Admin Dashboard
-              </h1>
+              <h1 className="dashboard-h1">Admin Dashboard</h1>
               <p style={{ fontSize: 12, color: "#6a6778", margin: "4px 0 0" }}>
                 Real-time overview of your CarField platform
               </p>
@@ -440,14 +435,14 @@ export default function Dashboard() {
                           {initials(u?.userName || "?")}
                         </div>
                         <div style={{ flex: 1, minWidth: 0 }}>
-                          <p style={{ margin: 0, fontSize: 12, fontWeight: 500, color: "#f0ede6", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          <p className="text" style={{ margin: 0, fontSize: 12, fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                             {u?.userName || "Unknown"}
                           </p>
                           <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
                             {order.items?.map((item, idx) => {
                               const c = item?.carId;
                               return (
-                                <p key={idx} style={{ margin: 0, fontSize: 11, color: "#6a6778", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                <p key={idx} className="text" style={{ margin: 0, fontSize: 11, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                                   {c ? `${c.brand} ${c.model}` : "Unknown Car"}
                                 </p>
                               );
@@ -455,7 +450,7 @@ export default function Dashboard() {
                           </div>
                         </div>
                         <div style={{ textAlign: "right", flexShrink: 0 }}>
-                          <p style={{ margin: "0 0 3px", fontSize: 12, fontWeight: 600, color: "#f0ede6" }}>
+                          <p className="text" style={{ margin: "0 0 3px", fontSize: 12, fontWeight: 600 }}>
                             {fmtRupees(order.totalPrice)}
                           </p>
                           <span style={{
@@ -488,7 +483,7 @@ export default function Dashboard() {
         {/* Header */}
         <div className="db-header">
           <div>
-            <h1>Dashboard</h1>
+            <h1 className="dashboard-h1">Dashboard</h1>
             <p>Overview of your activity on CarField</p>
           </div>
           <button
@@ -591,7 +586,7 @@ export default function Dashboard() {
                     alignItems: "center", justifyContent: "center",
                     pointerEvents: "none",
                   }}>
-                    <strong style={{ fontFamily: "'Syne',sans-serif", fontSize: 24, fontWeight: 700, color: "#f0ede6", lineHeight: 1 }}>
+                    <strong className="text" style={{ fontFamily: "'Syne',sans-serif", fontSize: 24, fontWeight: 700, lineHeight: 1 }}>
                       {totalOrders}
                     </strong>
                     <span style={{ fontSize: 10, color: "#6a6778", letterSpacing: 0.5, marginTop: 3 }}>Total Orders</span>

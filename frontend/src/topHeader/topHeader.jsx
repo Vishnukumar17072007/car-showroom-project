@@ -4,14 +4,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth/useAuth";
 import { useSearch } from "../context/search/useSearch";
 import { useNotification } from "../context/notification/useNotification";
+import { useTheme } from "../context/theme/useTheme";
 
 function TopHeader() {
 
     const navigate = useNavigate();
     const location = useLocation();
 
-      const { unreadCount } = useNotification();
-    
+    const { unreadCount } = useNotification();
+    const { isDark, toggleTheme } = useTheme();
     const {user, logout} = useAuth();
     const {setSearch} = useSearch();
 
@@ -37,12 +38,12 @@ function TopHeader() {
                 {user ? (
                     <div style={{display: "flex", flexDirection: "row", gap: "8px"}}>
                         <div style={{ position: "relative", cursor: "pointer", marginTop: "10px" }} onClick={() => navigate("/notifications")}>
-                            <i className="bi bi-bell" style={{ fontSize: "20px", color: "var(--text)", top: "0px" }} />
+                            <i className="bi bi-bell" style={{ fontSize: "20px", color: "var(--text)", top: "0px", padding: "10px" }} />
                             {unreadCount > 0 && (
                                 <span style={{
-                                position: "absolute", top: "-6px", right: "-6px",
+                                position: "absolute", top: "-6px", right: "0px",
                                 backgroundColor: "red", color: "white",
-                                fontSize: "10px", fontWeight: 700,
+                                fontSize: "10px", fontWeight: 700, padding: "10px",
                                 borderRadius: "50%", width: "16px", height: "16px",
                                 display: "flex", alignItems: "center", justifyContent: "center",
                                 }}>
@@ -50,6 +51,15 @@ function TopHeader() {
                                 </span>
                             )}
                         </div>
+                        <button onClick={toggleTheme}
+                            style={{
+                                background: "none", border: "none",
+                                color: "var(--gold)", fontSize: 20,
+                                cursor: "pointer", padding: "10px"
+                            }}
+                        >
+                            <i className={isDark ? "bi bi-sun" : "bi bi-moon"} />
+                        </button>
                         <button onClick={() => logout()}
                             style={{
                                 position: "relative", marginTop: "8px", marginRight: "20px",

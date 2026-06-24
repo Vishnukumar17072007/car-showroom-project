@@ -14,6 +14,7 @@ import { SearchProvider } from './context/search/searchProvider.jsx'
 import ProfileProvider from './context/profile/profileProvider.jsx';
 import { NotificationProvider } from './context/notification/notificationProvider.jsx';
 import { RoutePageSkeleton } from './component/PageSkeletons.jsx';
+import { ThemeProvider } from './context/theme/themeProvider.jsx';
 
 const Home = lazy(() => import('./pages/home.jsx'));
 const Vehicles = lazy(() => import('./pages/vehicles.jsx'));
@@ -78,6 +79,7 @@ const router = createBrowserRouter([
 ])
 
 createRoot(document.getElementById('root')).render(
+  <ThemeProvider>
     <AuthProvider>
       <NotificationProvider>
         <WishListProvider>
@@ -93,4 +95,5 @@ createRoot(document.getElementById('root')).render(
         </WishListProvider>
       </NotificationProvider>
     </AuthProvider>
+  </ThemeProvider>
 )

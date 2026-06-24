@@ -66,14 +66,14 @@ function Cart() {
 
                                     {/* Details */}
                                     <div style={{ flex: 1 }}>
-                                        <b style={{ fontSize: "1rem", color: "white"}}>{car.brand} {car.model}</b>
+                                        <b className="text" style={{ fontSize: "1rem" }}>{car.brand} {car.model}</b>
                                         <p style={{ margin: "2px 0", fontWeight: "lighter", fontSize: "0.85rem", color: "gray" }}>
                                             {car.bodyType}
                                             {car.transmission && ` • ${car.transmission}`}
                                             {car.fuelType && ` • ${car.fuelType}`}
                                         </p>
-                                        <p style={{ margin: "2px 0", fontSize: "0.85rem", color: "white" }}>⭐ {car.rating}</p>
-                                        <b style={{ fontSize: "1rem", color: "white" }}>₹{car.price?.toLocaleString('en-IN')}</b>
+                                        <p className="text" style={{ margin: "2px 0", fontSize: "0.85rem" }}>⭐ {car.rating}</p>
+                                        <b className="text" style={{ fontSize: "1rem" }}>₹{car.price?.toLocaleString('en-IN')}</b>
                                     </div>
 
                                     {/* Actions */}
