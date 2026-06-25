@@ -46,6 +46,14 @@
   --ep-input-bg: #081629;
   --ep-input-border: #2a3f5f;
   --ep-input-color: #e8dcc8;
+
+  --support-bg: #1a1a1a;
+  --bubble-bg: #2a2a2a;       /* bot chat bubble */
+  --bubble-text: #f0f0f0;     /* text inside bubble */
+  --bubble-user-bg: #1a6bbf;
+  --input-bar-bg: #2a2a2a;    /* bottom input bar bg */
+  --border-color: #2e2e2e;    /* divider line above input */
+  --gold: #C9A84C;            /* Send button */
 }
 
 /* ---------- Light Mode Overrides ---------- */
@@ -78,6 +86,13 @@ html[data-theme="light"] {
   --ep-input-bg: #ffffff;
   --ep-input-border: #2a3f5f;
   --ep-input-color: #000000;
+
+  --support-bg: #ffffff;
+  --bubble-bg: #2C2C2A;       /* bot chat bubble */
+  --bubble-text: #F5F5F3;     /* text inside bubble */
+  --input-bar-bg: #F5F5F3;    /* bottom input bar bg */
+  --border-color: #E8E8E5;    /* divider line above input */
+  --gold: #C9A84C;           /* Send button */
 }
 
 /* ---------- Reset & Base ---------- */
@@ -1646,7 +1661,7 @@ input[type="checkbox"]:checked {
 }
 
 .auth-brand-btn {
-  position: fixed;
+  position: absolute;
   top: 20px;
   left: 24px;
   background: none;
@@ -1749,7 +1764,7 @@ input[type="checkbox"]:checked {
   font-family: 'Syne', Arial, sans-serif;
   font-size: 26px;
   font-weight: 700;
-  color: var(--text);
+  color: white;
   margin: 0 0 6px;
   letter-spacing: 0.3px;
 }
@@ -1861,6 +1876,7 @@ input[type="checkbox"]:checked {
   font-size: 14px;
   margin-right: 10px;
   opacity: 0.5;
+  color: white;
   user-select: none;
   line-height: 1;
 }
@@ -1881,6 +1897,7 @@ input[type="checkbox"]:checked {
   border: none;
   cursor: pointer;
   font-size: 13px;
+  color: white;
   opacity: 0.4;
   padding: 0 0 0 8px;
   line-height: 1;
@@ -1946,7 +1963,7 @@ input[type="checkbox"]:checked {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  color: var(--text);
+  color: white;
   font-family: 'DM Sans', Arial, sans-serif;
   font-size: 13px;
   font-weight: 500;
@@ -3040,7 +3057,7 @@ input[type="checkbox"]:checked {
   flex-direction: column;
   height: calc(100vh - 54px);
   width: 100%;
-  background: #1a1a1a;
+  background: var(--support-bg);
   overflow: hidden;
 }
 
@@ -3049,8 +3066,8 @@ input[type="checkbox"]:checked {
   align-items: center;
   gap: 10px;
   padding: 14px 18px;
-  border-bottom: 1px solid #2e2e2e;
-  background: #1a1a1a;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--support-bg);
 }
 
 .support-avatar {
@@ -3067,7 +3084,7 @@ input[type="checkbox"]:checked {
 .support-title {
   font-size: 14px;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text);
   margin: 0;
 }
 
@@ -3083,7 +3100,7 @@ input[type="checkbox"]:checked {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background: #1a1a1a;
+  background: var(--support-bg);
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -3115,15 +3132,15 @@ input[type="checkbox"]:checked {
 }
 
 .bubble.bot {
-  background: #2a2a2a;
+  background: var(--bubble-bg);
   border: 1px solid #3a3a3a;
   border-bottom-left-radius: 4px;
-  color: #f0f0f0;
+  color: var(--bubble-text);
 }
 
 .bubble.user {
-  background: #1a6bbf;
-  color: #fff;
+  background: var(--bubble-text);
+  color: var(--bubble-bg);
   border-bottom-right-radius: 4px;
 }
 
@@ -3131,8 +3148,8 @@ input[type="checkbox"]:checked {
   display: flex;
   gap: 8px;
   padding: 12px 14px;
-  border-top: 1px solid #2e2e2e;
-  background: #1a1a1a;
+  border-top: 1px solid var(--border-color);
+  background: var(--support-bg);
 }
 
 .support-input-area textarea {
@@ -3141,8 +3158,8 @@ input[type="checkbox"]:checked {
   padding: 9px 12px;
   border-radius: 8px;
   border: 1px solid #3a3a3a;
-  background: #2a2a2a;
-  color: #f0f0f0;
+  background: var(--input-bar-bg);
+  color: var(--bubble-bg);
   font-size: 14px;
   font-family: sans-serif;
   outline: none;
@@ -3154,8 +3171,8 @@ input[type="checkbox"]:checked {
 
 .send-btn {
   padding: 0 18px;
-  background: #1a6bbf;
-  color: white;
+  background: var(--gold);
+  color: var(--support-bg);
   border: none;
   border-radius: 8px;
   font-size: 14px;
@@ -3163,7 +3180,7 @@ input[type="checkbox"]:checked {
 }
 
 .send-btn:hover {
-  background: #155299;
+  background: goldenrod;
 }
 
 .content-area {

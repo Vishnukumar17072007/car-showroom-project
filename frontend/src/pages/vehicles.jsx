@@ -5,7 +5,7 @@ import BodyTypeFilter from '../filter/BodyTypeFilter';
 import TransmissionFilter from '../filter/TransmissionFilter';
 import FuelTypeFilter from '../filter/FuelTypeFilter';
 import CarDetailsFetchingListForCards from '../cards/cars-details-fetching-list-for-cards';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearch } from '../context/search/useSearch';
 
 const defaultFilters = {
@@ -31,6 +31,18 @@ function Vehicles() {
   function handleReset() {
     setFilters(defaultFilters);
   }
+
+  useEffect(() => {
+    if (showFilter) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showFilter]);
 
   return (
     <>

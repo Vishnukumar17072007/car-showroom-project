@@ -21,6 +21,18 @@ function App() {
     setMobileNavOpen(false);
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (mobileNavOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [mobileNavOpen]);
+
   if (authLoading) {
     return <AppBootstrapSkeleton pathname={location.pathname} />;
   }

@@ -98,13 +98,13 @@ function Support() {
       <div className="support-messages">
         {messages.map((msg, index) => (
           <div key={index} className={`msg-row ${msg.role === "user" ? "msg-user" : "msg-bot"}`}>
-            {msg.role === "bot" && <div className="bot-icon">🚗</div>}
+            {msg.role === "bot" && <div className="bot-icon">🤖</div>}
             <div className={`bubble ${msg.role}`}>{msg.text}</div>
           </div>
         ))}
         {loading && (
           <div className="msg-row msg-bot">
-            <div className="bot-icon">🚗</div>
+            <div className="bot-icon">🤖</div>
             <div className="bubble bot" style={{ color: "#888", fontStyle: "italic" }}>Typing...</div>
           </div>
         )}
