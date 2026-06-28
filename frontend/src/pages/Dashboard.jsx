@@ -15,7 +15,7 @@ import { DashboardRouteSkeleton } from "../component/PageSkeletons";
    COLOUR TOKENS
 ═══════════════════════════════════════════════════════════════════ */
 const GOLD       = "#c9a84c";
-const GOLD_FAINT = "rgba(201,168,76,0.12)";
+const GOLD_FAINT = "#c9a84c1f";
 const BLUE       = "#378ADD";
 const GREEN      = "#1D9E75";
 const AMBER      = "#EF9F27";
@@ -24,7 +24,7 @@ const PURPLE     = "#7F77DD";
 const TEAL       = "#5DCAA5";
 
 const STATUS_COLORS = {
-  in_progress: '#ffea00',
+  in_progress: '#f3be17',
   delivered: "#3db87a",
   pending:   "#f39c12",
   approved: "#3b82f6",

@@ -18,7 +18,8 @@ const defaultFilters = {
 
 function Vehicles() {
   const [filters, setFilters] = useState(defaultFilters);
-  const [showFilter, setShowFilter] = useState(false); // ✅ new
+  const [showFilter, setShowFilter] = useState(false);
+  const [priceSort, setPriceSort] = useState("1");
   const { debouncedSearch } = useSearch();
 
   function handleFilterChange(key, value) {
@@ -55,7 +56,7 @@ function Vehicles() {
       <div className={`filter_column ${showFilter ? "open" : ""}`}>
         <FilterTitle onReset={handleReset} />
         <AvailableFilter checked={filters.available} onChange={()=> setFilters(prev => ({...prev, available: !prev.available}))}/>
-        <PriceFilter selected={filters.maxPrice} onChange={(val) => handleFilterChange("maxPrice", val)} />
+        <PriceFilter selected={filters.maxPrice} onChange={(val) => handleFilterChange("maxPrice", val)} priceSort={priceSort} onSortChange={(val) => setPriceSort(val)} />
         <BodyTypeFilter selected={filters.bodyType} onChange={(val) => handleFilterChange("bodyType", val)} />
         <TransmissionFilter selected={filters.transmission} onChange={(val) => handleFilterChange("transmission", val)} />
         <FuelTypeFilter selected={filters.fuelType} onChange={(val) => handleFilterChange("fuelType", val)} />
@@ -70,7 +71,7 @@ function Vehicles() {
           <i className="bi bi-sliders"></i> Filters
         </button>
 
-        <CarDetailsFetchingListForCards filters={filters} search={debouncedSearch} />
+        <CarDetailsFetchingListForCards filters={filters} search={debouncedSearch} priceSort={priceSort} onSortChange={(val) => setPriceSort(val)} />
       </div>
     </>
   );

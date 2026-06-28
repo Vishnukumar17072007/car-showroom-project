@@ -11,7 +11,7 @@ import { useOrder } from '../context/order/useOrder';
 // ─────────────────────────────────────────────
 const statusColor = (status) => {
   switch (status) {
-    case 'in_progress': return '#ffea00';
+    case 'in_progress': return '#f3be17';
     case 'approved':    return '#2ecc71';
     case 'delivered':   return '#3498db';
     case 'cancelled':   return '#e74c3c';

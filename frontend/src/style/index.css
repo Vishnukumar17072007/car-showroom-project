@@ -48,51 +48,52 @@
   --ep-input-color: #e8dcc8;
 
   --support-bg: #1a1a1a;
-  --bubble-bg: #2a2a2a;       /* bot chat bubble */
-  --bubble-text: #f0f0f0;     /* text inside bubble */
+  --bubble-bg: #2a2a2a;
+  --bubble-text: #f0f0f0;
   --bubble-user-bg: #1a6bbf;
-  --input-bar-bg: #2a2a2a;    /* bottom input bar bg */
-  --border-color: #2e2e2e;    /* divider line above input */
-  --gold: #C9A84C;            /* Send button */
+  --input-bar-bg: #2a2a2a;
+  --border-color: #2e2e2e;
+  --gold: #C9A84C;
 }
 
 /* ---------- Light Mode Overrides ---------- */
 html[data-theme="light"] {
-  --bg-deep:    #f0f2f5;
+  --bg-deep:    #f5f6f8;
   --bg-surface: #ffffff;
-  --bg-card:    #f7f8fa;
+  --bg-card:    #ffffff;
   --bg-hover:   #eceef2;
-  --bg-input:   #eef0f4;
+  --bg-input:   #f0f2f5;
 
-  --text:           #0d0d10;
-  --text-secondary: #4a4860;
-  --text-muted:     #7a7890;
-  --subtext:        #4a4860;
+  --text:           #1a1a2e;
+  --text-secondary: #4a5568;
+  --text-muted:     #718096;
+  --subtext:        #4a5568;
 
   --border:       rgba(0, 0, 0, 0.08);
-  --border-hover: rgba(0, 0, 0, 0.14);
+  --border-hover: rgba(0, 0, 0, 0.15);
 
-  --gold:        #b8860b;
-  --gold-light:  #c9a84c;
-  --gold-faint:  rgba(184, 134, 11, 0.10);
-  --gold-border: rgba(184, 134, 11, 0.40);
+  --gold:        #c9a227;
+  --gold-light:  #e8c97a;
+  --gold-faint:  rgba(201, 162, 39, 0.10);
+  --gold-border: rgba(201, 162, 39, 0.40);
 
-  --skeleton-color:  #6a6a6a;
+  --skeleton-color: #cbd5e0;
 
-  --profile-card: #F3F4F6;
-  --profile-card-border: #D1D5DB;
-  --profile-subcard: #e7e7e7;
+  --profile-card:        #ffffff;
+  --profile-card-border: #e2e8f0;
+  --profile-subcard:     #f7f8fa;
 
-  --ep-input-bg: #ffffff;
-  --ep-input-border: #2a3f5f;
-  --ep-input-color: #000000;
+  --ep-input-bg:    #ffffff;
+  --ep-input-border:#cbd5e0;
+  --ep-input-color: #1a1a2e;
 
-  --support-bg: #ffffff;
-  --bubble-bg: #2C2C2A;       /* bot chat bubble */
-  --bubble-text: #F5F5F3;     /* text inside bubble */
-  --input-bar-bg: #F5F5F3;    /* bottom input bar bg */
-  --border-color: #E8E8E5;    /* divider line above input */
-  --gold: #C9A84C;           /* Send button */
+  --support-bg:      #ffffff;
+  --bubble-bg:       #1a1a2e;
+  --bubble-text:     #f5f6f8;
+  --bubble-user-bg:  #3182ce;
+  --input-bar-bg:    #f5f6f8;
+  --border-color:    #e2e8f0;
+  --gold: #c9a227;
 }
 
 /* ---------- Reset & Base ---------- */
@@ -251,8 +252,8 @@ textarea {
   position: relative;
   cursor: pointer;
   font-size: 13px;
-  font-weight: 400;
-  color: var(--text-secondary);
+  color: var(--text);
+  font-weight: 300;
   border-left: 2px solid transparent;
   border-radius: 10px;
   transition: color 0.18s ease, background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
@@ -793,7 +794,6 @@ input[type="checkbox"]:checked {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   justify-content: space-between;
   align-content: start;
-  gap: 14px;
 }
 
 .car_card_box::-webkit-scrollbar {
@@ -925,11 +925,12 @@ input[type="checkbox"]:checked {
 .price-sort-dropdown {
   position: relative;
   display: inline-block;
-  width: 167px;
+  width: 190px;
+  margin-bottom: 12px;
 }
 
 .price-sort-btn {
-  background: #fff;
+  background: #e4e2e2;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 8px 14px;
@@ -938,7 +939,8 @@ input[type="checkbox"]:checked {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #333;
+  color: black;
+  width: 190px;
 }
 
 .price-sort-btn:hover {
@@ -959,10 +961,10 @@ input[type="checkbox"]:checked {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
-  background: #fff;
+  background: #e4e2e2;
   border: 1px solid #ddd;
   border-radius: 8px;
-  width: 200px;
+  width: 190px;
   padding: 4px 0;
   list-style: none;
   margin: 0;
@@ -1069,13 +1071,12 @@ input[type="checkbox"]:checked {
   width: 110px;
   margin-right: 36px;
   border-radius: var(--radius-md);
-  position: absolute;
-  right: 0px;
+  align-self: self-end;
   height: auto;
-  display: flex;
-  flex-direction: column;
   cursor: pointer;
+  display: flex;
   transition: border-color 0.18s ease, transform 0.18s ease;
+  z-index: 1000;
 }
 
 .car-card-update:hover {
@@ -3299,7 +3300,7 @@ input[type="checkbox"]:checked {
   width: 100%;
   height: calc(100vh - 54px);
   overflow-y: auto;
-  background: #0d0d12;
+  background: var(--bg-deep);
   padding: 28px;
   box-sizing: border-box;
   scrollbar-width: none;
@@ -4761,9 +4762,7 @@ input[type="checkbox"]:checked {
    ============================================================ */
 
 .catalog-list-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: block;
   width: 100%;
 }
 

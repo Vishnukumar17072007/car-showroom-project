@@ -8,35 +8,18 @@ import CatalogPagination from "../component/CatalogPagination";
 import { useCarsCatalog, CARS_PAGE_SIZE } from "../hooks/useCarsCatalog";
 import { addCar } from "../context/car/carProvider";
 
-function CarDetailsFetchingListForCards({ filters, search }) {
+function CarDetailsFetchingListForCards({ filters, search, priceSort }) {
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [updateCar, setUpdateCar] = useState({});
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [refreshKey, setRefreshKey] = useState(0);
-  const [priceSort, setPriceSort] = useState(1);
-  const [sortOpen, setSortOpen] = useState(false);
 
   const { user } = useAuth();
 
-  const sortOptions = [
-    { label: "Price: Low to High", value: "1" },
-    { label: "Price: High to Low", value: "-1" },
-  ];
-
-  useEffect(() => {
-    const handleOutsideClick = (e) => {
-      if (!e.target.closest(".price-sort-dropdown")) {
-        setSortOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleOutsideClick);
-    return () => document.removeEventListener("mousedown", handleOutsideClick);
-  }, []);
-
   useEffect(() => {
     setPage(1);
-  }, [filters, search]);
+  }, [filters, search, priceSort]);
 
   const handleRefresh = useCallback(() => {
     setRefreshKey((k) => k + 1);
@@ -144,42 +127,14 @@ function CarDetailsFetchingListForCards({ filters, search }) {
   return (
     <div className="catalog-list-wrap">
       <div className="car_card_box d-flex flex-column">
-        <div className="price-sort-dropdown">
-          <button
-            className="price-sort-btn"
-            onClick={() => setSortOpen((prev) => !prev)}
+        {user?.role === "admin" && (
+          <div
+            className="car-card-update"
+            onClick={() => setShowUpdateForm(true)}
           >
-            {sortOptions.find((o) => o.value === priceSort)?.label ?? "Price: Low to High"}
-            <span className={`sort-arrow ${sortOpen ? "open" : ""}`}>▾</span>
-          </button>
-
-          {sortOpen && (
-            <ul className="price-sort-menu">
-              {sortOptions.map((option) => (
-                <li
-                  key={option.value}
-                  className={`price-sort-item ${priceSort === option.value ? "active" : ""}`}
-                  onClick={() => {
-                    setPriceSort(option.value);
-                    setPage(1);
-                    setSortOpen(false);
-                  }}
-                >
-                  {option.label}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      
-          {user?.role === "admin" && (
-            <div
-              className="car-card-update"
-              onClick={() => setShowUpdateForm(true)}
-            >
-              <div className="car_card_body-update">Add CARS</div>
-            </div>
-          )}
+            <div className="car_card_body-update">Add CARS</div>
+          </div>
+        )}
         {/* Cards Grid */}
         <div className={`d-flex flex-wrap gap-2 ${user.role === "admin" ? "pt-2" : ""}`}>
           {carList.length > 0 ? (
