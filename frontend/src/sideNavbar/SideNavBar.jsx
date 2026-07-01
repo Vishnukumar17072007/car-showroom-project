@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { useAuth } from "../context/auth/useAuth";
-import SubscriptionModal from "../component/SubscriptionModal";
+import SubscriptionModal from "../components/SubscriptionModal";
 
 
 // ── Subscription Banner (local helper) ──────────────────────────────────────

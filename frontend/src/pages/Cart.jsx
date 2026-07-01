@@ -1,8 +1,8 @@
 import { useCart } from '../context/cart/useCart';
 import { useEffect, useState } from 'react';
-import CheckoutModal from '../component/CheckoutModal';
+import CheckoutModal from '../components/CheckoutModal';
 import { useNavigate } from 'react-router-dom';
-import { CartListSkeleton, PageTitleSkeleton } from '../component/PageSkeletons';
+import { CartListSkeleton, PageTitleSkeleton } from '../components/PageSkeletons';
 
 function Cart() {
     const [showCheckout, setShowCheckout] = useState(false);

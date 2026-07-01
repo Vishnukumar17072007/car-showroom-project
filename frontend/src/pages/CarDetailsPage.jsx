@@ -4,7 +4,7 @@ import { useCart } from "../context/cart/useCart";
 import { useWishList } from "../context/wish/useWishList";
 import { useAuth } from "../context/auth/useAuth";
 import { useState, useEffect } from "react";
-import { CarDetailsSkeleton } from "../component/PageSkeletons";
+import { CarDetailsSkeleton } from "../components/PageSkeletons";
 
 function CarDetailsPage() {
     const { id } = useParams();

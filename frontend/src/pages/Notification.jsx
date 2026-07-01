@@ -1,5 +1,5 @@
 import { useNotification } from "../context/notification/useNotification";
-import { NotificationListSkeleton } from "../component/PageSkeletons";
+import { NotificationListSkeleton } from "../components/PageSkeletons";
 
 const GOLD       = "#c9a84c";
 const GOLD_FAINT = "rgba(201,168,76,0.12)";

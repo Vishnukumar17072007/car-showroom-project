@@ -5,9 +5,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './style/index.css'
 
 import App from './App.jsx'
-import ProtectedRoutes from './component/ProtectedRoutes.jsx'
-import UserRoute from './component/UserRoute.jsx'
-import AdminRoute from './component/AdminRoute.jsx'
+import ProtectedRoutes from './components/ProtectedRoutes.js'
+import UserRoute from './components/UserRoute.jsx'
+import AdminRoute from './components/AdminRoute.js'
 import { AuthProvider } from './context/auth/authProvider.jsx'
 import { WishListProvider } from './context/wish/wishListProvider.jsx'
 import { OrderProvider } from './context/order/orderProvider.jsx'
@@ -15,7 +15,7 @@ import { CartProvider } from './context/cart/cartProvider.jsx'
 import { SearchProvider } from './context/search/searchProvider.jsx'
 import ProfileProvider from './context/profile/profileProvider.jsx';
 import { NotificationProvider } from './context/notification/notificationProvider.jsx';
-import { RoutePageSkeleton } from './component/PageSkeletons.jsx';
+import { RoutePageSkeleton } from './components/PageSkeletons.jsx';
 import { ThemeProvider } from './context/theme/themeProvider.jsx';
 
 const Home = lazy(() => import('./pages/Home.jsx'));
@@ -31,7 +31,7 @@ const EditProfile = lazy(() => import('./pages/EditProfile.jsx'));
 const Login = lazy(() => import('./pages/Login.jsx'));
 const Dashboard = lazy(() => import('./pages/Dashboard.jsx'));
 const Notifications = lazy(() => import('./pages/Notification.jsx'));
-const AuthCallback = lazy(() => import('./component/AuthCallback.jsx'))
+const AuthCallback = lazy(() => import('./components/AuthCallback.js'))
 
 function PageLoader() {
   return <RoutePageSkeleton />;

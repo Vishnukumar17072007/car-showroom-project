@@ -5,7 +5,7 @@ import { useAuth } from "./context/auth/useAuth";
 import { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import SideNavbar from "./sideNavbar/SideNavBar";
-import { AppBootstrapSkeleton } from "./component/PageSkeletons";
+import { AppBootstrapSkeleton } from "./components/PageSkeletons";
 
 function App() {
   const { authLoading } = useAuth();

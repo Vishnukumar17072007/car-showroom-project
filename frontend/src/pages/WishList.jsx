@@ -1,7 +1,7 @@
 import { useWishList } from '../context/wish/useWishList';
 import { useCart } from '../context/cart/useCart';
 import { useNavigate } from 'react-router-dom';
-import { CarGridSkeleton, PageTitleSkeleton } from '../component/PageSkeletons';
+import { CarGridSkeleton, PageTitleSkeleton } from '../components/PageSkeletons';
 import { useEffect } from 'react';
 
 function WishList(){

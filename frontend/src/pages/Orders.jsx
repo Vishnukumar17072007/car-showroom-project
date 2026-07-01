@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import API from '../api/axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { OrderListSkeleton, PageTitleSkeleton } from '../component/PageSkeletons';
+import { OrderListSkeleton, PageTitleSkeleton } from '../components/PageSkeletons';
 import { useAuth } from '../context/auth/useAuth';
 import { useOrder } from '../context/order/useOrder';
 

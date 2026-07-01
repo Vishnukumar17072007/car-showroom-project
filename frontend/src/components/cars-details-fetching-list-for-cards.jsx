@@ -3,8 +3,8 @@ import { useAuth } from "../context/auth/useAuth";
 import API from "../api/axios";
 import { useState, useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
-import { CarGridSkeleton, SkeletonBlock } from "../component/PageSkeletons";
-import CatalogPagination from "../component/CatalogPagination";
+import { CarGridSkeleton, SkeletonBlock } from "../components/PageSkeletons";
+import CatalogPagination from "../components/CatalogPagination";
 import { useCarsCatalog, CARS_PAGE_SIZE } from "../hooks/useCarsCatalog";
 import { addCar } from "../context/car/carProvider";
 

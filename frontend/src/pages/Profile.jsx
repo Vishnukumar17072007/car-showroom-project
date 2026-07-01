@@ -4,8 +4,8 @@ import { useAuth } from "../context/auth/useAuth";
 import { useWishList } from "../context/wish/useWishList";
 import { useCart } from "../context/cart/useCart";
 import { useOrder } from "../context/order/useOrder";
-import SubscriptionModal from "../component/SubscriptionModal";
-import { ProfileSkeleton } from "../component/PageSkeletons";
+import SubscriptionModal from "../components/SubscriptionModal";
+import { ProfileSkeleton } from "../components/PageSkeletons";
 
 function Profile() {
 

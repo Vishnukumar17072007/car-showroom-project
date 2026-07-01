@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth/useAuth";
-import Particles from "../component/loginComponent/Particles";
-import Field from "../component/loginComponent/Field";
-import PasswordStrength from "../component/loginComponent/PasswordStrength";
+import Particles from "../components/loginComponent/Particles";
+import Field from "../components/loginComponent/Field";
+import PasswordStrength from "../components/loginComponent/PasswordStrength";
 
 /* ─── Google Button ──────────────────────────────────────────────── */
 function GoogleButton() {

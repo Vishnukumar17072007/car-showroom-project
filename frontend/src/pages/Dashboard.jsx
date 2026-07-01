@@ -9,7 +9,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, PieChart, Pie, Cell, Sector,
 } from "recharts";
-import { DashboardRouteSkeleton } from "../component/PageSkeletons";
+import { DashboardRouteSkeleton } from "../components/PageSkeletons";
 
 /* ═══════════════════════════════════════════════════════════════════
    COLOUR TOKENS
