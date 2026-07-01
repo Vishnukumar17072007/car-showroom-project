@@ -4,7 +4,7 @@ import PriceFilter from '../filter/PriceFilter';
 import BodyTypeFilter from '../filter/BodyTypeFilter';
 import TransmissionFilter from '../filter/TransmissionFilter';
 import FuelTypeFilter from '../filter/FuelTypeFilter';
-import CarDetailsFetchingListForCards from '../cards/cars-details-fetching-list-for-cards';
+import CarDetailsFetchingListForCards from '../components/cars-details-fetching-list-for-cards';
 import { useState, useEffect } from 'react';
 import { useSearch } from '../context/search/useSearch';
 
