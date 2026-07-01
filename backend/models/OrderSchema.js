@@ -14,9 +14,8 @@ const orderSchema = new mongoose.Schema(
                     ref: "Car",
                     required: true,
                 },
-                priceAtPurchase: {
-                    type: Number,
-                    required: true,
+                image: {
+                    type: String,
                 },
                 carName: {
                     type: String,
@@ -24,7 +23,7 @@ const orderSchema = new mongoose.Schema(
                 },
             }
         ],
-        totalPrice: {
+        price: {
             type: Number,
             required: true,
         },

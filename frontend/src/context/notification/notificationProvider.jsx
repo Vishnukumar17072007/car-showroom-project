@@ -3,11 +3,7 @@ import toast from "react-hot-toast";
 
 import { NotificationContext } from "./notificationContext";
 import { useAuth } from "../auth/useAuth";
-import {
-  connectNotificationSocket,
-  disconnectNotificationSocket,
-  getNotificationSocket,
-} from "../../api/socket";
+import { connectNotificationSocket, disconnectNotificationSocket, getNotificationSocket } from "../../api/socket";
 
 export const NotificationProvider = ({ children }) => {
   const { user, authLoading } = useAuth();

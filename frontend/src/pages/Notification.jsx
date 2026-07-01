@@ -43,21 +43,28 @@ const Notifications = () => {
                   border: `1px solid ${n.read ? "var(--border)" : "var(--gold)"}`,
                 }}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <p style={{ fontWeight: 600, color: "var(--text)", margin: 0 }}>{n.title}</p>
-                  {!n.read && (
-                    <span style={{
-                      width: "8px", height: "8px", borderRadius: "50%",
-                      backgroundColor: "var(--gold)", display: "inline-block",
-                    }} />
-                  )}
+                <div style={{ display: "flex", gap: "20px" }}>
+
+                  <img className="img" src={n.image} alt=""/>
+
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "490px" }}>
+                      <p style={{ fontWeight: 600, color: "var(--text)", margin: 0 }}>{n.title}</p>
+                      {!n.read && (
+                        <span style={{
+                          width: "8px", height: "8px", borderRadius: "50%",
+                          backgroundColor: "var(--gold)", display: "inline-block",
+                        }} />
+                      )}
+                    </div>
+                    <p style={{ color: "var(--subtext)", fontSize: "13px", margin: "4px 0 0 0" }}>{n.message}</p>
+                    <p style={{ color: "var(--subtext)", fontSize: "11px", margin: "6px 0 0 0" }}>
+                      {new Date(n.createdAt).toLocaleDateString("en-IN", {
+                        day: "numeric", month: "short", year: "numeric",
+                      })}
+                    </p>
+                  </div>
                 </div>
-                <p style={{ color: "var(--subtext)", fontSize: "13px", margin: "4px 0 0 0" }}>{n.message}</p>
-                <p style={{ color: "var(--subtext)", fontSize: "11px", margin: "6px 0 0 0" }}>
-                  {new Date(n.createdAt).toLocaleDateString("en-IN", {
-                    day: "numeric", month: "short", year: "numeric",
-                  })}
-                </p>
               </div>
             ))
           )}

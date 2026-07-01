@@ -23,7 +23,7 @@ const getDashboardStats = async (req, res) => {
         ])
     ]);
 
-    const totalRevenue = orders.reduce((sum, o) => sum + Number(o.totalPrice || 0), 0);
+    const totalRevenue = orders.reduce((sum, o) => sum + Number(o.price || 0), 0);
 
     const statusCounts = { pending: 0, approved: 0, delivered: 0, cancelled: 0, in_progress: 0, rejected: 0 };
     orders.forEach(o => {
@@ -43,7 +43,7 @@ const getDashboardStats = async (req, res) => {
             };
         }
         monthlyMap[key].orders++;
-        monthlyMap[key].revenue += Number(o.totalPrice || 0);
+        monthlyMap[key].revenue += Number(o.price || 0);
     });
 
     const monthlyData = Object.values(monthlyMap)
@@ -109,7 +109,7 @@ const getOrderStats = async (req, res) => {
                 deletedByUser: { $ne: true },
             },
         },
-        { $group: { _id: null, total: { $sum: "$totalPrice" } } },
+        { $group: { _id: null, total: { $sum: "$price" } } },
     ]);
 
     const totalSpent = result.length > 0 ? result[0].total : 0;
@@ -134,7 +134,7 @@ const getSpendingOverTime = async (req, res) => {
         {
             $group: {
                 _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
-                total: { $sum: "$totalPrice" },
+                total: { $sum: "$price" },
             },
         },
         { $sort: { "_id.year": 1, "_id.month": 1 } },

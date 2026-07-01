@@ -3,9 +3,10 @@ const { getIO } = require("../socket");
 const { emitNotificationsToUser } = require("../socket/notificationSocket");
 
 // Used by other controllers internally
-const saveNotification = async ({ user, title, message }) => {
+const saveNotification = async ({ user, image, title, message }) => {
 
   const newNotification = {
+    image,
     title,
     message,
     createdAt: new Date(), // explicit fallback, safe even if using $push

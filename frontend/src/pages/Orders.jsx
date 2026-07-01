@@ -121,7 +121,7 @@ function AdminOrders() {
                         {item.carId?.brand} {item.carId?.model}
                       </p>
                       <p style={{ color: 'var(--subtext)', fontSize: '13px', margin: 0 }}>
-                        ₹{item.carId?.price?.toLocaleString('en-IN')}
+                        ₹{order.price}
                       </p>
                     </div>
                   </div>
@@ -137,7 +137,7 @@ function AdminOrders() {
                     Deliver to: {order.shippingDetails?.name}
                   </span>
                   <span style={{ fontWeight: 700, color: 'var(--text)' }}>
-                    Total: ₹{order.totalPrice?.toLocaleString('en-IN')}
+                    Total: ₹{order.price?.toLocaleString('en-IN')}
                   </span>
                 </div>
 
@@ -260,7 +260,7 @@ function UserOrders() {
           Deliver to: {order.shippingDetails?.name}
         </span>
         <span style={{ fontWeight: 700, color: 'var(--text)' }}>
-          Total: ₹{order.totalPrice?.toLocaleString('en-IN')}
+          Total: ₹{order.price?.toLocaleString('en-IN')}
         </span>
       </div>
 

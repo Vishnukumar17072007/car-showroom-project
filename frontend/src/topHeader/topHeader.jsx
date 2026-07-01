@@ -54,11 +54,11 @@ function TopHeader() {
                         <button onClick={toggleTheme}
                             style={{
                                 background: "none", border: "none",
-                                color: "var(--gold)", fontSize: isDark ? "25px" : "20px",
-                                cursor: "pointer", padding: isDark ? "7px" : "10px",
+                                color: "var(--gold)", fontSize: "25px",
+                                cursor: "pointer", padding: "7px",
                             }}
                         >
-                            <i className={isDark ? "bi bi-brightness-high-fill" : "bi bi-moon-stars-fill"} />
+                            <i className={isDark ? "bi bi-brightness-high-fill" : "bi bi-brightness-high-fill"} />
                         </button>
                         <button onClick={() => logout()}
                             style={{

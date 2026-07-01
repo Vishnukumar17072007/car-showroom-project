@@ -23,16 +23,16 @@ const createOrder = async (req, res) => {
 
   const items = cars.map((car) => ({
     carId: car._id,
-    priceAtPurchase: car.price,
+    image: car.image,
     carName: car.carName,
   }));
 
-  const totalPrice = cars.reduce((sum, car) => sum + car.price, 0);
+  const price = cars.reduce((sum, car) => sum + car.price, 0);
 
   const order = new Order({
     userId: req.user.userId,
     items,
-    totalPrice,
+    price,
     shippingDetails,
   });
 
@@ -54,8 +54,9 @@ const createOrder = async (req, res) => {
   // ✅ Create notification for user
   await saveNotification({
     user: order.userId,
+    image: order.items[0].image,
     title: "Order Placed",
-    message: `Your order #${order._id} has been placed successfully.`,
+    message: `Your journey with the ${order.items[0].carName} begins now. Thank you for trusting CarField — we'll notify you as your order progresses.`,
   });
   
   res.status(201).json({ message: "Order created", order });
@@ -131,10 +132,23 @@ const updateOrderStatus = async (req, res) => {
 
   await order.save();
 
+  const statusMessages = {
+    pending: `Your order for the ${order.items[0].carName} has been placed and is now pending review. We'll update you shortly!`,
+    in_progress: `Good news! Your order for the ${order.items[0].carName} is now being processed. Hang tight, we're working on it.`,
+    approved: `Your order for the ${order.items[0].carName} has been approved! We're getting it ready for delivery.`,
+    delivered: `Your ${order.items[0].carName} has been delivered! Thank you for choosing CarField — we hope you love it.`,
+    rejected: `Unfortunately, your order for the ${order.items[0].carName} could not be approved. Please reach out to us for more details.`,
+    cancelled: `Your order for the ${order.items[0].carName} has been cancelled. If this wasn't intentional, feel free to contact us anytime.`,
+  };
+  
+  const message = statusMessages[order.status] 
+    || `Your order for "${order.items[0].carName}" has been updated to "${order.status}".`;
+
   await saveNotification({
     user: order.userId,
+    image: order.items[0].image,
     title: "Order Improvement",
-    message: `Your order status for order "${order.items[0].carName}" have been changed to "${order.status}".`,
+    message: message,
   });
 
   res.status(200).json({ message: "Order updated", order });

@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const notificationItemSchema = new mongoose.Schema(
   {
+    image: {
+      type: String,
+    },
     title: {
       type: String,
     },

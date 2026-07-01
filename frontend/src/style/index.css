@@ -130,6 +130,13 @@ textarea {
   font-family: var(--font-body);
 }
 
+.img {
+  width: 100px;
+  height: 65px;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+}
+
 /* ============================================================
    BRAND / TOP HEADER
    ============================================================ */
@@ -3160,7 +3167,7 @@ input[type="checkbox"]:checked {
   border-radius: 8px;
   border: 1px solid #3a3a3a;
   background: var(--input-bar-bg);
-  color: var(--bubble-bg);
+  color: var(--text);
   font-size: 14px;
   font-family: sans-serif;
   outline: none;

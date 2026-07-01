@@ -451,7 +451,7 @@ export default function Dashboard() {
                         </div>
                         <div style={{ textAlign: "right", flexShrink: 0 }}>
                           <p className="text" style={{ margin: "0 0 3px", fontSize: 12, fontWeight: 600 }}>
-                            {fmtRupees(order.totalPrice)}
+                            {fmtRupees(order.price)}
                           </p>
                           <span style={{
                             fontSize: 10, padding: "2px 7px", borderRadius: 20,
@@ -649,7 +649,7 @@ export default function Dashboard() {
                         </div>
                       </td>
                       <td>{new Date(order.createdAt).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}</td>
-                      <td className="db-amount">{fmtRupees(order.totalPrice)}</td>
+                      <td className="db-amount">{fmtRupees(order.price)}</td>
                       <td>
                         <span className="db-status-pill" style={{ background: `${color}22`, color, border: `1px solid ${color}44` }}>
                           {STATUS_LABEL[order.status] ?? order.status}
