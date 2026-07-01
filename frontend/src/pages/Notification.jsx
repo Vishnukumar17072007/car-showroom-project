@@ -48,7 +48,7 @@ const Notifications = () => {
                   <img className="img" src={n.image} alt=""/>
 
                   <div>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "490px" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <p style={{ fontWeight: 600, color: "var(--text)", margin: 0 }}>{n.title}</p>
                       {!n.read && (
                         <span style={{

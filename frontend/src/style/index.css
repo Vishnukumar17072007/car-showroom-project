@@ -4223,6 +4223,57 @@ input[type="checkbox"]:checked {
   opacity: 1;
 }
 
+/* NotFound.css */
+.notfound-container {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.notfound-code {
+  font-size: 6rem;
+  font-weight: 700;
+  color: var(--accent-gold, #c9a84c);
+  margin: 0;
+  line-height: 1;
+}
+
+.notfound-title {
+  font-size: 1.5rem;
+  margin: 1rem 0 0.5rem;
+  color: var(--text-primary);
+}
+
+.notfound-message {
+  color: var(--text-secondary, #888);
+  margin-bottom: 1.5rem;
+}
+
+.notfound-btn {
+  padding: 0.7rem 1.6rem;
+  border-radius: 8px;
+  background-color: var(--accent-gold, #c9a84c);
+  color: #0a1628;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.notfound-btn:hover {
+  opacity: 0.85;
+}
+
+html[data-theme="light"] .notfound-container {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
 @media (max-width: 768px) {
   .profile {
     padding: 0 0.75rem 2rem;
