@@ -31,7 +31,7 @@ const EditProfile = lazy(() => import('./pages/EditProfile.jsx'));
 const Login = lazy(() => import('./pages/Login.jsx'));
 const Dashboard = lazy(() => import('./pages/Dashboard.jsx'));
 const Notifications = lazy(() => import('./pages/Notification.jsx'));
-const AuthCallback = lazy(() => import('./components/AuthCallback.js'))
+const AuthCallback = lazy(() => import('./components/AuthCallback.jsx'))
 
 function PageLoader() {
   return <RoutePageSkeleton />;
