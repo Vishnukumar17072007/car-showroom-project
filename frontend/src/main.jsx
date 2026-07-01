@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './style/index.css'
 
 import App from './App.jsx'
-import ProtectedRoutes from './components/ProtectedRoutes.js'
+import ProtectedRoutes from './components/ProtectedRoutes.jsx'
 import UserRoute from './components/UserRoute.jsx'
 import AdminRoute from './components/AdminRoute.js'
 import { AuthProvider } from './context/auth/authProvider.jsx'
