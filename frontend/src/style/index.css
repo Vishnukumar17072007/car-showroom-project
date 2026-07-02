@@ -1083,7 +1083,6 @@ input[type="checkbox"]:checked {
   cursor: pointer;
   display: flex;
   transition: border-color 0.18s ease, transform 0.18s ease;
-  z-index: 1000;
 }
 
 .car-card-update:hover {
