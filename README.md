@@ -63,13 +63,13 @@ This project was built as a hands-on learning journey through the MERN stack —
 
 | Homepage | Sign In | Create Account |
 |---|---|---|
-| ![Homepage](./screenshots/home.png) | ![Sign In](./screenshots/login.png) | ![Sign Up](./screenshots/register.png) |
+| ![Homepage](./screenshots/Home.png) | ![Sign In](./screenshots/login.png) | ![Sign Up](./screenshots/register.png) |
 
 ### 🚘 Vehicle Catalog
 
 | Vehicle Listing (User) | Vehicle Management (Admin — Light Mode) |
 |---|---|
-| ![Vehicles](./screenshots/vehicles.png) | ![Vehicles Admin Light](./screenshots/vehicles_admin_light.png) |
+| ![Vehicles](./screenshots/vehicles.png) | ![Vehicles Admin Light](./screenshots/vehicles(admin).png) |
 
 ### 🛒 Cart, Wishlist & Checkout
 
@@ -81,19 +81,19 @@ This project was built as a hands-on learning journey through the MERN stack —
 
 | My Orders (User) | Orders (Admin View) |
 |---|---|
-| ![Orders](./screenshots/orders.png) | ![Orders Admin](./screenshots/orders_admin.png) |
+| ![Orders](./screenshots/order.png) | ![Orders Admin](./screenshots/order(admin).png) |
 
 ### 📊 Dashboards
 
 | User Dashboard | Admin Dashboard (Dark) | Admin Dashboard (Light Mode) |
 |---|---|---|
-| ![User Dashboard](./screenshots/dashboard_user.png) | ![Admin Dashboard](./screenshots/dashboard_admin.png) | ![Admin Dashboard Light](./screenshots/dashboard_light.png) |
+| ![User Dashboard](./screenshots/dashboard.png) | ![Admin Dashboard](./screenshots/dashboard(admin).png) | ![Admin Dashboard Light](./screenshots/dashboard(light).png) |
 
 ### 👤 Profile & Support
 
 | Profile | Edit Profile | Support Chat |
 |---|---|---|
-| ![Profile](./screenshots/profile.png) | ![Edit Profile](./screenshots/edit_profile.png) | ![Support](./screenshots/support.png) |
+| ![Profile](./screenshots/profile.png) | ![Edit Profile](./screenshots/editProfile.png) | ![Support](./screenshots/support.png) |
 
 ---
 
