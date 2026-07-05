@@ -15,15 +15,12 @@ export function connectNotificationSocket() {
 
   if (socket) {
     socket.auth = { token };
-    if (!socket.connected) {
-      socket.connect();
-    }
+    if (!socket.connected) socket.connect();
     return socket;
   }
 
   socket = io(`${url}${NAMESPACE}`, {
     auth: { token },
-    withCredentials: true,
     autoConnect: Boolean(token),
   });
 

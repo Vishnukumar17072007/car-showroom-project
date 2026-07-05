@@ -132,11 +132,11 @@ function CarDetailsFetchingListForCards({ filters, search, priceSort }) {
             className="car-card-update"
             onClick={() => setShowUpdateForm(true)}
           >
-            <div className="car_card_body-update">Add CARS</div>
+            <div className="car_card_body-update"><span style={{fontSize: "25px"}}>+ </span>Add CARS</div>
           </div>
         )}
         {/* Cards Grid */}
-        <div className={`d-flex flex-wrap gap-2 ${user.role === "admin" ? "pt-2" : ""}`}>
+        <div className={`d-flex flex-wrap gap-2 ${user.role === "admin" ? "pt-2" : ""}`} style={{justifyContent: "space-between"}}>
           {carList.length > 0 ? (
             carList.map((detail) => (
               <Cards

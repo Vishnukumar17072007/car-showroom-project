@@ -11,6 +11,7 @@ function Profile() {
 
     const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
     const [pageLoading, setPageLoading] = useState(true);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
     const navigate = useNavigate();
 
     const { user, logout, checkAuth } = useAuth();
@@ -77,7 +78,7 @@ function Profile() {
                             </div>
                         </div>
 
-                        <i className="bi bi-box-arrow-right logout-btn" onClick={() => {logout()}}>
+                        <i className="bi bi-box-arrow-right logout-btn" onClick={() => {setShowLogoutModal(true)}}>
                             {" "}Logout
                         </i>
 
@@ -167,6 +168,43 @@ function Profile() {
 
                 {showSubscriptionModal && (
                     <SubscriptionModal onClose={() => setShowSubscriptionModal(false)} />
+                )}
+
+                {showLogoutModal && (
+                    <div
+                        onClick={(e) => { if (e.target === e.currentTarget) setShowLogoutModal(false); }}
+                        style={{
+                            position: "fixed",
+                            top: 0, left: 0, right: 0, bottom: 0,
+                            backgroundColor: "rgba(0, 0, 0, 0.35)",
+                            backdropFilter: "blur(6px)",
+                            WebkitBackdropFilter: "blur(6px)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            zIndex: 1000,
+                        }}
+                    >
+                        <div className="logout-dialogbox">
+                            <p style={{ marginBottom: "22px", fontSize: "14px" }}>
+                                Are you sure you want to log out?
+                            </p>
+                            <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
+                                <button
+                                    onClick={() => setShowLogoutModal(false)}
+                                    className="btn-delete"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={() => {logout()}}
+                                    className="btn-edit"
+                                >
+                                    Logout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 )}
             </div>
         </>

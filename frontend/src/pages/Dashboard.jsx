@@ -307,7 +307,7 @@ export default function Dashboard() {
           {/* Header */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
             <div>
-              <h1 className="dashboard-h1">Admin Dashboard</h1>
+              <h1 className="dashboard-h1">Dashboard</h1>
               <p style={{ fontSize: 12, color: "#6a6778", margin: "4px 0 0" }}>
                 Real-time overview of your CarField platform
               </p>
