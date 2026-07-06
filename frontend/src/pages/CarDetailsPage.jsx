@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import useFetch from "../useFetch/useFetch";
+import useFetch from "../components/useFetch";
 import { useCart } from "../context/cart/useCart";
 import { useWishList } from "../context/wish/useWishList";
 import { useAuth } from "../context/auth/useAuth";
