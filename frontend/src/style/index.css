@@ -54,6 +54,10 @@
   --input-bar-bg: #2a2a2a;
   --border-color: #2e2e2e;
   --gold: #C9A84C;
+
+  --profile-text-color: #8f9193;
+
+  --divider-border: #202020;
 }
 
 /* ---------- Light Mode Overrides ---------- */
@@ -94,6 +98,9 @@ html[data-theme="light"] {
   --input-bar-bg: #f5f6f8;
   --border-color: #e2e8f0;
   --gold: #c9a227;
+
+  --divider-border: #1d1d1d3b;
+  
 }
 
 /* ---------- Reset & Base ---------- */
@@ -244,7 +251,7 @@ textarea {
 }
 
 .divider {
-  border-bottom: 1px solid #202020;
+  border-bottom: 1px solid var(--divider-border);
 }
 
 .hamburger-toggle {
@@ -1197,9 +1204,9 @@ input[type="checkbox"]:checked {
 .skeleton-box {
   border-radius: var(--radius-sm);
   background: linear-gradient(90deg,
-      var(--bg-hover) 0%,
+      var(--text) 0%,
       var(--skeleton-color) 45%,
-      var(--bg-hover) 100%);
+      var(--text) 100%);
   background-size: 220% 100%;
   animation: skeletonGlow 1.4s ease-in-out infinite;
 }
@@ -1450,7 +1457,7 @@ input[type="checkbox"]:checked {
 
 .vehicles-skeleton-toolbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: 12px;
   margin-bottom: 16px;
@@ -4138,7 +4145,7 @@ input[type="checkbox"]:checked {
 .activity-block p {
   font-size: 10px;
   letter-spacing: 0.8px;
-  color: #6b84a0;
+  color: #959595;
   margin: 0;
   text-transform: uppercase;
 }
@@ -4159,7 +4166,7 @@ input[type="checkbox"]:checked {
 }
 
 .detail-row.divider {
-  border-bottom: 1px solid #202020;
+  border-bottom: 1px solid var(--divider-border);
 }
 
 .detail-label {
@@ -4186,7 +4193,7 @@ input[type="checkbox"]:checked {
 
 .detail-modal {
   background-color: var(--profile-subcard);
-  border: 1px solid #202020;
+  border: 1px solid var(--divider-border);
   border-left: 3px solid var(--gold);
   border-radius: 8px;
   padding: 8px 12px;
@@ -4635,7 +4642,7 @@ html[data-theme="light"] .notfound-container {
 
 .ep-modalContainer {
   background-color: var(--profile-subcard);
-  border: 1px solid #202020;
+  border: 1px solid var(--divider-border);
   border-left: 3px solid var(--gold);
   border-radius: 10px;
   padding: 14px 16px;
@@ -4652,7 +4659,7 @@ html[data-theme="light"] .notfound-container {
 
 .ep-modalContainer .ep-input {
   background-color: var(--ep-input-bg);
-  border: 1px solid #202020;
+  border: 1px solid var(--divider-border);
   color: var(--ep-input-color);
 }
 

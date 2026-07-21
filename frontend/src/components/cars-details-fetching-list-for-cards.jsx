@@ -110,10 +110,6 @@ function CarDetailsFetchingListForCards({ filters, search, priceSort }) {
   if (loading) {
     return (
       <>
-        <div className="vehicles-skeleton-toolbar">
-          <SkeletonBlock style={{ width: 90, height: 34, borderRadius: 8 }} />
-          <SkeletonBlock style={{ width: 140, height: 34, borderRadius: 8 }} />
-        </div>
         {!error && <CarGridSkeleton count={CARS_PAGE_SIZE} />}
         {error && <p className="catalog-error">{error}</p>}
       </>

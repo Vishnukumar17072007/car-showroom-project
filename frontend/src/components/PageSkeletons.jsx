@@ -362,7 +362,6 @@ export function VehiclesPageSkeleton() {
       </div>
       <div className="vehicles-skeleton-main">
         <div className="vehicles-skeleton-toolbar">
-          <SkeletonBlock style={{ width: 90, height: 34, borderRadius: 8 }} />
           <SkeletonBlock style={{ width: 140, height: 34, borderRadius: 8 }} />
         </div>
         <CarGridSkeleton count={12} />
