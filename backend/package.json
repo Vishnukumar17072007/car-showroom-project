@@ -26,6 +26,7 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.3.3",
     "multer": "^2.2.0",
+    "nodemailer": "^9.0.5",
     "nodemon": "^3.1.14",
     "open": "^11.0.0",
     "passport": "^0.7.0",

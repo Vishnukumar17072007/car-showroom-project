@@ -110,6 +110,15 @@ html[data-theme="light"] {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  transition: background-color 0.3s ease,
+              color 0.3s ease,
+              border-color 0.3s ease,
+              fill 0.3s ease,
+              stroke 0.3s ease;
+}
+
+body, body * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 body {
@@ -215,6 +224,13 @@ textarea {
 .main_body {
   width: 100%;
   background-color: var(--bg-deep);
+}
+
+/* Toast */
+.toast{
+  position: fixed;
+  bottom: 100px;
+  right: 100%;
 }
 
 /* ============================================================
@@ -1392,13 +1408,6 @@ input[type="checkbox"]:checked {
   flex-shrink: 0;
 }
 
-.profile-skeleton-upgrade {
-  width: 100%;
-  height: 48px;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-}
-
 .profile-skeleton-activity {
   justify-content: space-around;
 }
@@ -2101,6 +2110,54 @@ input[type="checkbox"]:checked {
   color: var(--text);
 }
 
+/* Forgot password */
+
+.auth-overlay-page {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 24px;
+
+  /* same base background color as .auth-page so there's no flash/mismatch underneath the layers */
+  background: var(--auth-page-bg, #0b0b10);
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.auth-overlay-page--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.auth-overlay-back {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  background: transparent;
+  border: none;
+  color: inherit;
+  opacity: 0.75;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.auth-overlay-back:hover {
+  opacity: 1;
+}
+
+.auth-overlay-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
 /* ============================================================
    EDIT MODAL
    ============================================================ */
@@ -2230,20 +2287,6 @@ input[type="checkbox"]:checked {
   color: var(--text-muted);
 }
 
-/* ============================================================
-   PLAN MODAL
-   ============================================================ */
-.planModals {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-hover);
-  border-radius: var(--radius-lg);
-  padding: 32px;
-  width: 90%;
-  max-width: 720px;
-  color: var(--text);
-  position: relative;
-}
-
 /* car details page */
 
 .cd-page {
@@ -2363,6 +2406,7 @@ input[type="checkbox"]:checked {
   border: 2px solid transparent;
   transition: border 0.2s;
   opacity: 0.6;
+  color: black;
 }
 
 .cd-thumb.active {
@@ -3971,11 +4015,6 @@ input[type="checkbox"]:checked {
   line-height: 1;
 }
 
-.name-subscription {
-  flex: 1;
-  min-width: 200px;
-}
-
 .name h3 {
   margin: 0 0 6px;
   font-size: 20px;
@@ -3990,26 +4029,16 @@ input[type="checkbox"]:checked {
   flex-wrap: wrap;
 }
 
-.user-role,
-.subscription-badge {
+.user-role {
   font-size: 11px;
   font-style: normal;
   padding: 3px 10px;
   border-radius: 20px;
   letter-spacing: 0.5px;
   text-transform: capitalize;
-}
-
-.user-role {
   background: rgba(201, 168, 76, 0.12);
   color: var(--gold);
   border: 1px solid rgba(201, 168, 76, 0.3);
-}
-
-.subscription-badge {
-  background: rgba(255, 255, 255, 0.06);
-  color: #a0b4cc;
-  border: 1px solid rgba(160, 180, 204, 0.25);
 }
 
 .logout-btn {
@@ -4071,31 +4100,6 @@ input[type="checkbox"]:checked {
 .tooltip-wrapper:hover::after {
   opacity: 1;
   visibility: visible;
-}
-
-.plan-upgrade-recommendation {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  background: rgba(201, 168, 76, 0.08);
-  border: 1px solid rgba(201, 168, 76, 0.3);
-  border-radius: 10px;
-  padding: 12px 18px;
-  margin-bottom: 1rem;
-  font-size: 13px;
-  color: var(--gold);
-}
-
-.plan-upgrade-recommendation p {
-  margin: 0;
-}
-
-.upgrade-link {
-  white-space: nowrap;
-  cursor: pointer;
-  font-weight: 600;
-  text-decoration: underline;
 }
 
 .profile-bottom-grid {
@@ -4379,11 +4383,6 @@ html[data-theme="light"] .notfound-container {
 
   .name h3 {
     font-size: 16px;
-  }
-
-  .name-subscription {
-    min-width: auto;
-    width: 100%;
   }
 
   .status {
@@ -4845,7 +4844,7 @@ html[data-theme="light"] .notfound-container {
   }
 
   .ep-form-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 
   .ep-card {
@@ -5433,8 +5432,8 @@ html[data-theme="light"] .notfound-container {
 }
 
 .order-car-img {
-  width: 80px;
-  height: 56px;
+  width: 100px;
+  height: 65px;
   object-fit: cover;
   border-radius: var(--radius-sm);
   background: var(--bg-hover);
@@ -5708,14 +5707,6 @@ img {
   /* Ensure modals don't overflow viewport */
   .editModalContent,
   .updateFormContent {
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-
-  /* Fix plan modal on mobile */
-  .planModals {
-    width: 95vw;
-    padding: 20px;
     max-height: 90vh;
     overflow-y: auto;
   }

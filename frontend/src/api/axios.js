@@ -18,8 +18,8 @@ export async function apiGet(path) {
     return res.data;
 }
 
-export async function apiPost(path, body) {
-    const res = await API.post(path, body);
+export async function apiPost(path, body, config) {
+    const res = await API.post(path, body, config);
     return res.data;
 }
 

@@ -3,7 +3,7 @@ const Wishlist = require("../models/WishListSchema");
 const getWishlist = async (req, res) => {
   const wishlist = await Wishlist.findOne({
     userId: req.user.userId,
-  }).populate("items.carId");
+  }).populate("items.carId", "carName brand image price rating bodyType");
   res.status(200).json(wishlist || { items: [] });
 };
 

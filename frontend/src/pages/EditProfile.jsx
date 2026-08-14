@@ -2,12 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth/useAuth";
 import { useProfile } from "../context/profile/useProfile";
+import toast from "react-hot-toast";
 
 function EditProfile() {
 
     const navigate = useNavigate();
     const { user } = useAuth();
-    const { loading, error, success, clearMessages, updateProfile } = useProfile();
+    const { loading, profilePhotoSuccess, profilePhotoError, clearMessages, updateProfile } = useProfile();
     const { uploadPhoto } = useProfile();
 
     // Local form state only — no API logic here
@@ -26,19 +27,12 @@ function EditProfile() {
     const [newPassword,        setNewPassword]        = useState("");
     const [confirmPassword,    setConfirmPassword]    = useState("");
     const [preview, setPreview] = useState(null);
+    const [showPhotoChangeCmd, setShowPhotoChangeCmd] = useState(false);
 
     // Clear any leftover messages when this page first loads
     useEffect(() => {
         clearMessages();
     }, []);
-
-    // Navigate back after success message shows
-    useEffect(() => {
-        if (success) {
-            const timer = setTimeout(() => navigate("/profile"), 1500);
-            return () => clearTimeout(timer);
-        }
-    }, [success]);
 
     // ── Validation (stays in page — it's UI logic, not DB logic) ──
     function validate() {
@@ -48,13 +42,14 @@ function EditProfile() {
         if (!String(city).trim())    return { ok: false, msg: "city cannot be empty." };
         if (!String(state).trim())    return { ok: false, msg: "state cannot be empty." };
         if (!String(pincode).trim())    return { ok: false, msg: "pincode cannot be empty." };
-        if(!user.googleId){
-            if (showPasswordFields) {
-                if (!currentPassword)          return { ok: false, msg: "Please enter your current password." };
-                if (newPassword.length < 8)    return { ok: false, msg: "New password must be at least 8 characters." };
-                if (newPassword !== confirmPassword) return { ok: false, msg: "New passwords do not match." };
-            }
+        if(showPasswordFields){
+            if (!currentPassword)          return { ok: false, msg: "Please enter your current password." };
+            if (!newPassword)    return { ok: false, msg: "Please enter your new password." };
+            if (newPassword.length < 8)    return { ok: false, msg: "New password must be at least 8 characters." };
+            if (confirmPassword)    return { ok: false, msg: "Please enter your confirmation password." };
+            if (newPassword !== confirmPassword) return { ok: false, msg: "New passwords do not match." };
         }
+
         return { ok: true };
     }
 
@@ -63,24 +58,32 @@ function EditProfile() {
         const check = validate();
         if (!check.ok) {
             // show local validation error — no need to go to context for this
-            alert(check.msg); // replace with your toast if preferred
+            toast.error(check.msg); // replace with your toast if preferred
             return;
         }
 
-        const data = { email, googleId, userName, phone, address, city, state, pincode };
-        if (showPasswordFields) {
-            data.currentPassword = currentPassword;
-            data.newPassword     = newPassword;
+        let data;
+        if(!currentPassword && !newPassword){
+             data = { email, googleId, userName, phone, address, city, state, pincode };
+        }
+        else{
+            data = { email, googleId, userName, phone, address, city, state, pincode, currentPassword, newPassword };
         }
 
         await updateProfile(data);
+        navigate("/profile");
     }
 
     async function handlePhotoChange(e) {
         const file = e.target.files[0];
         if (!file) return;
+
         setPreview(URL.createObjectURL(file));
         await uploadPhoto(file);
+        setShowPhotoChangeCmd(true);
+        setTimeout(() => {
+            setShowPhotoChangeCmd(false);
+        }, 5000);
     }
 
     return (
@@ -126,8 +129,8 @@ function EditProfile() {
                 </div>
 
                 {/* ── Feedback Messages — driven by context state ── */}
-                {error   && <p className="ep-msg ep-error">  <i className="bi bi-exclamation-circle"></i> {error}   </p>}
-                {success && <p className="ep-msg ep-success"> <i className="bi bi-check-circle"></i>       {success} </p>}
+                {(showPhotoChangeCmd && profilePhotoError) && <p className="ep-msg ep-error">  <i className="bi bi-exclamation-circle"></i> {profilePhotoError} </p>}
+                {(showPhotoChangeCmd && profilePhotoSuccess) && <p className="ep-msg ep-success"> <i className="bi bi-check-circle"></i> {profilePhotoSuccess} </p>}
 
                 {/* ── Personal Info ── */}
                 <div className="ep-form-grid" style={{gridTemplateColumns: (user.role === "admin") ? "1fr" : ""}}>
@@ -232,77 +235,75 @@ function EditProfile() {
                         </div>
                     </div>
                     {/* ── Security ── */}
-                    {!user.googleId && (
-                        <div className={user.email ? "ep-card" : ""}>
-                            <p className="ep-section-label">Security</p>
+                    <div className={user.email ? "ep-card" : ""}>
+                        <p className="ep-section-label">Security</p>
 
-                            <div className="ep-field" style={{ marginBottom: 0 }}>
-                                <label className="ep-label">
-                                    <i className="bi bi-lock"></i> Password
-                                </label>
-                                <input
-                                    className="ep-input ep-input-disabled"
-                                    type="password"
-                                    value="placeholder"
-                                    disabled
-                                />
-                            </div>
-
-                            <button
-                                className="ep-toggle-pw"
-                                onClick={() => {
-                                    setShowPasswordFields(!showPasswordFields);
-                                    setCurrentPassword("");
-                                    setNewPassword("");
-                                    setConfirmPassword("");
-                                }}
-                            >
-                                <i className={`bi ${showPasswordFields ? "bi-x-lg" : "bi-key"}`}></i>
-                                {showPasswordFields ? " Cancel password change" : " Change password"}
-                            </button>
-
-                            {showPasswordFields && (
-                                <div className="ep-pw-fields">
-                                    <div className="ep-field">
-                                        <label className="ep-label">
-                                            <i className="bi bi-lock"></i> Current password
-                                        </label>
-                                        <input
-                                            className="ep-input"
-                                            type="password"
-                                            value={currentPassword}
-                                            onChange={(e) => setCurrentPassword(e.target.value)}
-                                            placeholder="Enter current password"
-                                        />
-                                    </div>
-                                    <div className="ep-field">
-                                        <label className="ep-label">
-                                            <i className="bi bi-lock-open"></i> New password
-                                        </label>
-                                        <input
-                                            className="ep-input"
-                                            type="password"
-                                            value={newPassword}
-                                            onChange={(e) => setNewPassword(e.target.value)}
-                                            placeholder="Min. 8 characters"
-                                        />
-                                    </div>
-                                    <div className="ep-field" style={{ marginBottom: 0 }}>
-                                        <label className="ep-label">
-                                            <i className="bi bi-lock-open"></i> Confirm password
-                                        </label>
-                                        <input
-                                            className="ep-input"
-                                            type="password"
-                                            value={confirmPassword}
-                                            onChange={(e) => setConfirmPassword(e.target.value)}
-                                            placeholder="Repeat new password"
-                                        />
-                                    </div>
-                                </div>
-                            )}
+                        <div className="ep-field" style={{ marginBottom: 0 }}>
+                            <label className="ep-label">
+                                <i className="bi bi-lock"></i> Password
+                            </label>
+                            <input
+                                className="ep-input ep-input-disabled"
+                                type="password"
+                                value="placeholder"
+                                disabled
+                            />
                         </div>
-                    )}
+
+                        <button
+                            className="ep-toggle-pw"
+                            onClick={() => {
+                                setShowPasswordFields(!showPasswordFields);
+                                setCurrentPassword("");
+                                setNewPassword("");
+                                setConfirmPassword("");
+                            }}
+                        >
+                            <i className={`bi ${showPasswordFields ? "bi-x-lg" : "bi-key"}`}></i>
+                            {showPasswordFields ? " Cancel password change" : " Change password"}
+                        </button>
+
+                        {showPasswordFields && (
+                            <div className="ep-pw-fields">
+                                <div className="ep-field">
+                                    <label className="ep-label">
+                                        <i className="bi bi-lock"></i> Current password
+                                    </label>
+                                    <input
+                                        className="ep-input"
+                                        type="password"
+                                        value={currentPassword}
+                                        onChange={(e) => setCurrentPassword(e.target.value)}
+                                        placeholder="Enter current password"
+                                    />
+                                </div>
+                                <div className="ep-field">
+                                    <label className="ep-label">
+                                        <i className="bi bi-lock-open"></i> New password
+                                    </label>
+                                    <input
+                                        className="ep-input"
+                                        type="password"
+                                        value={newPassword}
+                                        onChange={(e) => setNewPassword(e.target.value)}
+                                        placeholder="Min. 8 characters"
+                                    />
+                                </div>
+                                <div className="ep-field" style={{ marginBottom: 0 }}>
+                                    <label className="ep-label">
+                                        <i className="bi bi-lock-open"></i> Confirm password
+                                    </label>
+                                    <input
+                                        className="ep-input"
+                                        type="password"
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        placeholder="Repeat new password"
+                                    />
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
                 {/* ── Action Buttons ── */}
                 <div className="ep-actions">

@@ -1,37 +1,36 @@
 import { useState } from "react";
-import { useAuth } from "../auth/useAuth";
+import toast from "react-hot-toast";
+import {apiGet, apiPost, apiPut} from "../../api/axios";
 import ProfileContext from "./profileContext";
-import API from "../../api/axios";
+import { useAuth } from "../auth/useAuth"
 
 function ProfileProvider({ children }) {
-    const { checkAuth } = useAuth();
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
+    const [profilePhotoSuccess, setProfilePhotoSuccess] = useState("");
+    const [profilePhotoError, setProfilePhotoError] = useState("");
+    const [wishListCount, setWishListCount] = useState(0);
+    const [cartCount, setcartCount] = useState(0);
+    const [orderCount, setorderCount] = useState(0);
+
+    const { checkUser } = useAuth();
 
     function clearMessages() {
-        setError("");
-        setSuccess("");
+        setProfilePhotoSuccess("");
+        setProfilePhotoError("");
     }
 
     async function updateProfile(data) {
-        setError("");
-        setSuccess("");
+        clearMessages();
         setLoading(true);
 
         try {
-            const res = await API.put('/auth/update', data);
+            const res = await apiPut('/profile/update', data);
+            checkUser();
 
-            try {
-                await checkAuth();
-            } catch {
-                // profile saved even if session refresh fails
-            }
-
-            setSuccess(res.data?.message || "Profile updated successfully!");
+            toast.success(res?.message || "Profile updated successfully!");
             return true;
         } catch (err) {
-            setError(err.response?.data?.message || "Update failed. Please try again.");
+            toast.error(err.response?.data?.message || "Update failed. Please try again.");
             return false;
         } finally {
             setLoading(false);
@@ -39,32 +38,45 @@ function ProfileProvider({ children }) {
     }
 
     async function uploadPhoto(file) {
-        setError("");
-        setSuccess("");
-        setLoading(true);
-    
+            clearMessages();
+            setLoading(true);
         try {
             const formData = new FormData();
             formData.append("photo", file);
     
-            const res = await API.post("/auth/upload-photo", formData, {
+            const res = await apiPost("/profile/upload-photo", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
     
-            await checkAuth();
-    
-            setSuccess(res.data?.message || "Photo updated successfully!");
+            setProfilePhotoSuccess(res?.message);
             return true;
         } catch (err) {
-            setError(err.response?.data?.message || "Photo upload failed.");
+            setProfilePhotoError(err.response?.data?.message || "Profile Photo upload was failed.");
             return false;
         } finally {
             setLoading(false);
         }
     }
 
+    async function WLCOCount(){ // WLCO stands for WishList, Cart, Order Count
+        try {
+            const wishListRes = await apiGet("/dashboard/wishlist-count");
+            const cartRes = await apiGet("/dashboard/cart-count");
+            const orderRes = await apiGet("/dashboard/order-stats");
+
+            setWishListCount(wishListRes.count ?? 0);
+            setcartCount(cartRes.count ?? 0);
+            setorderCount(orderRes.count ?? 0);
+        }
+        catch{
+            // if count apis fail then the state set to 0
+        }
+
+
+    }
+
     return (
-        <ProfileContext.Provider value={{ loading, error, success, clearMessages, updateProfile, uploadPhoto }}>
+        <ProfileContext.Provider value={{ loading, profilePhotoSuccess, profilePhotoError, clearMessages, updateProfile, uploadPhoto, WLCOCount, wishListCount, cartCount, orderCount }}>
             {children}
         </ProfileContext.Provider>
     );

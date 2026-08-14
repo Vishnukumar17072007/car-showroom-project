@@ -5,7 +5,7 @@ import { AuthCallbackSkeleton } from "./PageSkeletons";
 
 export default function AuthCallback() {
   const navigate = useNavigate();
-  const { checkAuth } = useAuth();
+  const { checkUser } = useAuth();
 
   useEffect(() => {
     async function handleCallback() {
@@ -16,7 +16,7 @@ export default function AuthCallback() {
         localStorage.setItem("token", token);  // ← store in localStorage
 
         try {
-          await checkAuth();
+          await checkUser();
           navigate("/dashboard", { replace: true });
         } catch {
           navigate("/login", { replace: true });

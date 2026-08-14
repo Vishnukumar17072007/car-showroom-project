@@ -1,60 +1,63 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     userName: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        unique: true,
-        sparse: true,
-        lowercase: true,
-        trim: true,
+      type: String,
+      unique: true,
+      sparse: true,
+      lowercase: true,
+      trim: true,
     },
     password: {
-        type: String,
+      type: String,
     },
     googleId: {
-       type: String,
+      type: String,
     },
     phone: {
-        type: String,
-        unique: true,
-        sparse: true,
+      type: String,
+      unique: true,
+      sparse: true,
     },
     image: {
-        type: String,
-        default: "",
+      type: String,
+      default: "",
     },
     location: {
-        address: {
-            type: String,
-            default: "",
-        },
-        city: {
-            type: String,
-            default: "",
-        },
-        state: {
-            type: String,
-            default: "",
-        },
-        pincode: {
-            type: Number,
-            default: "",
-        }
+      address: {
+        type: String,
+        default: "",
+      },
+      city: {
+        type: String,
+        default: "",
+      },
+      state: {
+        type: String,
+        default: "",
+      },
+      pincode: {
+        type: Number,
+        default: "",
+      },
     },
     role: {
-        type: String,
-        enum: ["user", "admin"],
-        default: "user"
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
     },
-    subscription: {
-        type: String,
-        enum: ["free", "pro", "premium"],
-        default: "free"
-    }
-}, { timestamps: true });
+    isEmailVerified: { type: Boolean, default: false },
+    resetOtp: { type: String, select: false },
+    resetOtpExpires: { type: Date, select: false },
+    resetTokenHash: { type: String, select: false },
+    resetTokenExpires: { type: Date, select: false },
+  },
+  { timestamps: true },
+);
 
 module.exports = mongoose.model("User", userSchema, "UserDetails");

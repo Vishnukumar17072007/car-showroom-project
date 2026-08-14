@@ -16,9 +16,9 @@ function FuelTypeFilter({selected, onChange}) {
 
                 <div className={`fuel_type_list row ${openContent ? "show" : ""}`} id="fuel_type">
                     {fuelTypes.map((t) => (
-                        <div key={t} className="col-6">
-                            <input type="checkbox" name="" id="" checked={selected ===t} onChange={() => onChange(t)}/>
-                            <span> {t}</span>
+                        <div key={t} className="col-6" onClick={() => {onChange(t)}} style={{cursor: "pointer"}}>
+                            <input type="checkbox" name="" id="" checked={selected === t} readOnly />
+                            <span>{t}</span>
                         </div>
                     ))}
                 </div>

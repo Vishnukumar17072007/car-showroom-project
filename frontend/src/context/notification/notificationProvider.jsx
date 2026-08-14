@@ -48,7 +48,7 @@ export const NotificationProvider = ({ children }) => {
       socket.off("connect_error", handleConnectError);
       disconnectNotificationSocket();
     };
-  }, [user, authLoading]);
+  }, [user?._id, authLoading]);
 
   const fetchNotifications = useCallback(() => {
     const socket = getNotificationSocket();

@@ -39,7 +39,14 @@ function App() {
 
   return (
     <>
-      <Toaster position="top-right" />
+      <Toaster 
+        position="bottom-center"
+        toastOptions={{
+          style: {
+            marginBottom: '50px',
+          },
+        }}
+      />
 
       {!hideLayout && <TopHeader />}
 

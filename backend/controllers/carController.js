@@ -42,9 +42,16 @@ const getCars = async (req, res) => {
     const priceNum = Number(maxPrice);
 
     if (!Number.isNaN(priceNum)) {
-      query.price = {
-        $lte: priceNum,
-      };
+      if(priceNum >= 10000000){
+        query.price = {
+          $gte: priceNum,
+        };
+      }
+      else{
+        query.price = {
+          $lte: priceNum,
+        };
+      }
     }
   }
 
@@ -59,12 +66,12 @@ const getCars = async (req, res) => {
   }
 
   const page = Math.max(1, parseInt(req.query.page) || 1);
-  const limit = Math.min(50, Math.max(1, parseInt(req.query.limit) || 12));
+  const limit = Math.min(100, Math.max(1, parseInt(req.query.limit) || 20));
   const skip = (page - 1) * limit;
   const sortDirection = priceSort === "-1" ? -1 : 1;
 
   const [cars, total] = await Promise.all([
-    Car.find(query).sort({price: sortDirection}).skip(skip).limit(limit).lean(),
+    Car.find(query).sort({price: sortDirection}).skip(skip).limit(limit).lean().select("carName image price rating bodyType brand available transmission fuelType"),
     Car.countDocuments(query),
   ]);
 

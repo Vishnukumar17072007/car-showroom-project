@@ -4,10 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useWishList } from "../context/wish/useWishList";
 import { useCart } from "../context/cart/useCart";
 import { useAuth } from "../context/auth/useAuth";
-import API from "../api/axios";
 import { createPortal } from "react-dom";
 import toast from "react-hot-toast";
-import { deleteCar, editCar } from "../context/car/carProvider";
+import { deleteCar, editCar, getCarById } from "../context/car/carProvider";
 
 function Cards(props) {
   const navigate = useNavigate();
@@ -39,19 +38,12 @@ function Cards(props) {
 
   const car = {
     _id: props._id,
+    carName: props.carName,
     brand: props.brand,
-    model: props.model,
     bodyType: props.bodyType,
     image: props.image,
-    frontImage: props.frontImage,
-    rearImage: props.rearImage,
-    leftSideImage: props.leftSideImage,
-    rightSideImage: props.rightSideImage,
     transmission: props.transmission,
     fuelType: props.fuelType,
-    engineType: props.engineType,
-    seats: props.seats,
-    mileage: props.mileage,
     price: props.price,
     rating: props.rating,
     available: props.available,
@@ -64,6 +56,37 @@ function Cards(props) {
       props.onUpdate?.();
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function getCarDetail(carId){
+    setLoading(true);
+    try{
+      const data = await getCarById(carId);
+      setLoading(false);
+
+      setEditData({
+        _id: data._id,
+        brand: data.brand,
+        model: data.model,
+        bodyType: data.bodyType,
+        image: data.image,
+        frontImage: data.frontImage,
+        rearImage: data.rearImage,
+        leftSideImage: data.leftSideImage,
+        rightSideImage: data.rightSideImage,
+        transmission: data.transmission,
+        fuelType: data.fuelType,
+        engineType: data.engineType,
+        seats: data.seats,
+        mileage: data.mileage,
+        price: data.price,
+        rating: data.rating,
+        available: data.available,
+      });
+    }
+    catch(err) {
+      console.log(err.message);
     }
   }
 
@@ -150,11 +173,12 @@ function Cards(props) {
         >
           <img
             src={props.image}
-            alt={`${props.brand} ${props.model}`}
+            alt={`${props.carName}`}
             loading="lazy"
             decoding="async"
             width={300}
             height={200}
+            style={{color: "black"}}
           />
           {user && (
             <p
@@ -174,12 +198,12 @@ function Cards(props) {
             <div
               style={{
                 display: "flex",
-                justifyContent: "start",
+                justifyContent: "space-between",
                 alignItems: "flex-start",
               }}
             >
               <b className="p-1">
-                {props.brand} {props.model}
+                {props.carName}
               </b>
               <p
                 className="rating p-1"
@@ -221,6 +245,7 @@ function Cards(props) {
                 type="button"
                 className="btn-edit"
                 onClick={() => {
+                  getCarDetail(car._id);
                   setShowEditModal(true);
                 }}
                 disabled={loading}

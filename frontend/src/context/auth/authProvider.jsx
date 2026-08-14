@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { AuthContext } from "./authContext";
-import API from "../../api/axios";
+import {apiGet, apiPost} from "../../api/axios";
 import toast from "react-hot-toast";
 
 function persistUserRole(user) {
@@ -18,6 +18,7 @@ function persistUserRole(user) {
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [authLoading, setAuthLoading] = useState(true);
+    const [success, setSuccess] = useState("");
 
     useEffect(() => {
         // Check if URL has ?token= from Google OAuth redirect
@@ -33,10 +34,8 @@ export function AuthProvider({ children }) {
 
         async function restoreSession() {
             try {
-                const res = await API.get('/auth/me');
-                setUser(res.data);
-                persistUserRole(res.data);
-            } catch (err) {
+                await checkUser();
+            } catch {
                 setUser(null);
                 persistUserRole(null);
             } finally {
@@ -45,43 +44,96 @@ export function AuthProvider({ children }) {
         }
 
         restoreSession();
+
+        if(success) {
+            toast.success(success);
+        }
     }, []);
 
-    async function register(userName, email, password, phone) {
-        await API.post('/auth/register', { userName, email, password, phone });
-        await API.post('/auth/login', { email, password });
-        const profile = await API.get('/auth/me');
-        setUser(profile.data);
-        persistUserRole(profile.data);
-        toast.success("Welcome! How can we help you?");
-        return profile.data;
+    /* ─── Registration OTP: sent to the email BEFORE any account exists.
+       "Generate OTP" in the signup form calls this. ─── */
+    async function sendRegistrationOtp(email) {
+        const res = await apiPost('/auth/send-registration-otp', { email });
+        setSuccess("OTP sent to your email.");
+
+        return res;
+    }
+
+    /* ─── Register: single step. otp is submitted along with the rest of the
+       form — the account is only created if it's correct, and the response
+       logs the user straight in (same shape as login). ─── */
+    async function register(userName, email, password, phone, otp) {
+        const res = await apiPost('/auth/register', { userName, email, password, phone, otp });
+        const user = await checkUser();
+
+        localStorage.setItem("token", res.token);
+
+        setSuccess("Welcome! How can we help you?");
+
+        return user;
     }
 
     async function login(email, password) {
-        const res = await API.post('/auth/login', { email, password });
-        localStorage.setItem("token", res.data.token);
-        const profile = await API.get('/auth/me');
-        setUser(profile.data);
-        persistUserRole(profile.data);
-        toast.success("Welcome back! How can we help you?");
-        return profile.data;
+        const res = await apiPost('/auth/login', { email, password });
+        const user = await checkUser();
+
+        localStorage.setItem("token", res.token);
+
+        setSuccess("Welcome back! How can we help you?");
+
+        return user;
     }
 
     async function logout() {
-        await API.post('/auth/logout');
+        await apiPost('/auth/logout');
         setUser(null);
         localStorage.removeItem("token");
         persistUserRole(null);
     }
 
-    async function checkAuth() {
-        const res = await API.get('/auth/me');
-        setUser(res.data);
-        persistUserRole(res.data);
+    async function checkUser() {
+        const res = await apiGet('/profile/me');
+        setUser(res);
+        persistUserRole(res);
+    }
+
+    /* ─── Forgot password (OTP flow) ─────────────────────────────── */
+
+    async function requestPasswordOtp(email) {
+        const res = await apiPost('/auth/forgot-password', { email });
+        setSuccess("If that email exists, a code has been sent.");
+
+        return res;
+    }
+
+    async function verifyPasswordOtp(email, otp) {
+        const res = await apiPost('/auth/verify-otp', { email, otp });
+
+        return res;
+    }
+
+    async function resetPassword(email, token, newPassword) {
+        const res = await apiPost('/auth/reset-password', { email, token, newPassword });
+        setSuccess("Password updated. You can sign in now.");
+
+        return res;
     }
 
     return (
-        <AuthContext.Provider value={{ user, register, login, logout, checkAuth, authLoading }}>
+        <AuthContext.Provider
+            value={{
+                user,
+                register,
+                login,
+                logout,
+                checkUser,
+                authLoading,
+                requestPasswordOtp,
+                verifyPasswordOtp,
+                resetPassword,
+                sendRegistrationOtp,
+            }}
+        >
             {children}
         </AuthContext.Provider>
     );

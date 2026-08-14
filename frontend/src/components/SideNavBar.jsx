@@ -1,52 +1,14 @@
 // component/SideNavbar.jsx
 
 import { Link, useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 import { useAuth } from "../context/auth/useAuth";
-import SubscriptionModal from "../components/SubscriptionModal";
-
-
-// ── Subscription Banner (local helper) ──────────────────────────────────────
-function SubscriptionBanner({ sub, onViewPlans, isActive, onActivate }) {
-
-  const navigate = useNavigate();
-
-  const { user } = useAuth();
-  if (sub === "premium") return null;
-
-  return (
-    <>
-      <li
-        className={`side_bar_menu_lists p-0 ${isActive ? "active" : ""}`}
-        onClick={
-          user
-            ? () => {
-                onActivate();
-                onViewPlans();
-              }
-            : () => {
-              navigate('/login');
-            }
-        }
-      >
-        <p className="bi bi-piggy-bank text-decoration-none side_bar_menu_items d-block m-0 p-3 ps-3">
-          Upgrade Plan
-        </p>
-      </li>
-      
-    </>
-  );
-}
 
 // ── Main Sidebar Component ───────────────────────────────────────────────────
 function SideNavbar() {
   const location = useLocation();
   const { user } = useAuth();
 
-  const [showModal, setShowModal] = useState(false);
-  const [upgradePlanActive, setUpgradePlanActive] = useState(false);
 
   const topNavItems = [
     ["bi bi-speedometer2", "Dashboard", "/dashboard"],
@@ -94,13 +56,6 @@ function SideNavbar() {
 
       <div className="divider" style={{ borderBottom: "1px solid grey" }}></div>
       <div className="bottomNavBar">
-        {/* ── Bottom Items ── */}
-        <SubscriptionBanner
-          sub={user?.subscription}
-          isActive={upgradePlanActive}
-          onActivate={() => setUpgradePlanActive(true)}
-          onViewPlans={() => setShowModal(true)}
-        />
 
         {/* Support */}
         <li
@@ -130,15 +85,6 @@ function SideNavbar() {
           </li>
         )}
       </div>
-
-      {showModal && (
-        <SubscriptionModal
-          onClose={() => {
-            setShowModal(false);
-            setUpgradePlanActive(false);
-          }}
-        />
-      )}
     </>
   );
 }

@@ -51,7 +51,7 @@ function WishList(){
                             </div>
                             <div className="car_card_body">
                                 <div className="car_title">
-                                    <b>{car.brand} {car.model}</b>
+                                    <b>{car.carName}</b>
                                     <p style={{fontWeight:"lighter", margin:"0%"}}>{car.brand}.{car.bodyType}</p>
                                     <p className='rating'>⭐{car.rating}</p>
                                 </div>

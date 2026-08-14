@@ -1,9 +1,9 @@
-import FilterTitle from '../filter/FilterTitle';
-import AvailableFilter from '../filter/AvailableFilter';
-import PriceFilter from '../filter/PriceFilter';
-import BodyTypeFilter from '../filter/BodyTypeFilter';
-import TransmissionFilter from '../filter/TransmissionFilter';
-import FuelTypeFilter from '../filter/FuelTypeFilter';
+import FilterTitle from '../components/filter/FilterTitle';
+import AvailableFilter from '../components/filter/AvailableFilter';
+import PriceFilter from '../components/filter/PriceFilter';
+import BodyTypeFilter from '../components/filter/BodyTypeFilter';
+import TransmissionFilter from '../components/filter/TransmissionFilter';
+import FuelTypeFilter from '../components/filter/FuelTypeFilter';
 import CarDetailsFetchingListForCards from '../components/cars-details-fetching-list-for-cards';
 import { useState, useEffect } from 'react';
 import { useSearch } from '../context/search/useSearch';

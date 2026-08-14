@@ -1,11 +1,10 @@
 import Cards from "../pages/Car-Cards";
 import { useAuth } from "../context/auth/useAuth";
-import API from "../api/axios";
 import { useState, useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
 import { CarGridSkeleton, SkeletonBlock } from "../components/PageSkeletons";
 import CatalogPagination from "../components/CatalogPagination";
-import { useCarsCatalog, CARS_PAGE_SIZE } from "../hooks/useCarsCatalog";
+import { useCarsCatalog, CARS_PAGE_SIZE } from "./hooks/useCarsCatalog";
 import { addCar } from "../context/car/carProvider";
 
 function CarDetailsFetchingListForCards({ filters, search, priceSort }) {
@@ -132,25 +131,18 @@ function CarDetailsFetchingListForCards({ filters, search, priceSort }) {
           </div>
         )}
         {/* Cards Grid */}
-        <div className={`d-flex flex-wrap gap-2 ${user.role === "admin" ? "pt-2" : ""}`} style={{justifyContent: "space-between"}}>
+        <div className={`d-flex flex-wrap gap-2 ${user.role === "admin" ? "pt-2" : ""}`} style={{justifyContent: "start"}}>
           {carList.length > 0 ? (
             carList.map((detail) => (
               <Cards
                 key={detail._id}
                 _id={detail._id}
+                carName={detail.carName}
                 brand={detail.brand}
-                model={detail.model}
                 bodyType={detail.bodyType}
                 image={detail.image}
-                frontImage={detail.frontImage}
-                rearImage={detail.rearImage}
-                leftSideImage={detail.leftSideImage}
-                rightSideImage={detail.rightSideImage}
                 transmission={detail.transmission}
                 fuelType={detail.fuelType}
-                seats={detail.seats}
-                mileage={detail.mileage}
-                engineType={detail.engineType}
                 price={detail.price}
                 rating={detail.rating}
                 available={detail.available}

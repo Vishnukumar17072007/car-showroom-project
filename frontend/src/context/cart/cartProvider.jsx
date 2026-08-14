@@ -1,21 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CartContext } from "./cartContext";
 import toast from "react-hot-toast";
-import API from "../../api/axios";
+import { apiDelete, apiGet, apiPost } from "../../api/axios";
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [cartLoading, setCartLoading] = useState(false);
 
-  useEffect(() => {
-    getCart();
-  }, []);
-
   const getCart = async () => {
     setCartLoading(true);
     try {
-      const data = await API.get("/cart");
-      setCartItems(data.data?.items || []);
+      const data = await apiGet("/cart");
+      setCartItems(data?.items || []);
     } catch {
       setCartItems([]);
     } finally {
@@ -33,7 +29,7 @@ export function CartProvider({ children }) {
       setCartLoading(true);
       setCartItems((prev) => [...prev, { carId: {_id: car._id} }]);
 
-      await API.post("/cart", {carId: car._id});
+      await apiPost("/cart", {carId: car._id});
 
       toast.success("Added to Cart!");
     } catch (err) {
@@ -53,13 +49,12 @@ export function CartProvider({ children }) {
       setCartLoading(true);
       setCartItems((prev) =>
         prev.filter((item) => {
-          const itemId =
-            typeof item.carId === "object" ? item.carId._id : item.carId;
+          const itemId = item.carId?._id ?? item.carId;
 
           return itemId?.toString() !== carId;
         }),
       );
-      await API.delete(`/cart/${carId}`);
+      await apiDelete(`/cart/${carId}`);
       setCartLoading(false);
       toast.success("Removed from Cart.");
     } catch (err) {

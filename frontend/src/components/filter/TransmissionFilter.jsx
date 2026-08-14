@@ -17,7 +17,7 @@ function TransmissionFilter({selected, onChange}) {
             </div>
         
             <div className={`trans_content ${openContent ? "show" : ""}`}>
-                {["Any", "Automatic", "manual"].map((t)=>(
+                {["Automatic", "manual"].map((t)=>(
                     <button key={t} className={selected === t ? "active-filter-btn" : ""} onClick={() => onChange(t)}>{t}</button>
                 ))}
             </div>

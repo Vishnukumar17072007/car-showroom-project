@@ -17,6 +17,7 @@ import ProfileProvider from './context/profile/profileProvider.jsx';
 import { NotificationProvider } from './context/notification/notificationProvider.jsx';
 import { RoutePageSkeleton } from './components/PageSkeletons.jsx';
 import { ThemeProvider } from './context/theme/themeProvider.jsx';
+import { DashboardProvider } from './context/dashboard/dashboardProvider.jsx';
 
 const Home = lazy(() => import('./pages/Home.jsx'));
 const Vehicles = lazy(() => import('./pages/Vehicles.jsx'));
@@ -58,7 +59,11 @@ const router = createBrowserRouter([
       {
         element: <ProtectedRoutes />,
         children: [
-          { path: "/dashboard", element: <LazyPage><Dashboard /></LazyPage> },
+          { path: "/dashboard", element: (
+            <DashboardProvider>
+              <LazyPage><Dashboard /></LazyPage>
+            </DashboardProvider>
+          ) },
           { path: "/vehicles", element: <LazyPage><Vehicles /></LazyPage> },
           { path: "/vehicles/:id", element: <LazyPage><CarDetailsPage /></LazyPage> },
           { path: "/wishlist", element: <LazyPage><WishList /></LazyPage> },
@@ -84,17 +89,17 @@ createRoot(document.getElementById('root')).render(
   <ThemeProvider>
     <AuthProvider>
       <NotificationProvider>
-        <WishListProvider>
-          <OrderProvider>
-            <CartProvider>
-              <SearchProvider>
-                <ProfileProvider>
-                    <RouterProvider router={router} />
-                </ProfileProvider>
-              </SearchProvider>
-            </CartProvider>
-          </OrderProvider>
-        </WishListProvider>
+          <WishListProvider>
+            <OrderProvider>
+              <CartProvider>
+                <SearchProvider>
+                  <ProfileProvider>
+                      <RouterProvider router={router} />
+                  </ProfileProvider>
+                </SearchProvider>
+              </CartProvider>
+            </OrderProvider>
+          </WishListProvider>
       </NotificationProvider>
     </AuthProvider>
   </ThemeProvider>

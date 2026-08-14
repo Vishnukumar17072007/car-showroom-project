@@ -1,29 +1,31 @@
 import { useParams, useNavigate } from "react-router-dom";
-import useFetch from "../components/useFetch";
 import { useCart } from "../context/cart/useCart";
 import { useWishList } from "../context/wish/useWishList";
 import { useAuth } from "../context/auth/useAuth";
 import { useState, useEffect } from "react";
 import { CarDetailsSkeleton } from "../components/PageSkeletons";
+import { getCarById } from "../context/car/carProvider";
 
 function CarDetailsPage() {
     const { id } = useParams();
     const navigate = useNavigate();
+
     const { user } = useAuth();
     const { addToCart, removeFromCart, isInCart } = useCart();
     const { addToWishList, removeFromWishList, isInWishList } = useWishList();
+
     const [activeImg, setActiveImg] = useState(0);
     const [emiMonths, setEmiMonths] = useState(36);
-
-    const url = `${import.meta.env.VITE_API_URL}/cars/${id}`;
-    const [car, error, loading] = useFetch(url);
+    const [carDetails, setCarDetails] = useState(null);
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const gallery = [
-        car?.frontImage,
-        car?.leftSideImage,
-        car?.rightSideImage,
-        car?.rearImage,
-        car?.image
+        carDetails?.frontImage,
+        carDetails?.leftSideImage,
+        carDetails?.rightSideImage,
+        carDetails?.rearImage,
+        carDetails?.image
     ].filter(Boolean);
 
     useEffect(() => {
@@ -37,6 +39,21 @@ function CarDetailsPage() {
     }, [gallery.length]);
 
     useEffect(() => {
+        
+        async function getCarDetails(id){
+            try{
+                setLoading(true);
+                setError(false);
+                const data = await getCarById(id);
+                setCarDetails(data);
+                setLoading(false);
+            }
+            catch{
+                setError(true);
+            };
+        }
+
+        getCarDetails(id);
         setActiveImg(0);
     }, [id]);
 
@@ -46,21 +63,21 @@ function CarDetailsPage() {
         </div>
     );
 
-    if (loading || !car) {
+    if (loading || !carDetails) {
         return <CarDetailsSkeleton />;
     }
 
-    const downPayment = car.price * 0.2;
-    const loanAmount = car.price - downPayment;
+    const downPayment = carDetails.price * 0.2;
+    const loanAmount = carDetails.price - downPayment;
     const monthlyEmi = Math.round((loanAmount * 1.09) / emiMonths);
 
     const specs = [
-        { icon: "bi bi-lightning-charge-fill", label: "Body Type", value: car.bodyType || "N/A" },
-        { icon: "bi bi-fuel-pump-fill", label: "Fuel Type", value: car.fuelType || "N/A" },
-        { icon: "bi bi-gear-fill", label: "Transmission", value: car.transmission || "N/A" },
-        { icon: "bi bi-speedometer2", label: "Mileage", value: car.mileage || "N/A" },
-        { icon: "bi bi-tools", label: "Engine", value: car.engineType || "N/A" },
-        { icon: "bi bi-person-fill", label: "Seating", value: car.seats ? car.seats + " Seats" : "N/A" },
+        { icon: "bi bi-lightning-charge-fill", label: "Body Type", value: carDetails.bodyType || "N/A" },
+        { icon: "bi bi-fuel-pump-fill", label: "Fuel Type", value: carDetails.fuelType || "N/A" },
+        { icon: "bi bi-gear-fill", label: "Transmission", value: carDetails.transmission || "N/A" },
+        { icon: "bi bi-speedometer2", label: "Mileage", value: carDetails.mileage || "N/A" },
+        { icon: "bi bi-tools", label: "Engine", value: carDetails.engineType || "N/A" },
+        { icon: "bi bi-person-fill", label: "Seating", value: carDetails.seats ? carDetails.seats + " Seats" : "N/A" },
     ];
 
     const highlights = [
@@ -77,7 +94,7 @@ function CarDetailsPage() {
             <style>{`
             .cd-avail-badge {
                 background: $ {
-                  car.available ? "#1db954": "#e63946"
+                  carDetails.available ? "#1db954": "#e63946"
                 };
               }
             `}</style>
@@ -86,25 +103,25 @@ function CarDetailsPage() {
                 <div className="cd-breadcrumb">
                     <a onClick={() => navigate("/")}>Home</a> &nbsp;›&nbsp;
                     <a onClick={() => navigate("/vehicles")}>Vehicles</a> &nbsp;›&nbsp;
-                    <span>{car.brand} {car.model}</span>
+                    <span>{carDetails.brand} {carDetails.model}</span>
                 </div>
 
                 <div className="cd-header">
                     <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 8px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-                            <h1>{car.brand} {car.model}</h1>
-                            <span className="cd-rating-badge">⭐ {car.rating}</span>
-                            <span className="cd-avail-badge">{car.available ? "● IN STOCK" : "● OUT OF STOCK"}</span>
+                            <h1>{carDetails.brand} {carDetails.model}</h1>
+                            <span className="cd-rating-badge">⭐ {carDetails.rating}</span>
+                            <span className="cd-avail-badge">{carDetails.available ? "● IN STOCK" : "● OUT OF STOCK"}</span>
                         </div>
-                        <p className="cd-subtitle">{car.brand} · {car.bodyType} · {car.fuelType || "Petrol"}</p>
+                        <p className="cd-subtitle">{carDetails.brand} · {carDetails.bodyType} · {carDetails.fuelType || "Petrol"}</p>
                     </div>
                 </div>
 
                 <div className="cd-body">
                     <div className="cd-gallery">
                         <img
-                            src={gallery[activeImg] || car.image}
-                            alt={`${car.brand} ${car.model}`}
+                            src={gallery[activeImg] || carDetails.image}
+                            alt={`${carDetails.brand} ${carDetails.model}`}
                             className="cd-main-img"
                             loading="lazy"
                             decoding="async"
@@ -115,7 +132,7 @@ function CarDetailsPage() {
                                 <img
                                     key={i}
                                     src={img}
-                                    alt={`${car.brand} ${car.model} view ${i + 1}`}
+                                    alt={`${carDetails.brand} ${carDetails.model} view ${i + 1}`}
                                     className={`cd-thumb ${activeImg === i ? "active" : ""}`}
                                     onClick={() => setActiveImg(i)}
                                     loading="lazy"
@@ -155,22 +172,22 @@ function CarDetailsPage() {
                             <div style={{ color: "#888", fontSize: "0.82rem", marginBottom: "4px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
                                 Ex-Showroom Price
                             </div>
-                            <div className="cd-price">₹ {car.price?.toLocaleString("en-IN")}</div>
+                            <div className="cd-price">₹ {carDetails.price?.toLocaleString("en-IN")}</div>
                             <div className="cd-price-sub">* Prices may vary. Contact dealer for on-road price.</div>
 
                             {user ? (
                                 <div className="cd-cta-group">
                                     <button
                                         className="cd-btn-cart"
-                                        onClick={() => isInCart(car._id) ? removeFromCart(car._id) : addToCart(car._id)}
+                                        onClick={() => isInCart(carDetails._id) ? removeFromCart(carDetails._id) : addToCart(carDetails._id)}
                                     >
-                                        {isInCart(car._id) ? "✓ Added to Cart" : "🛒 Add to Cart"}
+                                        {isInCart(carDetails._id) ? "✓ Added to Cart" : "🛒 Add to Cart"}
                                     </button>
                                     <button
-                                        className={`cd-btn-wish ${isInWishList(car._id) ? "active" : ""}`}
-                                        onClick={() => isInWishList(car._id) ? removeFromWishList(car._id) : addToWishList(car)}
+                                        className={`cd-btn-wish ${isInWishList(carDetails._id) ? "active" : ""}`}
+                                        onClick={() => isInWishList(carDetails._id) ? removeFromWishList(carDetails._id) : addToWishList(carDetails)}
                                     >
-                                        {isInWishList(car._id) ? "❤️" : "🤍"}
+                                        {isInWishList(carDetails._id) ? "❤️" : "🤍"}
                                     </button>
                                 </div>
                             ) : (
@@ -220,15 +237,15 @@ function CarDetailsPage() {
                                 <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.9rem" }}>
                                     <tbody>
                                         {[
-                                            ["Brand", car.brand],
-                                            ["Model", car.model],
-                                            ["Body Type", car.bodyType || "N/A"],
-                                            ["Fuel Type", car.fuelType || "N/A"],
-                                            ["Transmission", car.transmission || "N/A"],
-                                            ["Engine", car.engineType || "N/A"],
-                                            ["Mileage", car.mileage || "N/A"],
-                                            ["Seating", car.seats ? car.seats + " Seats" : "N/A"],
-                                            ["Available", car.available ? "Yes" : "No"],
+                                            ["Brand", carDetails.brand],
+                                            ["Model", carDetails.model],
+                                            ["Body Type", carDetails.bodyType || "N/A"],
+                                            ["Fuel Type", carDetails.fuelType || "N/A"],
+                                            ["Transmission", carDetails.transmission || "N/A"],
+                                            ["Engine", carDetails.engineType || "N/A"],
+                                            ["Mileage", carDetails.mileage || "N/A"],
+                                            ["Seating", carDetails.seats ? carDetails.seats + " Seats" : "N/A"],
+                                            ["Available", carDetails.available ? "Yes" : "No"],
                                         ].map(([label, val], i) => (
                                             <tr key={i} style={{ borderBottom: "1px solid #f0f0f0" }}>
                                                 <td style={{ padding: "9px 8px", color: "#888", width: "45%" }}>{label}</td>

@@ -1,35 +1,22 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth/useAuth";
-import { useWishList } from "../context/wish/useWishList";
-import { useCart } from "../context/cart/useCart";
-import { useOrder } from "../context/order/useOrder";
-import SubscriptionModal from "../components/SubscriptionModal";
+import {useProfile} from "../context/profile/useProfile";
 import { ProfileSkeleton } from "../components/PageSkeletons";
 
 function Profile() {
 
-    const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
     const [pageLoading, setPageLoading] = useState(true);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const navigate = useNavigate();
 
-    const { user, logout, checkAuth } = useAuth();
-    const { wishListItems, getWishList } = useWishList();
-    const { cartItems, getCart } = useCart();
-    const { orders, getOrders } = useOrder();
-
-    const wishListCount = wishListItems.length;
-    const cartListCount = cartItems.length;
-    const orderCount = orders.length;
+    const { user, logout } = useAuth();
+    const { WLCOCount, wishListCount, cartCount, orderCount } = useProfile();
 
     useEffect(() => {
         async function loadProfile() {
             await Promise.all([
-                checkAuth(),
-                getWishList(),
-                getOrders(),
-                getCart(),
+                WLCOCount()
             ]);
             setPageLoading(false);
         }
@@ -68,13 +55,6 @@ function Profile() {
                                 <i className={`user-role ${user.role === "admin" ? "bi bi-shield-check" : "bi bi-shield"}`}>
                                     {" "}{user.role}
                                 </i>
-                                <i className={`subscription-badge ${
-                                    user.subscription === "free"    ? "bi bi-stars" :
-                                    user.subscription === "pro"     ? "bi bi-star-half" :
-                                    user.subscription === "premium" ? "bi bi-star-fill" : ""
-                                }`}>
-                                    {" "}{user.subscription}
-                                </i>
                             </div>
                         </div>
 
@@ -83,18 +63,6 @@ function Profile() {
                         </i>
 
                     </div>
-
-                    {user.subscription !== "premium" && (
-                        <div className="plan-upgrade-recommendation">
-                            <p>
-                                <i className="bi bi-crown"></i>
-                                {" "}You're on the <strong>{user.subscription === "free" ? "Free" : "Pro"}</strong> plan. Upgrade for priority listings.
-                            </p>
-                            <p className="upgrade-link" onClick={() => setShowSubscriptionModal(true)}>
-                                Upgrade <span className="bi bi-arrow-right"></span>
-                            </p>
-                        </div>
-                    )}
 
                     <div className="profile-bottom-grid">
                         <div className="activity-overview">
@@ -105,7 +73,7 @@ function Profile() {
                             </div>
                             <div className="activity-block divider" onClick={() => navigate("/cartList")}>
                                 <i className="bi bi-cart3"></i>
-                                <strong className="count">{cartListCount}</strong>
+                                <strong className="count">{cartCount}</strong>
                                 <p>CART</p>
                             </div>
                             <div className="activity-block divider" onClick={() => navigate("/orders")}>
@@ -118,7 +86,7 @@ function Profile() {
                         <div className="account-details">
                             <div className="detail-row divider">
                                 <p className="detail-label"><i className="bi bi-envelope"></i> Email</p>
-                                <p className="detail-value">{user?.email}</p>
+                                <p className="detail-value" style={{textTransform: "lowercase"}}>{user?.email}</p>
                             </div>
                             <div className="detail-row divider">
                                 <p className="detail-label"><i className="bi bi-telephone"></i> Phone</p>
@@ -149,10 +117,6 @@ function Profile() {
                                 <p className="detail-label"><i className="bi bi-shield"></i> Role</p>
                                 <p className="detail-value">{user.role}</p>
                             </div>
-                            <div className="detail-row divider">
-                                <p className="detail-label"><i className="bi bi-stars"></i> Subscription</p>
-                                <p className="detail-value">{user.subscription}</p>
-                            </div>
                             <div className="detail-row">
                                 <p className="detail-label"><i className="bi bi-calendar-event"></i> Joined</p>
                                 <p className="detail-value">{joinedDate}</p>
@@ -165,10 +129,6 @@ function Profile() {
                     </button>
 
                 </div>
-
-                {showSubscriptionModal && (
-                    <SubscriptionModal onClose={() => setShowSubscriptionModal(false)} />
-                )}
 
                 {showLogoutModal && (
                     <div

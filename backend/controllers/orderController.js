@@ -69,7 +69,7 @@ const getOrders = async (req, res) => {
     ...filter,
   })
   .populate("userId", "userName email")
-  .populate("items.carId")
+  .populate("items.carId", "carName image price")
   .sort({createdAt: -1});
 
   res.status(200).json(orders);

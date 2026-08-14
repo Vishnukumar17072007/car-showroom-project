@@ -17,6 +17,7 @@ const orderRoute = require("./routes/orderRoute");
 const authRoutes = require("./routes/authRoute");
 const chatRoute = require("./routes/chatRoute");
 const dashboardRoute = require("./routes/dashboardRoute");
+const profileRoute = require("./routes/profileRoute");
 const { initSocket } = require("./socket");
 
 const errorHandler = require("./middleware/errorHandler");
@@ -116,6 +117,7 @@ app.use("/api/wishlist", wishListRoute);
 app.use("/api/order", orderRoute);
 app.use("/api/chat", chatRoute);
 app.use("/api/dashboard", dashboardRoute);
+app.use("/api/profile", profileRoute);
 
 app.use(errorHandler);
 

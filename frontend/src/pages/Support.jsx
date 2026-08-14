@@ -8,7 +8,6 @@ You help users with:
 - Placing and tracking orders
 - Account management (login, register, profile editing, password change)
 - Admin features (adding, editing, soft-deleting cars; managing all orders)
-- Subscription plans (Free, Pro, Premium)
 
 Key facts about CarField:
 - Users must be logged in to access wishlist, cart, orders, and profile

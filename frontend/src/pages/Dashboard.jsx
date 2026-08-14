@@ -1,7 +1,5 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/auth/useAuth";
-import API, { apiGet } from "../api/axios";
 import {
   AreaChart, Area,
   LineChart, Line,
@@ -10,6 +8,7 @@ import {
   ResponsiveContainer, PieChart, Pie, Cell, Sector,
 } from "recharts";
 import { DashboardRouteSkeleton } from "../components/PageSkeletons";
+import { useDashboard } from "../context/dashboard/useDashboard";
 
 /* ═══════════════════════════════════════════════════════════════════
    COLOUR TOKENS
@@ -186,68 +185,26 @@ function SectionCard({ title, badge, children }) {
    MAIN COMPONENT
 ═══════════════════════════════════════════════════════════════════ */
 export default function Dashboard() {
-  const navigate   = useNavigate();
-  const { user }   = useAuth();
-  const isAdmin    = user?.role === "admin";
+  const navigate = useNavigate();
+  const {
+    isAdmin,
+    loading,
+    wishlistCount,
+    cartCount,
+    totalOrders,
+    totalSpent,
+    spendingOverTime,
+    orderStatus,
+    orderHistory,
+    stats,
+    recentOrders,
+    fetchDashboard,
+  } = useDashboard();
 
-  /* ── shared state ── */
-  const [loading, setLoading] = useState(true);
+  /* ── local UI-only state (not API data, so it stays out of the provider) ── */
+  const [activePieIndex, setActivePieIndex] = useState(0);
 
-  /* ── user state ── */
-  const [wishlistCount,    setWishlistCount]    = useState(0);
-  const [cartCount,        setCartCount]        = useState(0);
-  const [totalOrders,      setTotalOrders]      = useState(0);
-  const [totalSpent,       setTotalSpent]       = useState(0);
-  const [spendingOverTime, setSpendingOverTime] = useState([]);
-  const [orderStatus,      setOrderStatus]      = useState([]);
-  const [orderHistory,     setOrderHistory]     = useState([]);
-
-  /* ── admin state ── */
-  const [stats,           setStats]           = useState(null);
-  const [recentOrders,    setRecentOrders]    = useState([]);
-  const [activePieIndex,  setActivePieIndex]  = useState(0);
-
-  /* ── fetch ── */
-  const fetchDashboard = useCallback(async () => {
-    setLoading(true);
-    try {
-      if (isAdmin) {
-        /* admin: two endpoints */
-        const [statsRes, ordersRes] = await Promise.all([
-          API.get("/dashboard/stats"),
-          API.get("/dashboard/recent-orders"),
-        ]);
-        setStats(statsRes.data);
-        setRecentOrders(ordersRes.data || []);
-      } else {
-        /* user: six endpoints */
-        const [wishlistRes, cartRes, orderStatsRes, spendingRes, statusRes, historyRes] =
-          await Promise.all([
-            apiGet("/dashboard/wishlist-count"),
-            apiGet("/dashboard/cart-count"),
-            apiGet("/dashboard/order-stats"),
-            apiGet("/dashboard/spending-over-time"),
-            apiGet("/dashboard/order-status"),
-            apiGet("/dashboard/order-history"),
-          ]);
-        setWishlistCount(wishlistRes.count ?? 0);
-        setCartCount(cartRes.count ?? 0);
-        setTotalOrders(orderStatsRes.totalOrders ?? 0);
-        setTotalSpent(orderStatsRes.totalSpent ?? 0);
-        setSpendingOverTime(spendingRes.spendingOverTime ?? []);
-        setOrderStatus(statusRes.orderStatus ?? []);
-        setOrderHistory(historyRes.orders ?? []);
-      }
-    } catch (err) {
-      console.error("Dashboard fetch failed:", err);
-    } finally {
-      setLoading(false);
-    }
-  }, [isAdmin]);
-
-  useEffect(() => { fetchDashboard(); }, [fetchDashboard]);
-
-  /* ── user derived data ── */
+  /* ── user derived data (kept local — pure presentation logic) ── */
   const statusData = useMemo(() =>
     orderStatus.map((s) => ({
       name:  s._id,

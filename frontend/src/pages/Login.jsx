@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth/useAuth";
-import Particles from "../components/loginComponent/Particles";
-import Field from "../components/loginComponent/Field";
-import PasswordStrength from "../components/loginComponent/PasswordStrength";
+import Particles from "../components/loginComponents/Particles";
+import Field from "../components/loginComponents/Field";
+import PasswordStrength from "../components/loginComponents/PasswordStrength";
+import ForgotPasswordModal from "../components/loginComponents/ForgotPasswordModal";
 
 /* ─── Google Button ──────────────────────────────────────────────── */
 function GoogleButton() {
@@ -29,7 +30,7 @@ function GoogleButton() {
 /* ─── Main Auth Page ─────────────────────────────────────────────── */
 export default function Login() {
   const navigate = useNavigate();
-  const { login, register } = useAuth();
+  const { login, register, sendRegistrationOtp } = useAuth();
 
   const [tab, setTab] = useState("signin");
   const [animating, setAnimating] = useState(false);
@@ -46,10 +47,39 @@ export default function Login() {
   const [suPhone, setSuPhone] = useState("");
   const [suPassword, setSuPassword] = useState("");
   const [suConfirm, setSuConfirm] = useState("");
+  const [suOtp, setSuOtp] = useState("");
   const [suError, setSuError] = useState("");
   const [suLoading, setSuLoading] = useState(false);
 
+  /* OTP generation state (signup form) */
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpLoading, setOtpLoading] = useState(false);
+  const [otpCooldown, setOtpCooldown] = useState(0);
+  const [otpSentForEmail, setOtpSentForEmail] = useState(""); // guards against sending for one email, editing it, then submitting stale OTP
+  const cooldownRef = useRef(null);
+
+  /* forgot password */
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
+
   const isSignIn = tab === "signin";
+
+  useEffect(() => {
+    return () => clearInterval(cooldownRef.current);
+  }, []);
+
+  const startCooldown = () => {
+    setOtpCooldown(30);
+    clearInterval(cooldownRef.current);
+    cooldownRef.current = setInterval(() => {
+      setOtpCooldown((prev) => {
+        if (prev <= 1) {
+          clearInterval(cooldownRef.current);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
 
   const switchTab = (t) => {
     if (t === tab || animating) return;
@@ -80,6 +110,25 @@ export default function Login() {
     }
   };
 
+  const handleGenerateOtp = async () => {
+    setSuError("");
+    if (!suEmail.trim() || !/\S+@\S+\.\S+/.test(suEmail.trim())) {
+      setSuError("Enter a valid email address first.");
+      return;
+    }
+    setOtpLoading(true);
+    try {
+      await sendRegistrationOtp(suEmail.trim());
+      setOtpSent(true);
+      setOtpSentForEmail(suEmail.trim());
+      startCooldown();
+    } catch (err) {
+      setSuError(err.response?.data?.message || "Couldn't send OTP. Try again.");
+    } finally {
+      setOtpLoading(false);
+    }
+  };
+
   const handleSignUp = async (e) => {
     e.preventDefault();
     setSuError("");
@@ -99,9 +148,17 @@ export default function Login() {
       setSuError("Phone must be exactly 10 digits.");
       return;
     }
+    if (!otpSent || suEmail.trim() !== otpSentForEmail) {
+      setSuError("Click 'Generate OTP' and verify your email first.");
+      return;
+    }
+    if (!/^\d{6}$/.test(suOtp)) {
+      setSuError("Enter the 6-digit OTP sent to your email.");
+      return;
+    }
     setSuLoading(true);
     try {
-      await register(suName, suEmail, suPassword, `+91 ${suPhone}`);
+      await register(suName, suEmail, suPassword, `+91 ${suPhone}`, suOtp);
       navigate("/");
     } catch (err) {
       setSuError(err.response?.data?.message || "Registration failed.");
@@ -220,6 +277,17 @@ export default function Login() {
                   "Sign In →"
                 )}
               </button>
+              <div style={{ display: "flex", justifyContent: "right" }}>
+                <p
+                  className="auth-switch-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsForgotPassword(true);
+                  }}
+                >
+                  Forgot password?
+                </p>
+              </div>
 
               <GoogleButton />
 
@@ -243,15 +311,55 @@ export default function Login() {
                 placeholder="Your name"
                 autoComplete="name"
               />
+
               <Field
                 icon="✉"
                 label="Email address"
                 type="email"
                 value={suEmail}
-                onChange={(e) => setSuEmail(e.target.value)}
+                onChange={(e) => {
+                  setSuEmail(e.target.value);
+                  // editing the email after an OTP was sent invalidates it
+                  if (otpSent && e.target.value.trim() !== otpSentForEmail) {
+                    setOtpSent(false);
+                    setSuOtp("");
+                  }
+                }}
                 placeholder="you@example.com"
                 autoComplete="email"
               />
+
+              {/* OTP row: field + Generate/Resend button side by side */}
+              <div style={{ display: "flex", gap: "8px", alignItems: "flex-end" }}>
+                <div style={{ flex: 1 }}>
+                  <Field
+                    icon="🔑"
+                    label="Email OTP"
+                    type="text"
+                    value={suOtp}
+                    onChange={(e) => setSuOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                    placeholder={otpSent ? "123456" : "Generate OTP first"}
+                    autoComplete="one-time-code"
+                    disabled={!otpSent}
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={handleGenerateOtp}
+                  disabled={otpLoading || otpCooldown > 0}
+                  className="auth-google-btn"
+                  style={{ marginBottom: "16px", whiteSpace: "nowrap", opacity: otpLoading || otpCooldown > 0 ? 0.6 : 1 }}
+                >
+                  {otpLoading
+                    ? "Sending…"
+                    : otpCooldown > 0
+                    ? `Resend (${otpCooldown}s)`
+                    : otpSent
+                    ? "Resend OTP"
+                    : "Generate OTP"}
+                </button>
+              </div>
+
               <Field
                 icon="📱"
                 label="Phone (10 digits)"
@@ -322,6 +430,10 @@ export default function Login() {
       <p className="auth-tagline">
         Premium automobiles · Trusted experience · India&apos;s finest
       </p>
+
+      {isForgotPassword && (
+        <ForgotPasswordModal onClose={() => setIsForgotPassword(false)} />
+      )}
     </div>
   );
 }

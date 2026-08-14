@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import WishListContext from "./wishListContext";
 import { AuthContext } from "../auth/authContext";
 import toast from "react-hot-toast";
-import API from "../../api/axios";
+import { apiDelete, apiGet, apiPost } from "../../api/axios";
 
 export function WishListProvider({ children }) {
   const [wishListItems, setWishListItems] = useState([]);
@@ -13,15 +13,11 @@ export function WishListProvider({ children }) {
     return items.map((x) => x?.carId).filter(Boolean);
   };
 
-  useEffect(()=>{
-    getWishList();
-  },[]);
-
   const getWishList = async () => {
     try {
         setWishListLoading(true);
-        const res = await API.get("/wishlist");
-        setWishListItems(normalizeWishList(res.data));
+        const res = await apiGet("/wishlist");
+        setWishListItems(normalizeWishList(res));
     }
     catch {
         setWishListItems([]);
@@ -40,7 +36,7 @@ export function WishListProvider({ children }) {
     try {
       setWishListItems((prev) => [...prev, {_id: car._id}]);
 
-      await API.post("/wishlist", {carId: car._id});
+      await apiPost("/wishlist", {carId: car._id});
 
       toast.success("Added to Wish List!");
     } catch (err) {
@@ -60,7 +56,7 @@ export function WishListProvider({ children }) {
         prev.filter((car) => car?._id?.toString() !== carId.toString()),
       );
 
-      await API.delete(`/wishlist/${carId}`);
+      await apiDelete(`/wishlist/${carId}`);
 
       toast.success("Removed from Wish List.");
     } catch (err) {

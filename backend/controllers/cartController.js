@@ -1,7 +1,7 @@
 const Cart = require("../models/CartListSchema");
 
 const getCart = async (req, res) => {
-  const cart = await Cart.findOne({ userId: req.user.userId }).populate("items.carId").lean();
+  const cart = await Cart.findOne({ userId: req.user.userId }).populate("items.carId", "carName image price availabel rating transmission fuelType").lean();
 
   res.status(200).json(cart || { items: [] });
 };

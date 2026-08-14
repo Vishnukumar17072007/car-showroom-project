@@ -70,14 +70,14 @@ function TopHeader() {
                         {location.pathname !== "/profile" && (
                             <button onClick={() => setShowLogoutModal(true)}
                                 style={{
-                                    position: "relative", marginTop: "8px",
+                                    position: "relative", marginTop: "9px",
                                     display: "flex", alignItems: "center", gap: 6,
                                     padding: "10px", border: "none",
                                     width: "37px", height: "35px", backgroundColor: "#00000000",
-                                    color: "#c9a84c", fontSize: 23, cursor: "pointer", fontWeight: 500,
+                                    color: "#c9a84c", fontSize: 23, cursor: "pointer"
                                 }} className="tooltip-wrapper" data-tooltip="Logout"
                             >
-                            <i className="bi bi-power" />
+                            <i className="bi bi-box-arrow-right" />
                             </button>
                         )}
                     </div>

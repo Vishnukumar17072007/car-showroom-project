@@ -1,8 +1,8 @@
 import { useEffect, useState, useMemo } from "react";
-import API from "../api/axios";
-import { normalizeCarsResponse } from "../utils/carsApi";
+import { apiGet } from "../../api/axios";
+import { normalizeCarsResponse } from "../../utils/carsApi";
 
-const DEFAULT_LIMIT = 12;
+const DEFAULT_LIMIT = 20;
 
 function buildCarsQuery({ filters, search, page, limit, refreshKey, priceSort}) {
     const params = new URLSearchParams();
@@ -34,9 +34,9 @@ export function useCarsCatalog({ filters, search, page, limit = DEFAULT_LIMIT, r
         setLoading(true);
         setError(null);
 
-        API.get(`/cars?${queryString}`, { signal: controller.signal })
+        apiGet(`/cars?${queryString}`, { signal: controller.signal })
             .then((res) => {
-                setRaw(res.data);
+                setRaw(res);
                 setLoading(false);
             })
             .catch((err) => {

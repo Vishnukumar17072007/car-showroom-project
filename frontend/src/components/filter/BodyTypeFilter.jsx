@@ -18,8 +18,8 @@ function BodyTypeFilter({selected, onChange}) {
 
                 <div className={`car_type_list row ms-2 ${openContent ? "show" : ""}`} id="car-type">
                     {bodyTypes.map((t) => (
-                        <div key={t} className="car_type_checkbox col-6">
-                            <input type="checkbox" name="" id="" checked={selected === t} onChange={() => onChange(t)}/>
+                        <div key={t} className="car_type_checkbox col-6" onClick={() => {onChange(t)}} style={{cursor: "pointer"}}>
+                            <input type="checkbox" name="" id="" checked={selected === t} readOnly />
                             <span> {t}</span>
                         </div>
                     ))}

@@ -113,7 +113,7 @@ const getOrderStats = async (req, res) => {
     ]);
 
     const totalSpent = result.length > 0 ? result[0].total : 0;
-    return res.status(200).json({ totalOrders, totalSpent });
+    return res.status(200).json({ count: totalOrders, totalSpent });
 };
 
 // ─── USER ONLY: Spending Over Time ────────────────────────────────

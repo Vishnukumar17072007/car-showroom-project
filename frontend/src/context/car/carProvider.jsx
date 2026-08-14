@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
-import { carContext } from "./carContext";
-import API from "../../api/axios";
+import { apiGet, apiPatch, apiPost, apiPut } from "../../api/axios";
 import toast from "react-hot-toast";
 
 export async function addCar(updateCar) {
     try{
-        const res = await API.post("/cars/", updateCar);
+        const res = await apiPost("/cars/", updateCar);
         toast.success("Car added successfully!");
         return res;
     }
@@ -14,9 +12,19 @@ export async function addCar(updateCar) {
     }
 };
 
+export async function getCarById(carId) {
+    try{
+        const res = await apiGet(`/cars/${carId}`);
+        return res;
+    }
+    catch {
+        toast.error("failed to get data to edit the car.");
+    }
+}
+
 export async function deleteCar(id) {
     try{
-        const res = await API.patch(`/cars/soft-delete/${id}`);
+        const res = await apiPatch(`/cars/soft-delete/${id}`);
         toast.success("Car deleted successfully.");
         return res;
     }
@@ -27,7 +35,7 @@ export async function deleteCar(id) {
 
 export async function editCar(id, editData) {
     try{
-        const res = await API.put(`/cars/${id}`, editData);
+        const res = await apiPut(`/cars/${id}`, editData);
         toast.success("Car updated successfully!");
         return res;
     }

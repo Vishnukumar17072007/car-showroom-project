@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import API from '../api/axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { OrderListSkeleton, PageTitleSkeleton } from '../components/PageSkeletons';
@@ -24,9 +23,9 @@ const statusColor = (status) => {
 // Admin View
 // ─────────────────────────────────────────────
 function AdminOrders() {
-  const {orders, ordersLoading, fetchOrders, changeStatus} = useOrder();
+  const {orders, ordersLoading, getOrders, changeStatus} = useOrder();
 
-  useEffect(() => { fetchOrders(); }, []);
+  useEffect(() => { getOrders(); }, []);
 
 
   async function handleStatusChange(orderId, newStatus) {
@@ -111,14 +110,13 @@ function AdminOrders() {
                 {/* Cars in this order */}
                 {order.items.map((item, idx) => (
                   <div key={idx} style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '10px' }}>
-                    <img
+                    <img className='order-car-img'
                       src={item.carId?.image}
                       alt={item.carId?.brand}
-                      style={{ width: '100px', height: '65px', objectFit: 'cover', borderRadius: '8px' }}
                     />
                     <div>
                       <p style={{ fontWeight: 600, color: 'var(--text)', margin: 0 }}>
-                        {item.carId?.brand} {item.carId?.model}
+                        {item.carId?.carName}
                       </p>
                       <p style={{ color: 'var(--subtext)', fontSize: '13px', margin: 0 }}>
                         ₹{order.price}
@@ -155,7 +153,7 @@ function AdminOrders() {
 // ─────────────────────────────────────────────
 function UserOrders() {
   const navigate = useNavigate();
-  const { orders, cancelOrder, deleteOrder, ordersLoading, fetchOrders } = useOrder();
+  const { orders, cancelOrder, deleteOrder, ordersLoading, getOrders } = useOrder();
   const [openOrderMenu, setOpenOrderMenu] = useState(null);
 
   const activeOrders = orders
@@ -166,7 +164,7 @@ function UserOrders() {
     .filter((i) => ['cancelled', 'delivered', 'rejected'].includes(i.status))
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-  useEffect(() => { fetchOrders(); }, []);
+  useEffect(() => { getOrders(); }, []);
 
   const handleCancel = async (orderId) => {
     try {
@@ -245,7 +243,7 @@ function UserOrders() {
             onClick={() => navigate(`/vehicles/${item.carId._id}`)}
           />
           <div>
-            <p style={{ fontWeight: 600, color: 'var(--text)' }}>{item.carId?.brand} {item.carId?.model}</p>
+            <p style={{ fontWeight: 600, color: 'var(--text)' }}>{item.carId?.carName}</p>
             <p style={{ color: 'var(--subtext)', fontSize: '13px' }}>₹{item.carId?.price?.toLocaleString('en-IN')}</p>
           </div>
         </div>

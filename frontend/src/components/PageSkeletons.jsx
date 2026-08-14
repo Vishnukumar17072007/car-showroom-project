@@ -295,7 +295,6 @@ export function ProfileSkeleton() {
           </div>
           <SkeletonBlock style={{ width: 80, height: 32, borderRadius: 8 }} />
         </div>
-        <SkeletonBlock className="profile-skeleton-upgrade" />
         <div className="profile-bottom-grid">
           <div className="activity-overview profile-skeleton-activity">
             {Array.from({ length: 3 }).map((_, i) => (
@@ -332,11 +331,11 @@ export function NotificationListSkeleton({ count = 5 }) {
         <div className="cart_items_scroll notification-skeleton-list">
           {Array.from({ length: count }).map((_, index) => (
             <div key={index} className="notification-skeleton-card">
+              <SkeletonBlock style={{ width: "45%", height: 14 }} />
               <div className="notification-skeleton-top">
-                <SkeletonBlock style={{ width: "45%", height: 14 }} />
+                <SkeletonBlock style={{ width: "85%", height: 12, marginTop: 8 }} />
                 <SkeletonBlock style={{ width: 8, height: 8, borderRadius: "50%" }} />
               </div>
-              <SkeletonBlock style={{ width: "85%", height: 12, marginTop: 8 }} />
               <SkeletonBlock style={{ width: "30%", height: 10, marginTop: 10 }} />
             </div>
           ))}

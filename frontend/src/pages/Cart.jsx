@@ -53,12 +53,12 @@ function Cart() {
                                 <div key={index} className="cart-item">
                                     {/* Image */}
                                     <div style={{
-                                        width: "140px", height: "90px", flexShrink: 0,
+                                        width: "140px", height: "90px", flexShrink: 0, color: "black",
                                         borderRadius: "8px", overflow: "hidden", background: "#f0f0f0"
                                     }}>
                                         <img
                                             src={car.image}
-                                            alt={car.model}
+                                            alt={car.carName}
                                             style={{ width: "100%", height: "100%", objectFit: "cover", cursor: "pointer" }}
                                             onClick={() => navigate(`/vehicles/${car._id}`)}
                                         />
@@ -66,7 +66,7 @@ function Cart() {
 
                                     {/* Details */}
                                     <div style={{ flex: 1 }}>
-                                        <b className="text" style={{ fontSize: "1rem" }}>{car.brand} {car.model}</b>
+                                        <b className="text" style={{ fontSize: "1rem" }}>{car.carName}</b>
                                         <p style={{ margin: "2px 0", fontWeight: "lighter", fontSize: "0.85rem", color: "gray" }}>
                                             {car.bodyType}
                                             {car.transmission && ` • ${car.transmission}`}
