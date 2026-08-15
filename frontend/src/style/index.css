@@ -39,6 +39,9 @@
 
   --skeleton-color: #26262f;
 
+  --landing-bg-1: #16161c;
+  --landing-bg-2: #111116;
+
   --profile-card: #111116;
   --profile-card-border: #111116;
   --profile-subcard: #111116;
@@ -82,6 +85,9 @@ html[data-theme="light"] {
   --gold-border: rgba(201, 162, 39, 0.40);
 
   --skeleton-color: #cbd5e0;
+
+  --landing-bg-1: #ffffff;
+  --landing-bg-2: #d2d2d2;
 
   --profile-card: #ffffff;
   --profile-card-border: #e2e8f0;
@@ -1908,7 +1914,7 @@ input[type="checkbox"]:checked {
   background: transparent;
   border: none;
   outline: none;
-  color: var(--text);
+  color: #f0ede6;
   font-size: 14px;
   padding: 12px 0;
   font-family: 'DM Sans', Arial, sans-serif;
@@ -2915,7 +2921,7 @@ input[type="checkbox"]:checked {
 }
 
 .landing-hero {
-  background: linear-gradient(140deg, #171720 10%, var(--bg-surface) 90%);
+  background: linear-gradient(140deg, var(--landing-bg-1) 10%, var(--landing-bg-2) 90%);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 34px;

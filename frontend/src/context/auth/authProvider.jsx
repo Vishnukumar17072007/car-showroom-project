@@ -18,7 +18,6 @@ function persistUserRole(user) {
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [authLoading, setAuthLoading] = useState(true);
-    const [success, setSuccess] = useState("");
 
     useEffect(() => {
         // Check if URL has ?token= from Google OAuth redirect
@@ -45,16 +44,13 @@ export function AuthProvider({ children }) {
 
         restoreSession();
 
-        if(success) {
-            toast.success(success);
-        }
     }, []);
 
     /* ─── Registration OTP: sent to the email BEFORE any account exists.
        "Generate OTP" in the signup form calls this. ─── */
     async function sendRegistrationOtp(email) {
         const res = await apiPost('/auth/send-registration-otp', { email });
-        setSuccess("OTP sent to your email.");
+        toast.success("OTP sent to your email.");
 
         return res;
     }
@@ -68,7 +64,7 @@ export function AuthProvider({ children }) {
 
         localStorage.setItem("token", res.token);
 
-        setSuccess("Welcome! How can we help you?");
+        toast.success("Welcome! How can we help you?");
 
         return user;
     }
@@ -79,7 +75,7 @@ export function AuthProvider({ children }) {
 
         localStorage.setItem("token", res.token);
 
-        setSuccess("Welcome back! How can we help you?");
+        toast.success("Welcome back! How can we help you?");
 
         return user;
     }
@@ -101,7 +97,7 @@ export function AuthProvider({ children }) {
 
     async function requestPasswordOtp(email) {
         const res = await apiPost('/auth/forgot-password', { email });
-        setSuccess("If that email exists, a code has been sent.");
+        toast.success("If that email exists, a code has been sented to your email.");
 
         return res;
     }
@@ -114,7 +110,7 @@ export function AuthProvider({ children }) {
 
     async function resetPassword(email, token, newPassword) {
         const res = await apiPost('/auth/reset-password', { email, token, newPassword });
-        setSuccess("Password updated. You can sign in now.");
+        toast.success("Password updated. You can sign in now.");
 
         return res;
     }

@@ -32,15 +32,18 @@ router.get("/google/callback",
     session: false,
     failureRedirect: `${(process.env.CLIENT_URL || "").replace(/\/$/, "")}/login`,
   }),
-  async (req, res) => {
-    const token = generateToken(req.user);
-    const clientUrl = (process.env.CLIENT_URL || "").replace(/\/$/, "");
-    const redirectUrl =
-      process.env.NODE_ENV === "production"
-        ? `${clientUrl}/?token=${token}`       // ← redirect to root with token
-        : `http://localhost:1200/?token=${token}`;
-
-    res.redirect(redirectUrl);
+  async (req, res, next) => {
+    try {
+      const token = generateToken(req.user);
+      const clientUrl = (process.env.CLIENT_URL || "").replace(/\/$/, "");
+      const redirectUrl =
+        process.env.NODE_ENV === "production"
+          ? `${clientUrl}/?token=${token}`
+          : `http://localhost:1200/?token=${token}`;
+      res.redirect(redirectUrl);
+    } catch (err) {
+      next(err);
+    }
   }
 );
 

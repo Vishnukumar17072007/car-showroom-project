@@ -54,10 +54,10 @@ const AVATAR_BG = [
    HELPERS
 ═══════════════════════════════════════════════════════════════════ */
 function fmtRupees(n) {
-  if (!n) return "₹0";
-  if (n >= 1e7) return `₹${(n / 1e7).toFixed(2)} Cr`;
-  if (n >= 1e5) return `₹${(n / 1e5).toFixed(1)} L`;
-  return `₹${n.toLocaleString("en-IN")}`;
+  if (!n) return "0";
+  if (n >= 1e7) return `${(n / 1e7).toFixed(2)} Cr`;
+  if (n >= 1e5) return `${(n / 1e5).toFixed(1)} L`;
+  return `${n.toLocaleString("en-IN")}`;
 }
 
 function initials(name = "") {
