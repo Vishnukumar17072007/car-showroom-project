@@ -64,63 +64,63 @@ This project was built as a hands-on learning journey through the MERN stack —
 
 | Sign In | Sign Up | Forgot Password |
 |---|---|---|
-| ![Sign In](./frontend/public/asset/screenshots/sign-in-page.png) | ![Sign Up](./frontend/public/asset/screenshots/sign-up-page.png) | ![Forgot Password](./frontend/public/asset/screenshots/forgot-password-page.png) |
+| ![Sign In](./frontend/public/assets/screenshots/sign-in-page.png) | ![Sign Up](./frontend/public/assets/screenshots/sign-up-page.png) | ![Forgot Password](./frontend/public/assets/screenshots/forgot-password-page.png) |
 
 ### 🚘 Vehicle Catalog
 
 | Vehicles (Dark) | Vehicles (Light) |
 |---|---|
-| ![Vehicles Dark](./frontend/public/asset/screenshots/vehicles-page.png) | ![Vehicles Light](./frontend/public/asset/screenshots/vehicles-page-light.png) |
+| ![Vehicles Dark](./frontend/public/assets/screenshots/vehicles-page.png) | ![Vehicles Light](./frontend/public/assets/screenshots/vehicles-page-light.png) |
 
 ### ❤️ Wishlist & 🛒 Cart
 
 | Wishlist (Dark) | Wishlist (Light) |
 |---|---|
-| ![Wishlist Dark](./frontend/public/asset/screenshots/wishlist-page.png) | ![Wishlist Light](./frontend/public/asset/screenshots/wishlist-page-light.png) |
+| ![Wishlist Dark](./frontend/public/assets/screenshots/wishlist-page.png) | ![Wishlist Light](./frontend/public/assets/screenshots/wishlist-page-light.png) |
 
 | Cart (Dark) | Cart (Light) |
 |---|---|
-| ![Cart Dark](./frontend/public/asset/screenshots/cart-page.png) | ![Cart Light](./frontend/public/asset/screenshots/cart-page-light.png) |
+| ![Cart Dark](./frontend/public/assets/screenshots/cart-page.png) | ![Cart Light](./frontend/public/assets/screenshots/cart-page-light.png) |
 
 ### 📦 Orders
 
 | Orders (Dark) | Orders (Light) |
 |---|---|
-| ![Orders Dark](./frontend/public/asset/screenshots/order-page.png) | ![Orders Light](./frontend/public/asset/screenshots/order-page-light.png) |
+| ![Orders Dark](./frontend/public/assets/screenshots/order-page.png) | ![Orders Light](./frontend/public/assets/screenshots/order-page-light.png) |
 
 | Orders (Admin) |
 |---|
-| ![Orders Admin](./frontend/public/asset/screenshots/order-page-admin.png) |
+| ![Orders Admin](./frontend/public/assets/screenshots/order-page-admin.png) |
 
 ### 📊 Dashboards
 
 | Dashboard (Dark) | Dashboard (Light) |
 |---|---|
-| ![Dashboard Dark](./frontend/public/asset/screenshots/dashboard-page.png) | ![Dashboard Light](./frontend/public/asset/screenshots/dashboard-page-light.png) |
+| ![Dashboard Dark](./frontend/public/assets/screenshots/dashboard-page.png) | ![Dashboard Light](./frontend/public/assets/screenshots/dashboard-page-light.png) |
 
 | Dashboard (Admin) |
 |---|
-| ![Dashboard Admin](./frontend/public/asset/screenshots/dashboard-page-admin.png) |
+| ![Dashboard Admin](./frontend/public/assets/screenshots/dashboard-page-admin.png) |
 
 ### 👤 Profile
 
 | Profile (Dark) | Profile (Light) |
 |---|---|
-| ![Profile Dark](./frontend/public/asset/screenshots/profile-page.png) | ![Profile Light](./frontend/public/asset/screenshots/profile-page-light.png) |
+| ![Profile Dark](./frontend/public/assets/screenshots/profile-page.png) | ![Profile Light](./frontend/public/assets/screenshots/profile-page-light.png) |
 
 | Edit Profile (Dark) | Edit Profile (Light) |
 |---|---|
-| ![Edit Profile Dark](./frontend/public/asset/screenshots/edit-profile-page.png) | ![Edit Profile Light](./frontend/public/asset/screenshots/edit-profile-page-light.png) |
+| ![Edit Profile Dark](./frontend/public/assets/screenshots/edit-profile-page.png) | ![Edit Profile Light](./frontend/public/assets/screenshots/edit-profile-page-light.png) |
 
 ### 🔔 Notifications & 💬 Support
 
 | Notifications (Dark) | Notifications (Light) |
 |---|---|
-| ![Notifications Dark](./frontend/public/asset/screenshots/notification-page.png) | ![Notifications Light](./frontend/public/asset/screenshots/notification-page-light.png) |
+| ![Notifications Dark](./frontend/public/assets/screenshots/notification-page.png) | ![Notifications Light](./frontend/public/assets/screenshots/notification-page-light.png) |
 
 | Support (Dark) | Support (Light) |
 |---|---|
-| ![Support Dark](./frontend/public/asset/screenshots/support-page.png) | ![Support Light](./frontend/public/asset/screenshots/support-page-light.png) |
+| ![Support Dark](./frontend/public/assets/screenshots/support-page.png) | ![Support Light](./frontend/public/assets/screenshots/support-page-light.png) |
 
 ---
 
@@ -238,7 +238,7 @@ car-showroom-project/
 │   └── server.js
 ├── frontend/
 │   ├── public/
-│   │   └── asset/
+│   │   └── assets/
 │   │       └── screenshots/
 │   ├── src/
 │   │   ├── components/
