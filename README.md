@@ -38,62 +38,89 @@ This project was built as a hands-on learning journey through the MERN stack —
 - Browse a full car catalog with **server-side filtering** (price, body type, transmission, fuel type) and **search**
 - **Wishlist** and **Cart** with persistent state
 - Secure **JWT-based authentication** with **Google OAuth (Sign in with Google)**
+- **Forgot password** flow with email OTP reset
 - Seamless **checkout flow** with shipping details form and order confirmation
 - **Order tracking** — Pending → Approved → Delivered / Cancelled, with full order history
 - Personalized **User Dashboard** with spending analytics, order status breakdown, and history
-- **Real-time notifications** (order updates, etc.) powered by Socket.IO
+- **Real-time notifications** (order updates, etc.) powered by Socket.IO, with a dedicated notifications page
 - Editable **profile** with photo upload (via Cloudinary), password change, and address management
-- **Light / Dark mode** toggle with persistent theme selection
-- In-app **Support Chat** assistant
+- **Light / Dark mode** toggle with persistent theme selection across every page
+- In-app **Support Chat** AI assistant
 
 ### 🛠️ For Admins
 - **Admin Dashboard** with live stats — total users, active cars, total orders, total revenue
 - **Monthly revenue & order trends**, order status distribution, and inventory breakdown by body type
 - Full **CRUD on vehicle listings** (add, edit, delete cars) directly from the catalog view
-- **Order management** — approve, reject, or update order/delivery status
+- **Order management** — approve, reject, or update order/delivery status across all users
 - Unified **role-based dashboard** — single codebase renders admin or user views based on role
 
 ---
 
 ## 🖥️ Screenshots
 
-> All screenshots below are from the live application. Light and dark mode are both fully supported.
+> All screenshots below are from the live application. Light and dark mode are both fully supported, and admin views are shown where applicable.
 
-### 🏠 Homepage & Authentication
+### 🔐 Authentication
 
-| Homepage | Sign In | Create Account |
+| Sign In | Sign Up | Forgot Password |
 |---|---|---|
-| ![Homepage](./screenshots/Home.png) | ![Sign In](./screenshots/login.png) | ![Sign Up](./screenshots/register.png) |
+| ![Sign In](./frontend/public/asset/screenshots/sign-in-page.png) | ![Sign Up](./frontend/public/asset/screenshots/sign-up-page.png) | ![Forgot Password](./frontend/public/asset/screenshots/forgot-password-page.png) |
 
 ### 🚘 Vehicle Catalog
 
-| Vehicle Listing (User) | Vehicle Management (Admin — Light Mode) |
+| Vehicles (Dark) | Vehicles (Light) |
 |---|---|
-| ![Vehicles](./screenshots/vehicles.png) | ![Vehicles Admin Light](./screenshots/vehicles(admin).png) |
+| ![Vehicles Dark](./frontend/public/asset/screenshots/vehicles-page.png) | ![Vehicles Light](./frontend/public/asset/screenshots/vehicles-page-light.png) |
 
-### 🛒 Cart, Wishlist & Checkout
+### ❤️ Wishlist & 🛒 Cart
 
-| Wishlist | Cart | Shipping / Checkout |
-|---|---|---|
-| ![Wishlist](./screenshots/wishlist.png) | ![Cart](./screenshots/cart.png) | ![Checkout](./screenshots/checkout.png) |
+| Wishlist (Dark) | Wishlist (Light) |
+|---|---|
+| ![Wishlist Dark](./frontend/public/asset/screenshots/wishlist-page.png) | ![Wishlist Light](./frontend/public/asset/screenshots/wishlist-page-light.png) |
+
+| Cart (Dark) | Cart (Light) |
+|---|---|
+| ![Cart Dark](./frontend/public/asset/screenshots/cart-page.png) | ![Cart Light](./frontend/public/asset/screenshots/cart-page-light.png) |
 
 ### 📦 Orders
 
-| My Orders (User) | Orders (Admin View) |
+| Orders (Dark) | Orders (Light) |
 |---|---|
-| ![Orders](./screenshots/order.png) | ![Orders Admin](./screenshots/order(admin).png) |
+| ![Orders Dark](./frontend/public/asset/screenshots/order-page.png) | ![Orders Light](./frontend/public/asset/screenshots/order-page-light.png) |
+
+| Orders (Admin) |
+|---|
+| ![Orders Admin](./frontend/public/asset/screenshots/order-page-admin.png) |
 
 ### 📊 Dashboards
 
-| User Dashboard | Admin Dashboard (Dark) | Admin Dashboard (Light Mode) |
-|---|---|---|
-| ![User Dashboard](./screenshots/dashboard.png) | ![Admin Dashboard](./screenshots/dashboard(admin).png) | ![Admin Dashboard Light](./screenshots/dashboard(light).png) |
+| Dashboard (Dark) | Dashboard (Light) |
+|---|---|
+| ![Dashboard Dark](./frontend/public/asset/screenshots/dashboard-page.png) | ![Dashboard Light](./frontend/public/asset/screenshots/dashboard-page-light.png) |
 
-### 👤 Profile & Support
+| Dashboard (Admin) |
+|---|
+| ![Dashboard Admin](./frontend/public/asset/screenshots/dashboard-page-admin.png) |
 
-| Profile | Edit Profile | Support Chat |
-|---|---|---|
-| ![Profile](./screenshots/profile.png) | ![Edit Profile](./screenshots/editProfile.png) | ![Support](./screenshots/support.png) |
+### 👤 Profile
+
+| Profile (Dark) | Profile (Light) |
+|---|---|
+| ![Profile Dark](./frontend/public/asset/screenshots/profile-page.png) | ![Profile Light](./frontend/public/asset/screenshots/profile-page-light.png) |
+
+| Edit Profile (Dark) | Edit Profile (Light) |
+|---|---|
+| ![Edit Profile Dark](./frontend/public/asset/screenshots/edit-profile-page.png) | ![Edit Profile Light](./frontend/public/asset/screenshots/edit-profile-page-light.png) |
+
+### 🔔 Notifications & 💬 Support
+
+| Notifications (Dark) | Notifications (Light) |
+|---|---|
+| ![Notifications Dark](./frontend/public/asset/screenshots/notification-page.png) | ![Notifications Light](./frontend/public/asset/screenshots/notification-page-light.png) |
+
+| Support (Dark) | Support (Light) |
+|---|---|
+| ![Support Dark](./frontend/public/asset/screenshots/support-page.png) | ![Support Light](./frontend/public/asset/screenshots/support-page-light.png) |
 
 ---
 
@@ -205,17 +232,20 @@ car-showroom-project/
 │   ├── models/
 │   ├── routes/
 │   ├── middleware/
+|   ├── utils/
+|   ├── validations/
 │   ├── config/
 │   └── server.js
 ├── frontend/
+│   ├── public/
+│   │   └── asset/
+│   │       └── screenshots/
 │   ├── src/
 │   │   ├── components/
 │   │   ├── pages/
 │   │   ├── context/
-│   │   ├── hooks/
 │   │   └── App.jsx
 │   └── vite.config.js
-├── screenshots/
 ├── LICENSE
 └── README.md
 ```

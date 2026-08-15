@@ -70,7 +70,7 @@ const register = async (req, res) => {
         password: hashedPassword,
         phone,
         role: "user",
-        isEmailVerified: true, // OTP already proved ownership
+        isEmailVerified: true,
     });
 
     await PendingOtp.deleteOne({ email });
@@ -117,7 +117,6 @@ const logout = async (req, res) => {
 const requestPasswordOtp = async (req, res) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
-    // Always respond 200 even if not found — don't leak which emails exist
     if (!user) return res.status(200).json({ message: "If that email exists, a code has been sent." });
 
     const otp = String(crypto.randomInt(100000, 999999));

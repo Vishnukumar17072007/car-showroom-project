@@ -1,10 +1,7 @@
-// component/SideNavbar.jsx
-
 import { Link, useLocation } from "react-router-dom";
 
 import { useAuth } from "../context/auth/useAuth";
 
-// ── Main Sidebar Component ───────────────────────────────────────────────────
 function SideNavbar() {
   const location = useLocation();
   const { user } = useAuth();
@@ -56,7 +53,7 @@ function SideNavbar() {
 
       <div className="divider" style={{ borderBottom: "1px solid grey" }}></div>
       <div className="bottomNavBar">
-
+        {/* Bottom Nav Items */}
         {/* Support */}
         <li
           className={`side_bar_menu_lists ps-2 w-100 ${location.pathname === "/support" ? "active" : ""}`}

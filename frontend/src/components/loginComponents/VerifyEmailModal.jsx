@@ -3,10 +3,6 @@ import { useAuth } from "../../context/auth/useAuth";
 import { useNavigate } from "react-router-dom";
 import Field from "./Field";
 
-/**
- * Full-screen "verify your email" overlay, shown immediately after signup
- * (and re-enterable from login if the account is still unverified).
- */
 export default function VerifyEmailModal({ email, onClose }) {
   const { verifyEmail, resendEmailOtp } = useAuth();
   const navigate = useNavigate();
@@ -28,7 +24,6 @@ export default function VerifyEmailModal({ email, onClose }) {
       document.body.style.overflow = prevOverflow;
       clearInterval(cooldownRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const startCooldown = () => {

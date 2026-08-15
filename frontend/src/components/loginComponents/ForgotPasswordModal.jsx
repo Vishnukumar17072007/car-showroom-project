@@ -3,10 +3,6 @@ import { useAuth } from "../../context/auth/useAuth";
 import Field from "./Field";
 import PasswordStrength from "./PasswordStrength";
 
-/**
- * Full-screen forgot-password overlay (same route, no navigation).
- * Steps: 1 email -> 2 otp -> 3 new password -> 4 success
- */
 export default function ForgotPasswordModal({ onClose }) {
   const { requestPasswordOtp, verifyPasswordOtp, resetPassword } = useAuth();
 
@@ -131,7 +127,6 @@ export default function ForgotPasswordModal({ onClose }) {
 
   return (
     <div className={`auth-overlay-page ${visible ? "auth-overlay-page--visible" : ""}`}>
-      {/* reuse the same background treatment as the login page so it feels like one continuous surface */}
       <div className="auth-bg-layer1" />
       <div className="auth-bg-layer2" />
       <div className="auth-bg-grid" />
