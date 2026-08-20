@@ -102,7 +102,7 @@ This project was built as a hands-on learning journey through the MERN stack —
 |---|
 | ![Dashboard Admin](./frontend/public/assets/screenshots/dashboard-page-admin.png) |
 
-### 👤 Profile
+### 👤 Profile 
 
 | Profile (Dark) | Profile (Light) |
 |---|---|
