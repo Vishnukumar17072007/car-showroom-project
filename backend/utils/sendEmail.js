@@ -1,19 +1,29 @@
 import nodemailer from "nodemailer";
 import dns from "dns";
 
-// Render's network can't route Gmail's IPv6 SMTP address — force IPv4 resolution
-dns.setDefaultResultOrder("ipv4first");
+const dnsPromises = dns.promises;
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  family: 4, // force IPv4 even if DNS still returns AAAA
-  auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-  connectionTimeout: 10000, // fail fast instead of hanging if this ever recurs
-});
+let transporterPromise;
+
+async function getTransporter() {
+  if (!transporterPromise) {
+    transporterPromise = (async () => {
+      const [ipv4] = await dnsPromises.resolve4("smtp.gmail.com");
+      return nodemailer.createTransport({
+        host: ipv4,
+        port: 465,
+        secure: true,
+        tls: { servername: "smtp.gmail.com" }, // cert is issued for the hostname, not the raw IP
+        auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+        connectionTimeout: 10000,
+      });
+    })();
+  }
+  return transporterPromise;
+}
 
 export const sendOtpEmail = async (to, otp) => {
+  const transporter = await getTransporter();
   await transporter.sendMail({
     from: `"CarField" <${process.env.SMTP_USER}>`,
     to,
